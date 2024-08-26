@@ -41,7 +41,7 @@ const Footer: FC<TFooterProps> = () => {
 
         {/* Footer Links */}
         <motion.div
-          className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-8"
+          className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -91,38 +91,38 @@ const Footer: FC<TFooterProps> = () => {
           <div>
             <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex justify-center sm:justify-start gap-4">
-              <a
-                href="https://facebook.com"
+              <Link
+                to="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
               >
                 <FaFacebookF className="text-xl hover:text-warning" />
-              </a>
-              <a
-                href="https://twitter.com"
+              </Link>
+              <Link
+                to="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
               >
                 <FaTwitter className="text-xl hover:text-warning" />
-              </a>
-              <a
-                href="https://instagram.com"
+              </Link>
+              <Link
+                to="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
               >
                 <FaInstagram className="text-xl hover:text-warning" />
-              </a>
-              <a
-                href="https://linkedin.com"
+              </Link>
+              <Link
+                to="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="text-xl hover:text-warning" />
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

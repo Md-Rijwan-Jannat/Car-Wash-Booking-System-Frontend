@@ -9,7 +9,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { toast } from "sonner";
-import { IError } from "../../types";
+import { TError } from "../../types";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api",
@@ -33,7 +33,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status) {
-    const errorData = result.error.data as IError;
+    const errorData = result.error.data as TError;
 
     console.log(errorData.errorMessages?.[0]?.message, errorData);
     if (result.error) {
@@ -48,5 +48,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["users", "reviews"],
   endpoints: () => ({}),
 });

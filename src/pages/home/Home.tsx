@@ -1,11 +1,18 @@
 import { FC } from "react";
+import Banner from "../../components/Banner/Banner";
+import FeaturedServices from "../../components/FeaturedServices/FeaturedServices";
+import WebsiteReview from "../../components/WebsiteReview/WebsiteReview";
 
 type THomeProps = object;
 
 const Home: FC<THomeProps> = () => {
   return (
     <div>
-      <h2>This is a Home component</h2>
+      <Banner />
+      <div className="px-2">
+        <FeaturedServices />
+        <WebsiteReview />
+      </div>
     </div>
   );
 };

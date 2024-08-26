@@ -1,27 +1,31 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
 
-interface IMeta {
+type TMeta = {
   limit: number;
   page: number;
   total: number;
   totalPage: number;
-}
+};
 
-export interface IError {
+export type TError = {
   success: boolean;
   message: string;
   errorMessages: TErrorMessages;
-}
+};
 
-export interface IResponse<T> {
-  data?: T;
-  error?: IError;
-  meta?: IMeta;
+export type TData<T> = {
+  result?: T;
+  meta?: TMeta;
+};
+
+export type TResponse<T> = {
+  data?: TData<T>;
+  error?: TError;
   success: boolean;
   message: string;
-}
+};
 
-export type TResponseRedux<T> = IResponse<T> & BaseQueryApi;
+export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
 
 export type TErrorMessages = {
   path: string | number;

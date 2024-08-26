@@ -49,7 +49,7 @@ const NavBar: FC<TNavBarProps> = () => {
   }
 
   return (
-    <Navbar shouldHideOnScroll disableAnimation isBordered>
+    <Navbar shouldHideOnScroll disableAnimation isBordered className="">
       <NavbarContent className="sm:hidden pr-3" justify="start">
         <NavbarBrand>
           <Link to={"/"}>
@@ -65,7 +65,7 @@ const NavBar: FC<TNavBarProps> = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand>
+        <NavbarBrand className="w-16 md:w-20">
           <Link to={"/"}>
             {" "}
             <Image
@@ -91,7 +91,7 @@ const NavBar: FC<TNavBarProps> = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="lg:flex">
+        <NavbarItem className="hidden lg:flex">
           {user ? (
             <>
               <Button
@@ -133,7 +133,7 @@ const NavBar: FC<TNavBarProps> = () => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu className="lg:hidden">
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <NavLink
@@ -154,6 +154,32 @@ const NavBar: FC<TNavBarProps> = () => {
             </NavLink>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          {user ? (
+            <>
+              <Button
+                as={NavLink}
+                to="/auth/login"
+                color="warning"
+                variant="flat"
+                onClick={() => dispatch(logout())}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                as={NavLink}
+                to="/auth/login"
+                color="default"
+                variant="flat"
+              >
+                Login
+              </Button>
+            </>
+          )}
+        </NavbarMenuItem>
       </NavbarMenu>
       <NavbarContent className="sm:hidden" justify="end">
         <NavbarMenuToggle />
