@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Image,
   Navbar,
@@ -10,13 +11,15 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
 import brandLogo from "../../../public/car-wash-brand-logo.png";
 import { useTheme } from "next-themes";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import {
   logout,
+  TUser,
+  useCurrentUser,
   useCurrentUserToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/VerifyToken";
@@ -26,11 +29,14 @@ type TNavBarProps = object;
 const NavBar: FC<TNavBarProps> = () => {
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(useCurrentUser) as TUser;
+  const role = userData?.role;
+
+  console.log(role);
   const menuItems = [
-    { name: "Home", path: "/" },
     { name: "Services", path: "/services" },
     { name: "Booking", path: "/booking" },
-    { name: "Dashboard", path: "/dashboard/admin" },
+    { name: "Dashboard", path: `/dashboard/${role}` },
     { name: "About Us", path: "/aboutUs" },
     { name: "Contact Us", path: "/contactUs" },
   ];
@@ -46,23 +52,29 @@ const NavBar: FC<TNavBarProps> = () => {
     <Navbar shouldHideOnScroll disableAnimation isBordered>
       <NavbarContent className="sm:hidden pr-3" justify="start">
         <NavbarBrand>
-          <Image
-            className={`w-16 md:w-20  px-3 rounded-md ${
-              theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
-            }`}
-            src={brandLogo}
-          />
+          <Link to={"/"}>
+            {" "}
+            <Image
+              className={`w-16 md:w-20  px-3 rounded-md ${
+                theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
+              }`}
+              src={brandLogo}
+            />
+          </Link>{" "}
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
-          <Image
-            className={`w-16 md:w-20  px-3 rounded-md ${
-              theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
-            }`}
-            src={brandLogo}
-          />
+          <Link to={"/"}>
+            {" "}
+            <Image
+              className={`w-16 md:w-20  px-3 rounded-md ${
+                theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
+              }`}
+              src={brandLogo}
+            />
+          </Link>{" "}
         </NavbarBrand>
         {menuItems.map((item, index) => (
           <NavbarItem key={index}>
@@ -79,13 +91,13 @@ const NavBar: FC<TNavBarProps> = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="lg:flex">
           {user ? (
             <>
               <Button
                 as={NavLink}
                 to="/auth/login"
-                color="default"
+                color="warning"
                 variant="flat"
                 onClick={() => dispatch(logout())}
               >
@@ -106,10 +118,18 @@ const NavBar: FC<TNavBarProps> = () => {
           )}
         </NavbarItem>
         <NavbarItem className="flex gap-3 items-center">
-          <Button as={NavLink} to="/auth/signup" color="warning" variant="flat">
-            Sign Up
-          </Button>
           <ThemeSwitcher />
+          {user ? (
+            <>
+              {" "}
+              <Avatar
+                isBordered
+                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+              />
+            </>
+          ) : (
+            ""
+          )}
         </NavbarItem>
       </NavbarContent>
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Checkbox } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import { FC } from "react";
@@ -30,24 +31,19 @@ const Login: FC = () => {
 
       if (res.token) {
         const userData = verifyToken(res.token);
-
         dispatch(setUser({ user: userData, token: res.token }));
-        toast.success("Successfully logged in", {
-          id: toastId,
-          duration: 2000,
-        });
         navigate("/");
-      } else {
-        throw new Error("Unauthorized user");
       }
+
+      toast.success("Successfully logged in", {
+        id: toastId,
+        duration: 3000,
+      });
     } catch (error) {
       toast.error("Something went wrong", {
         id: toastId,
-        duration: 2000,
+        duration: 3000,
       });
-      console.error("Login error:", error);
-    } finally {
-      toast.dismiss(toastId);
     }
   };
 

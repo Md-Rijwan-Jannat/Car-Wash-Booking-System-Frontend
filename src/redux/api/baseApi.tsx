@@ -37,7 +37,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
     console.log(errorData.errorMessages?.[0]?.message, errorData);
     if (result.error) {
-      toast.error(errorData.errorMessages?.[0]?.message);
+      toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
       result = await baseQuery(args, api, extraOptions);
     }
   }

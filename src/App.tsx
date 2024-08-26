@@ -1,10 +1,13 @@
+// src/App.tsx
 import { FC } from "react";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes/routes";
+import { useRouter } from "./hooks/useRoutes";
 
 type TAppProps = object;
 
 const App: FC<TAppProps> = () => {
+  const router = useRouter();
+
   return (
     <main>
       <RouterProvider router={router} />

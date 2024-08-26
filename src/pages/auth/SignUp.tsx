@@ -42,13 +42,13 @@ const SignUp: FC = () => {
       if (res?.success) {
         toast.success("Successfully registered, Please login now", {
           id: toastId,
-          duration: 2000,
+          duration: 3000,
         });
       }
     } catch (err) {
       toast.error("Something went wrong", {
         id: toastId,
-        duration: 2000,
+        duration: 3000,
       });
     }
   };
