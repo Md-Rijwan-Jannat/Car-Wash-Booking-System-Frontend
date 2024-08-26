@@ -5,7 +5,11 @@ import { router } from "./routes/routes";
 type TAppProps = object;
 
 const App: FC<TAppProps> = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <main>
+      <RouterProvider router={router} />
+    </main>
+  );
 };
 
 export default App;
