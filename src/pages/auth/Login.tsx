@@ -85,7 +85,12 @@ const Login: FC = () => {
               Forgot password?
             </Link>
           </div>
-          <Button isLoading={isLoading} color="default" type="submit">
+          <Button
+            isLoading={isLoading}
+            color="warning"
+            variant="flat"
+            type="submit"
+          >
             Sign in
           </Button>
           <Link to="/auth/signup" className="mt-3 border-b text-primary">

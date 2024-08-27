@@ -32,7 +32,6 @@ const NavBar: FC<TNavBarProps> = () => {
   const userData = useAppSelector(useCurrentUser) as TUser;
   const role = userData?.role;
 
-  console.log(role);
   const menuItems = [
     { name: "Services", path: "/services" },
     { name: "Booking", path: "/booking" },
@@ -96,7 +95,6 @@ const NavBar: FC<TNavBarProps> = () => {
             <>
               <Button
                 as={NavLink}
-                to="/auth/login"
                 color="warning"
                 variant="flat"
                 onClick={() => dispatch(logout())}
@@ -109,7 +107,7 @@ const NavBar: FC<TNavBarProps> = () => {
               <Button
                 as={NavLink}
                 to="/auth/login"
-                color="default"
+                color="warning"
                 variant="flat"
               >
                 Login

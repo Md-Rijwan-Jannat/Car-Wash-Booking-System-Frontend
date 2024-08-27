@@ -34,7 +34,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden -mt-[40px]">
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden -mt-[40px] mr-1">
       <AnimatePresence initial={false}>
         {images.map((image, index) =>
           index === currentIndex ? (
@@ -89,14 +89,14 @@ const Banner = () => {
       <Button
         onClick={prevSlide}
         size="sm"
-        className="absolute top-1/2 w-[30px] left-4 transform -translate-y-1/2 bg-white text-black p-2 rounded-full shadow-md focus:outline-none hidden md:block"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black rounded-full shadow-md focus:outline-none hidden md:block"
       >
         <IoMdArrowDropleft size={25} />
       </Button>
       <Button
         onClick={nextSlide}
         size="sm"
-        className="absolute top-1/2 w-[30px] right-4 transform -translate-y-1/2 bg-white text-black p-2 rounded-full shadow-md focus:outline-none hidden md:block"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black rounded-full shadow-md focus:outline-none hidden md:block"
       >
         <IoMdArrowDropright size={25} />
       </Button>

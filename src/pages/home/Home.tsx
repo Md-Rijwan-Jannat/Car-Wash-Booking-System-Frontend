@@ -1,6 +1,6 @@
 import { FC } from "react";
-import Banner from "../../components/Banner/Banner";
-import FeaturedServices from "../../components/FeaturedServices/FeaturedServices";
+import Banner from "../../components/banner/Banner";
+import FeaturedServices from "../../components/featuredServices/FeaturedServices";
 import WebsiteReview from "../../components/WebsiteReview/WebsiteReview";
 
 type THomeProps = object;

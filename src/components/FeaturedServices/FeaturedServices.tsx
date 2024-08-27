@@ -56,7 +56,7 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
               <Skeleton className="w-4/5 rounded-lg">
                 <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
               </Skeleton>
-              <div className="flex justify-between gap-3 mt-5">
+              <div className="flex justify-between gap-3 mt-10">
                 <Skeleton className="w-2/5 rounded-lg">
                   <div className="h-8 w-2/5 rounded-lg bg-default-300"></div>
                 </Skeleton>

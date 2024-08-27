@@ -18,7 +18,11 @@ const Footer: FC<TFooterProps> = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={`py-10${theme === "dark" ? "" : ""}`}>
+    <footer
+      className={`py-10 border-t mt-10 ${
+        theme === "dark" ? "border-gray-50 border-opacity-15" : ""
+      }`}
+    >
       <div className="container mx-auto px-4">
         {/* Logo and Description */}
         <motion.div

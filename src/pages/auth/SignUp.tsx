@@ -103,7 +103,7 @@ const SignUp: FC = () => {
             rows={3}
             required
           />
-          <Button color="default" type="submit">
+          <Button color="warning" variant="flat" type="submit">
             Sign Up
           </Button>
           <div className="flex py-2 px-1 justify-between w-full">

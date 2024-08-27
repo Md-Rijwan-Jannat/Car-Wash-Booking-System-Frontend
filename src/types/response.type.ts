@@ -1,6 +1,6 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
 
-type TMeta = {
+export type TMeta = {
   limit: number;
   page: number;
   total: number;
@@ -31,8 +31,3 @@ export type TErrorMessages = {
   path: string | number;
   message: string;
 }[];
-
-export type TQueryParams = {
-  name: string;
-  value: boolean | React.Key;
-};

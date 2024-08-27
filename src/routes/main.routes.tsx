@@ -28,7 +28,7 @@ export const MainRoutes = [
     element: <ContactUs />,
   },
   {
-    path: "service-details",
+    path: "service-details/:id",
     element: <ServiceDetails />,
   },
   {

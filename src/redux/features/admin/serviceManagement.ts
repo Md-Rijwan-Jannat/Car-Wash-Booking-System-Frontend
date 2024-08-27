@@ -25,14 +25,14 @@ const serviceManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
-    addAcademicSemester: builder.mutation({
-      query: (data) => ({
-        url: "/academic-semesters/create-academic-semester",
-        method: "POST",
-        body: data,
+    getSingleService: builder.query({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "Get",
       }),
     }),
   }),
 });
 
-export const { useGetAllServicesQuery } = serviceManagementApi;
+export const { useGetAllServicesQuery, useGetSingleServiceQuery } =
+  serviceManagementApi;
