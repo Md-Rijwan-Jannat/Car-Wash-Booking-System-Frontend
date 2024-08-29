@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "@nextui-org/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { FC } from "react";
@@ -10,6 +11,7 @@ type TCWInputProps = {
   type?: string;
   icon?: JSX.Element;
   defaultValue?: string;
+  required?: boolean;
 };
 
 const CWInput: FC<TCWInputProps> = ({
@@ -21,6 +23,7 @@ const CWInput: FC<TCWInputProps> = ({
     <IoMdPerson className="text-2xl text-warning pointer-events-none flex-shrink-0" />
   ),
   defaultValue,
+  required,
 }) => {
   const { control } = useFormContext();
 
@@ -39,7 +42,7 @@ const CWInput: FC<TCWInputProps> = ({
           endContent={icon}
           variant="bordered"
           color="warning"
-          required
+          required={required ? required : true}
           value={field.value || defaultValue}
         />
       )}

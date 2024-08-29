@@ -2,12 +2,12 @@ import { FC, useState } from "react";
 import { useGetAllWebsiteReviewsQuery } from "../../redux/features/websiteReviewApi";
 import { motion } from "framer-motion";
 import { Button, Chip } from "@nextui-org/react";
-import AddReviewModal from "./AddReviewModal";
 import { useTheme } from "next-themes";
 import { useAppSelector } from "../../redux/hook";
 import { useCurrentUser } from "../../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import RatingDisplay from "./Rating";
+import AddReviewModal from "../modal/AddReviewModal";
 
 type TWebsiteReviewProps = object;
 

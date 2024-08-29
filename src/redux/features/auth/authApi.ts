@@ -22,7 +22,18 @@ const authApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    updateUser: builder.mutation({
+      query: (id) => ({
+        url: `/auth/${id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation, useGetMeQuery } = authApi;
+export const {
+  useLoginMutation,
+  useSignUpMutation,
+  useGetMeQuery,
+  useUpdateUserMutation,
+} = authApi;

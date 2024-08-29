@@ -2,7 +2,6 @@ import {
   Avatar,
   Badge,
   Button,
-  Image,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -14,7 +13,6 @@ import {
 import { FC } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
-import brandLogo from "../../../public/car-wash-brand-logo.png";
 import { useTheme } from "next-themes";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import {
@@ -24,7 +22,7 @@ import {
   useCurrentUserToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/VerifyToken";
-import { FaShopify } from "react-icons/fa";
+import { FaHandsWash, FaShopify } from "react-icons/fa";
 import { useGetMeQuery } from "../../redux/features/auth/authApi";
 import { getAllSlotBooking } from "../../redux/features/user/slotBookmarkSlice";
 
@@ -32,16 +30,16 @@ type TNavBarProps = object;
 
 const NavBar: FC<TNavBarProps> = () => {
   const { theme } = useTheme();
+
   const dispatch = useAppDispatch();
   const userData = useAppSelector(useCurrentUser) as TUser;
   const navigate = useNavigate();
-  const role = userData?.role;
   const { data: userDetails } = useGetMeQuery(userData?.email);
   const slotBookingData = useAppSelector(getAllSlotBooking);
 
   const menuItems = [
     { name: "Services", path: "/services" },
-    { name: "Dashboard", path: `/dashboard/${role}` },
+    { name: "Dashboard", path: `/dashboard` },
     { name: "About Us", path: "/aboutUs" },
     { name: "Contact Us", path: "/contactUs" },
   ].filter(Boolean); // Remove undefined values from the array
@@ -53,88 +51,112 @@ const NavBar: FC<TNavBarProps> = () => {
   }
 
   return (
-    <Navbar shouldHideOnScroll disableAnimation isBordered className="">
-      <NavbarContent className="sm:hidden pr-3" justify="start">
-        <NavbarBrand>
-          <Link to={"/"}>
-            <Image
-              className={`w-16 md:w-20  px-3 rounded-md ${
-                theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
-              }`}
-              src={brandLogo}
-            />
-          </Link>
-        </NavbarBrand>
-      </NavbarContent>
-
+    <Navbar shouldHideOnScroll disableAnimation isBordered className="w-full">
+      <div className="flex justify-start">
+        <NavbarContent className="sm:hidden pr-3" justify="start">
+          <NavbarBrand>
+            <Link to={"/"}>
+              <div
+                className={`flex items-center gap-3 border rounded-full px-3 py-1 justify-center w-full ${
+                  theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+                }`}
+              >
+                <FaHandsWash className="text-warning" size={35} />
+                <h2 className="font-semibold text-warning text-sm md:text-xl hidden md:block">
+                  Car Wash
+                </h2>
+              </div>
+            </Link>
+          </NavbarBrand>
+        </NavbarContent>
+      </div>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand className="w-16 md:w-20">
-          <Link to={"/"}>
-            <Image
-              className={`w-16 md:w-20  px-3 rounded-md ${
-                theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
-              }`}
-              src={brandLogo}
-            />
-          </Link>
-        </NavbarBrand>
-        {menuItems.map((item, index) => (
-          <NavbarItem key={index}>
-            <NavLink
-              to={item.path}
-              className={({ isActive }) =>
-                isActive ? "text-warning font-medium" : "text-foreground"
-              }
-            >
-              {item.name}
-            </NavLink>
-          </NavbarItem>
-        ))}
+        <div className="w-[150px] lg:w-[200px] md:-ml-[160px]">
+          <NavbarBrand className="w-16 md:w-20">
+            <Link to={"/"}>
+              <div
+                className={`flex items-center gap-3 border rounded-full px-3 py-1 justify-center w-full ${
+                  theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+                }`}
+              >
+                <FaHandsWash className="text-warning" size={35} />
+                <h2 className="font-semibold text-warning text-sm md:text-xl">
+                  Car Wash
+                </h2>
+              </div>
+            </Link>
+          </NavbarBrand>
+        </div>
+        <div className="flex items-center justify-center gap-6">
+          {menuItems.map((item, index) => (
+            <NavbarItem key={index}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  isActive ? "text-warning font-medium" : "text-foreground"
+                }
+              >
+                {item.name}
+              </NavLink>
+            </NavbarItem>
+          ))}
+        </div>
       </NavbarContent>
 
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          {user ? (
-            <Button
-              as={NavLink}
-              color="warning"
-              variant="flat"
-              onClick={() => dispatch(logout())}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              as={NavLink}
-              to="/auth/login"
-              color="warning"
-              variant="flat"
-            >
-              Login
-            </Button>
-          )}
-        </NavbarItem>
-        <NavbarItem className="flex gap-3 md:gap-5 items-center">
-          <ThemeSwitcher />
-          {user && (
-            <>
-              <Avatar isBordered src={userDetails?.profileImg} />
+      <div className="flex justify-end">
+        <NavbarContent>
+          <div className="flex items-center gap-3">
+            <NavbarItem className="hidden lg:flex">
+              {user ? (
+                <Button
+                  as={NavLink}
+                  color="warning"
+                  variant="flat"
+                  onClick={() => dispatch(logout())}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Button
+                  as={NavLink}
+                  to="/auth/login"
+                  color="warning"
+                  variant="flat"
+                >
+                  Login
+                </Button>
+              )}
+            </NavbarItem>
+            <NavbarItem>
+              <ThemeSwitcher />
+            </NavbarItem>
+
+            <NavbarItem>
+              {user && (
+                <>
+                  <Avatar isBordered src={userDetails?.profileImg} />
+                </>
+              )}
+            </NavbarItem>
+            <NavbarItem>
               <div
                 onClick={() => navigate("/booking")}
                 className="cursor-pointer animate-pulse"
               >
-                <Badge
-                  content={slotBookingData?.length || 0}
-                  color="warning"
-                  variant="flat"
-                >
-                  <FaShopify size={30} />
-                </Badge>
+                {user && (
+                  <Badge
+                    content={slotBookingData?.length || 0}
+                    color="warning"
+                    variant="flat"
+                  >
+                    <FaShopify size={30} />
+                  </Badge>
+                )}
               </div>
-            </>
-          )}
-        </NavbarItem>
-      </NavbarContent>
+            </NavbarItem>
+          </div>
+        </NavbarContent>
+      </div>
 
       <NavbarMenu className="lg:hidden">
         {menuItems.map((item, index) => (
@@ -181,7 +203,13 @@ const NavBar: FC<TNavBarProps> = () => {
         </NavbarMenuItem>
       </NavbarMenu>
       <NavbarContent className="sm:hidden" justify="end">
-        <NavbarMenuToggle />
+        <div
+          className={`border size-10 flex items-center justify-center rounded-full text-warning ${
+            theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+          }`}
+        >
+          <NavbarMenuToggle />
+        </div>
       </NavbarContent>
     </Navbar>
   );
