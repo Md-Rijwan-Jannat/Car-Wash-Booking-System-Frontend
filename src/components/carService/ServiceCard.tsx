@@ -44,8 +44,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
               </p>
             </Chip>
           </div>
-          <div className="mt-5 flex items-center justify-between gap-3 w-full">
-            <Button color="default">Bookmark</Button>
+          <div className="mt-5 flex items-center justify-center gap-3 w-full">
             <Button
               onClick={handleServiceDetails}
               color="warning"

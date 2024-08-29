@@ -1,8 +1,8 @@
-import { TUser } from "./userManagement.type";
+import { TUserData } from "./userManagement.type";
 
 export type TReview = {
   _id: string;
-  user: TUser;
+  user: TUserData;
   feedback: string;
   rating: number;
   createdAt: string;

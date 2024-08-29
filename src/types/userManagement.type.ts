@@ -1,4 +1,4 @@
-export type TUser = {
+export type TUserData = {
   profileImg: string;
   _id: string;
   name: string;

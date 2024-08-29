@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@nextui-org/react";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_01.jpg",
@@ -13,6 +14,7 @@ const images = [
 
 const Banner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,10 +75,20 @@ const Banner = () => {
                   laoreet sed euismod ligula.
                 </motion.p>
                 <div className="flex space-x-4">
-                  <Button color="warning" size="lg" variant="ghost">
+                  <Button
+                    onClick={() => navigate("/aboutUs")}
+                    color="warning"
+                    size="lg"
+                    variant="ghost"
+                  >
                     Read more
                   </Button>
-                  <Button color="warning" size="lg" variant="shadow">
+                  <Button
+                    onClick={() => navigate("/services")}
+                    color="warning"
+                    size="lg"
+                    variant="shadow"
+                  >
                     Order now
                   </Button>
                 </div>

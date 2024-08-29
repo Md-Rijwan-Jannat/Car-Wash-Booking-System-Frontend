@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagement";
+import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
 import { Chip, Pagination } from "@nextui-org/react";
 import ServiceFilter from "../../components/carService/ServiceFilter";
 import ServiceCard from "../../components/carService/ServiceCard";

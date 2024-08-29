@@ -8,6 +8,7 @@ type CWTextareaProps = {
   placeholder: string;
   rows: number;
   endContent?: ReactNode;
+  defaultValue?: string;
 } & TextAreaProps;
 
 const CWTextarea = ({
@@ -16,6 +17,7 @@ const CWTextarea = ({
   placeholder,
   endContent,
   rows,
+  defaultValue,
   ...textareaProps
 }: CWTextareaProps) => {
   const { control } = useFormContext();
@@ -24,14 +26,17 @@ const CWTextarea = ({
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
         <div className="w-full">
           <Textarea
             {...field}
             label={label}
+            defaultValue={defaultValue}
             placeholder={placeholder}
             endContent={endContent}
             rows={rows}
+            value={field.value || defaultValue}
             status={error ? "error" : undefined}
             {...textareaProps}
           />

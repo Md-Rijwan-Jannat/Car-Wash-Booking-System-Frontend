@@ -7,7 +7,7 @@ import { Card, Chip, Image, Skeleton } from "@nextui-org/react";
 import { FaDollarSign } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { useTheme } from "next-themes";
-import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagement";
+import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
 import { motion } from "framer-motion";
 
 type TFeaturedServicesProps = object;

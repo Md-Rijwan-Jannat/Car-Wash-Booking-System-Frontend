@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Button,
   Image,
   Navbar,
@@ -11,7 +12,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { FC } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
 import brandLogo from "../../../public/car-wash-brand-logo.png";
 import { useTheme } from "next-themes";
@@ -23,6 +24,9 @@ import {
   useCurrentUserToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/VerifyToken";
+import { FaShopify } from "react-icons/fa";
+import { useGetMeQuery } from "../../redux/features/auth/authApi";
+import { getAllSlotBooking } from "../../redux/features/user/slotBookmarkSlice";
 
 type TNavBarProps = object;
 
@@ -30,17 +34,18 @@ const NavBar: FC<TNavBarProps> = () => {
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
   const userData = useAppSelector(useCurrentUser) as TUser;
+  const navigate = useNavigate();
   const role = userData?.role;
+  const { data: userDetails } = useGetMeQuery(userData?.email);
+  const slotBookingData = useAppSelector(getAllSlotBooking);
 
   const menuItems = [
     { name: "Services", path: "/services" },
-    { name: "Booking", path: "/booking" },
     { name: "Dashboard", path: `/dashboard/${role}` },
     { name: "About Us", path: "/aboutUs" },
     { name: "Contact Us", path: "/contactUs" },
-  ];
+  ].filter(Boolean); // Remove undefined values from the array
 
-  // user check and make conditional route
   const token = useAppSelector(useCurrentUserToken);
   let user;
   if (token) {
@@ -52,28 +57,26 @@ const NavBar: FC<TNavBarProps> = () => {
       <NavbarContent className="sm:hidden pr-3" justify="start">
         <NavbarBrand>
           <Link to={"/"}>
-            {" "}
             <Image
               className={`w-16 md:w-20  px-3 rounded-md ${
                 theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
               }`}
               src={brandLogo}
             />
-          </Link>{" "}
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand className="w-16 md:w-20">
           <Link to={"/"}>
-            {" "}
             <Image
               className={`w-16 md:w-20  px-3 rounded-md ${
                 theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
               }`}
               src={brandLogo}
             />
-          </Link>{" "}
+          </Link>
         </NavbarBrand>
         {menuItems.map((item, index) => (
           <NavbarItem key={index}>
@@ -92,41 +95,43 @@ const NavBar: FC<TNavBarProps> = () => {
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
           {user ? (
-            <>
-              <Button
-                as={NavLink}
-                color="warning"
-                variant="flat"
-                onClick={() => dispatch(logout())}
-              >
-                Logout
-              </Button>
-            </>
+            <Button
+              as={NavLink}
+              color="warning"
+              variant="flat"
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </Button>
           ) : (
-            <>
-              <Button
-                as={NavLink}
-                to="/auth/login"
-                color="warning"
-                variant="flat"
-              >
-                Login
-              </Button>
-            </>
+            <Button
+              as={NavLink}
+              to="/auth/login"
+              color="warning"
+              variant="flat"
+            >
+              Login
+            </Button>
           )}
         </NavbarItem>
-        <NavbarItem className="flex gap-3 items-center">
+        <NavbarItem className="flex gap-3 md:gap-5 items-center">
           <ThemeSwitcher />
-          {user ? (
+          {user && (
             <>
-              {" "}
-              <Avatar
-                isBordered
-                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-              />
+              <Avatar isBordered src={userDetails?.profileImg} />
+              <div
+                onClick={() => navigate("/booking")}
+                className="cursor-pointer animate-pulse"
+              >
+                <Badge
+                  content={slotBookingData?.length || 0}
+                  color="warning"
+                  variant="flat"
+                >
+                  <FaShopify size={30} />
+                </Badge>
+              </div>
             </>
-          ) : (
-            ""
           )}
         </NavbarItem>
       </NavbarContent>
@@ -154,28 +159,24 @@ const NavBar: FC<TNavBarProps> = () => {
         ))}
         <NavbarMenuItem>
           {user ? (
-            <>
-              <Button
-                as={NavLink}
-                to="/auth/login"
-                color="warning"
-                variant="flat"
-                onClick={() => dispatch(logout())}
-              >
-                Logout
-              </Button>
-            </>
+            <Button
+              as={NavLink}
+              to="/auth/login"
+              color="warning"
+              variant="flat"
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </Button>
           ) : (
-            <>
-              <Button
-                as={NavLink}
-                to="/auth/login"
-                color="default"
-                variant="flat"
-              >
-                Login
-              </Button>
-            </>
+            <Button
+              as={NavLink}
+              to="/auth/login"
+              color="default"
+              variant="flat"
+            >
+              Login
+            </Button>
           )}
         </NavbarMenuItem>
       </NavbarMenu>

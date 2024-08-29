@@ -9,6 +9,7 @@ type TCWInputProps = {
   placeholder: string;
   type?: string;
   icon?: JSX.Element;
+  defaultValue?: string;
 };
 
 const CWInput: FC<TCWInputProps> = ({
@@ -19,6 +20,7 @@ const CWInput: FC<TCWInputProps> = ({
   icon = (
     <IoMdPerson className="text-2xl text-warning pointer-events-none flex-shrink-0" />
   ),
+  defaultValue,
 }) => {
   const { control } = useFormContext();
 
@@ -26,16 +28,19 @@ const CWInput: FC<TCWInputProps> = ({
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <Input
           {...field}
           label={label}
           placeholder={placeholder}
+          defaultValue={defaultValue}
           type={type}
           endContent={icon}
           variant="bordered"
           color="warning"
           required
+          value={field.value || defaultValue}
         />
       )}
     />
