@@ -41,6 +41,7 @@ export const useRouter = () => {
         ),
         children: role === "admin" ? AdminRoutes : UserRoutes,
       },
+
       {
         path: "*",
         element: <Navigate to="/auth/login" replace={true} />,

@@ -5,7 +5,7 @@ import ServiceFilter from "../../components/carService/ServiceFilter";
 import ServiceCard from "../../components/carService/ServiceCard";
 import { TMeta, TService } from "../../types";
 import { useTheme } from "next-themes";
-import ServiceSkeleton from "../../components/carService/ServiceSkeleton";
+import ServiceSkeleton from "../../components/skeleton/ServiceSkeleton";
 
 const Services: FC = () => {
   const [sortItem, setSortItem] = useState("price");

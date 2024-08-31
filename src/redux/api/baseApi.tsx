@@ -11,8 +11,12 @@ import { RootState } from "../store";
 import { toast } from "sonner";
 import { TError } from "../../types";
 
+const development = import.meta.env.VITE_WORKSPACE;
+const localUrl = import.meta.env.VITE_BASE_URL;
+const liveUrl = import.meta.env.VITE_LIVE_URL;
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: `${development === "development" ? localUrl : liveUrl}`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -48,6 +52,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["users", "reviews"],
+  tagTypes: ["users", "reviews", "userInfo", "services", "slots"],
   endpoints: () => ({}),
 });

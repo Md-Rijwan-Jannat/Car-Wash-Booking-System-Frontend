@@ -18,7 +18,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
   };
   return (
     <Card
-      className={`overflow-hidden shadow-lg h-[440px] border ${
+      className={`overflow-hidden h-[440px] border ${
         theme === "dark" ? "border-gray-100 border-opacity-15" : ""
       }`}
     >
@@ -40,7 +40,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
             </Chip>
             <Chip>
               <p className="text-lg font-bold text-primaryColor">
-                ${service.price.toFixed(2)}
+                ৳{service.price.toFixed(2)}
               </p>
             </Chip>
           </div>

@@ -1,16 +1,17 @@
-/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useState } from "react";
+/* eslint-disable prefer-const */
+import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetSingleServiceQuery } from "../../redux/features/admin/serviceManagementApi";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { Button, Calendar, Chip, Divider } from "@nextui-org/react";
 import { FaClock } from "react-icons/fa";
-import BackButton from "../../components/serviceSlots/BackButton";
 import ServicesSlots from "../../components/serviceSlots/ServicesSlots";
 import NoData from "../../components/serviceSlots/NoData";
-import ServiceDetailsSkeleton from "../../components/serviceSlots/ServiceDetailsSkeleton";
+import ServiceDetailsSkeleton from "../../components/skeleton/ServiceDetailsSkeleton";
+import { formatCalenderDate } from "../../utils/FormatDate";
+import { parseDate } from "@internationalized/date";
 
 const ServiceDetails: FC = () => {
   const [focusedDate, setFocusedDate] = useState<any>();
@@ -21,7 +22,15 @@ const ServiceDetails: FC = () => {
   const { data: serviceData, isLoading: serviceLoading } =
     useGetSingleServiceQuery(id);
 
-  console.log("availableDates", availableDates);
+  console.log(serviceData?.data?.availableDates);
+
+  // Populate availableDates with some initial data if needed
+  useEffect(() => {
+    if (serviceData?.data?.availableDates) {
+      setAvailableDates(serviceData.data.availableDates);
+      setSelectedDate(serviceData.data.availableDates[0]);
+    }
+  }, [serviceData]);
 
   if (serviceLoading) {
     return <ServiceDetailsSkeleton />;
@@ -36,8 +45,8 @@ const ServiceDetails: FC = () => {
   let formattedDate;
 
   formattedDate = focusedDate
-    ? `${focusedDate?.year}-${focusedDate?.month}-${focusedDate?.day}`
-    : "No date selected";
+    ? `${focusedDate?.month}-${focusedDate?.day}-${focusedDate?.year}`
+    : availableDates[0];
 
   return (
     <div
@@ -45,8 +54,6 @@ const ServiceDetails: FC = () => {
         theme === "dark" ? "text-white" : "text-black"
       }`}
     >
-      <BackButton />
-
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -70,7 +77,7 @@ const ServiceDetails: FC = () => {
               </Chip>
               <Chip>
                 <p className="text-lg font-bold text-primaryColor">
-                  ${price.toFixed(2)}
+                  ৳{price.toFixed(2)}
                 </p>
               </Chip>
             </div>
@@ -78,17 +85,21 @@ const ServiceDetails: FC = () => {
 
           <div className="flex flex-col items-start gap-3">
             <Chip variant="faded">Select a Date</Chip>
-            <Calendar
-              color="warning"
-              aria-label="Select a date"
-              focusedValue={focusedDate}
-              onFocusChange={(date) => {
-                setFocusedDate(date);
-                setSelectedDate(
-                  date ? `${date.year}-${date.month}-${date.day}` : null
-                );
-              }}
-            />
+            {availableDates.length > 0 && (
+              <Calendar
+                color="warning"
+                aria-label="Select a date"
+                focusedValue={focusedDate}
+                defaultValue={parseDate(formatCalenderDate(availableDates[0]))}
+                onFocusChange={(date) => {
+                  setFocusedDate(date);
+                  setSelectedDate(
+                    date ? `${date.year}-${date.month}-${date.day}` : null
+                  );
+                }}
+              />
+            )}
+
             <Divider />
             <h2 className="px-1">Available dates:</h2>
             <div className="flex gap-3 flex-wrap">

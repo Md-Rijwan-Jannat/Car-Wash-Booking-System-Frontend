@@ -44,12 +44,11 @@ const SignUp: FC = () => {
           id: toastId,
           duration: 3000,
         });
+      } else {
+        toast.dismiss(toastId);
       }
     } catch (err) {
-      toast.error("Something went wrong", {
-        id: toastId,
-        duration: 3000,
-      });
+      toast.dismiss(toastId);
     }
   };
 
@@ -68,12 +67,14 @@ const SignUp: FC = () => {
             name="name"
             label="Name"
             placeholder="Enter your name"
+            required={true}
             icon={<IoMdPerson className="text-2xl text-warning" />}
           />
           <CWInput
             name="email"
             label="Email"
             placeholder="Enter your email"
+            required={true}
             type="email"
             icon={<IoMdMail className="text-2xl text-warning" />}
           />
@@ -81,6 +82,7 @@ const SignUp: FC = () => {
             name="password"
             label="Password"
             placeholder="Enter your password"
+            required={true}
             type="password"
             icon={<IoMdLock className="text-2xl text-warning" />}
           />
@@ -89,6 +91,7 @@ const SignUp: FC = () => {
             label="Phone Number"
             placeholder="Enter your phone number"
             type="tel"
+            required={true}
             icon={<IoMdCall className="text-2xl text-warning" />}
           />
           <CWTextarea

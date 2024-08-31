@@ -7,9 +7,9 @@ type TNoDataProps = { text: string };
 const NoData: FC<TNoDataProps> = ({ text }) => {
   const { theme } = useTheme();
   return (
-    <div className="flex justify-center items-center h-[100px]">
+    <div className="flex justify-center items-center h-[300px] lg:h-[70vh]">
       <h1
-        className={`bg-gray-200 px-5 text-gray-500 py-2 rounded-full flex items-center justify-between ga-3 ${
+        className={`bg-gray-200 px-5 text-gray-500 py-2 text-sm rounded-full flex items-center justify-between ga-3 ${
           theme === "dark" ? "bg-opacity-10" : ""
         }`}
       >

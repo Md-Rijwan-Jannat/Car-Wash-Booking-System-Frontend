@@ -1,3 +1,5 @@
+import Calender from "../pages/dashboard/Calender";
+import Documentation from "../pages/dashboard/Documentation";
 import NewBookings from "../pages/dashboard/user/Bookings/NewBookings";
 import PastBookings from "../pages/dashboard/user/Bookings/PastBookings";
 import OverviewMyBooking from "../pages/dashboard/user/OverviewMyBooking";
@@ -19,5 +21,13 @@ export const UserRoutes = [
   {
     path: "past-bookings",
     element: <PastBookings />,
+  },
+  {
+    path: "calender",
+    element: <Calender />,
+  },
+  {
+    path: "documentation",
+    element: <Documentation />,
   },
 ];

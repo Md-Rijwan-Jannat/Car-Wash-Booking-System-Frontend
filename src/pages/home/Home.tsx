@@ -7,7 +7,7 @@ type THomeProps = object;
 
 const Home: FC<THomeProps> = () => {
   return (
-    <div>
+    <div className="ml-0.5 mr-1">
       <Banner />
       <div className="px-2">
         <FeaturedServices />

@@ -10,16 +10,16 @@ import {
   TableRow,
   User,
 } from "@nextui-org/react";
-import { useGetAllUsersQuery } from "../../../../redux/features/admin/userManagementApi";
+import { useGetAllAdminsQuery } from "../../../../redux/features/admin/userManagementApi"; // Adjust the import path as needed
 import { TMeta, TUserData } from "../../../../types";
 import LoaderSkeleton from "../../../../components/skeleton/LoaderSkeleton";
 import UserRoleDropdown from "./UserRoleDropdown";
 import { useTheme } from "next-themes";
 import NoData from "../../../../components/serviceSlots/NoData";
 
-type TAllUsersProps = object;
+type TAllAdminsProps = object;
 
-const AllUsers: FC<TAllUsersProps> = () => {
+const AllAdmins: FC<TAllAdminsProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
@@ -28,11 +28,9 @@ const AllUsers: FC<TAllUsersProps> = () => {
     page: page.toString(),
   };
 
-  const { data: AllUsersData, isLoading } = useGetAllUsersQuery(
-    queryParams || undefined
-  );
-  const users = AllUsersData?.data as TUserData[];
-  const meta = AllUsersData?.meta as TMeta | undefined;
+  const { data: allAdminsData, isLoading } = useGetAllAdminsQuery(queryParams);
+  const admins = allAdminsData?.data as TUserData[];
+  const meta = allAdminsData?.meta as TMeta | undefined;
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
@@ -40,13 +38,13 @@ const AllUsers: FC<TAllUsersProps> = () => {
     return <LoaderSkeleton />;
   }
 
-  if (!users || (users?.length === 0 && undefined)) {
-    return <NoData text="There are no users available" />;
+  if (!admins || (admins?.length === 0 && undefined)) {
+    return <NoData text="There are no admin available" />;
   }
 
   return (
     <div>
-      <Table aria-label="Users Overview Table">
+      <Table aria-label="Admins Overview Table">
         <TableHeader>
           <TableColumn>User</TableColumn>
           <TableColumn>Email</TableColumn>
@@ -54,20 +52,20 @@ const AllUsers: FC<TAllUsersProps> = () => {
           <TableColumn>Address</TableColumn>
           <TableColumn>Update Role</TableColumn>
         </TableHeader>
-        <TableBody items={users || []}>
-          {(user) => (
-            <TableRow key={user._id}>
+        <TableBody items={admins || []}>
+          {(admin) => (
+            <TableRow key={admin._id}>
               <TableCell>
                 <User
-                  avatarProps={{ radius: "full", src: user.profileImg }}
-                  name={user.name}
+                  avatarProps={{ radius: "full", src: admin.profileImg }}
+                  name={admin.name}
                 />
               </TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.address}</TableCell>
+              <TableCell>{admin.email}</TableCell>
+              <TableCell>{admin.phone}</TableCell>
+              <TableCell>{admin.address}</TableCell>
               <TableCell>
-                <UserRoleDropdown user={user} />
+                <UserRoleDropdown user={admin} />
               </TableCell>
             </TableRow>
           )}
@@ -92,4 +90,4 @@ const AllUsers: FC<TAllUsersProps> = () => {
   );
 };
 
-export default AllUsers;
+export default AllAdmins;

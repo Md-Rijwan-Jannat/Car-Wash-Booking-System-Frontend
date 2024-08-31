@@ -9,31 +9,28 @@ import {
   Button,
   useDisclosure,
   Input,
+  Tooltip,
 } from "@nextui-org/react";
 import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  useGetMeQuery,
-  useUpdateUserMutation,
-} from "../../redux/features/auth/authApi";
-import { useAppSelector } from "../../redux/hook";
-import { TUser, useCurrentUser } from "../../redux/features/auth/authSlice";
+import { useUpdateServiceMutation } from "../../redux/features/admin/serviceManagementApi";
 import { FaEdit } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
 import { useTheme } from "next-themes";
 
-const UserImageModal: FC = () => {
+type TServiceImageModalProps = {
+  serviceId: string;
+};
+
+const ServiceImageModal: FC<TServiceImageModalProps> = ({ serviceId }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const user = useAppSelector(useCurrentUser) as TUser;
   const { theme } = useTheme();
-  const { data } = useGetMeQuery(user?.email);
-  const userId = data?.data?._id;
-  const [updateUser, { isLoading }] = useUpdateUserMutation();
+  const [updateService, { isLoading }] = useUpdateServiceMutation();
   const { register, handleSubmit } = useForm();
 
   const onSubmit: SubmitHandler<Record<string, any>> = async (formData) => {
-    const toastId = toast.loading("Updating your profile...");
+    const toastId = toast.loading("Updating service image...");
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${
       import.meta.env.VITE_CLOUDINARY_NAME
     }/image/upload`;
@@ -42,7 +39,6 @@ const UserImageModal: FC = () => {
     const cloudinaryName = import.meta.env.VITE_CLOUDINARY_NAME;
 
     if (formData.image instanceof FileList && formData.image.length > 0) {
-      console.log(formData);
       const newFormData = new FormData();
       newFormData.append("file", formData.image[0]);
       newFormData.append("upload_preset", cloudinaryUploadPreset as string);
@@ -55,13 +51,13 @@ const UserImageModal: FC = () => {
         );
         const imgUrl = cloudinaryData.secure_url;
 
-        const updateResponse = await updateUser({
-          id: userId,
-          data: { profileImg: imgUrl },
+        const updateResponse = await updateService({
+          id: serviceId,
+          data: { image: imgUrl },
         }).unwrap();
 
         if (updateResponse?.success) {
-          toast.success("Profile image updated successfully", {
+          toast.success("Service image updated successfully", {
             id: toastId,
             duration: 3000,
           });
@@ -83,16 +79,19 @@ const UserImageModal: FC = () => {
 
   return (
     <>
-      <Button
-        onPress={onOpen}
-        className="absolute top-2 right-2"
-        startContent={<FaEdit size={20} />}
-        size={"sm"}
-      />
+      <Tooltip content={"Upload Image"}>
+        <Button
+          onPress={onOpen}
+          color="warning"
+          variant="faded"
+          startContent={<FaEdit size={20} />}
+          size={"sm"}
+        />
+      </Tooltip>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
-            Update Profile Image
+            Update Service Image
           </ModalHeader>
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -103,7 +102,7 @@ const UserImageModal: FC = () => {
               >
                 <Input
                   {...register("image", { required: true })}
-                  label="Profile Image"
+                  label="Service Image"
                   placeholder="Upload image"
                   type="file"
                   fullWidth
@@ -128,4 +127,4 @@ const UserImageModal: FC = () => {
   );
 };
 
-export default UserImageModal;
+export default ServiceImageModal;

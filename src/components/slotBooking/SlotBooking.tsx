@@ -85,7 +85,7 @@ const SlotBooking: FC = () => {
             <div className="flex items-center gap-2">
               <Chip>
                 <p className="text-sm font-medium text-primaryColor">
-                  Total Price: ${totalPrice}
+                  Total Price: ৳{totalPrice}
                 </p>
               </Chip>
               <Button
@@ -99,7 +99,7 @@ const SlotBooking: FC = () => {
             </div>
           </div>
           <div className="flex flex-col gap-5  mt-11">
-            {slotBookingData?.length === 0 ? (
+            {slotBookingData?.length === 0 && undefined ? (
               <div className="flex flex-col items-center justify-center">
                 <NoData text="There are no slots! Please bookmark slot" />
                 <img

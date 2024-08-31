@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../redux/hook";
 import { removeBookmark } from "../../redux/features/user/slotBookmarkSlice";
 import BookingDeleteModal from "../modal/BookingDeleteModal";
 import { toast } from "sonner";
+import { formatTo12Hour } from "../../utils/FormatDate";
 
 type TSlotsBookingCardProps = {
   bookingData: TSlotBookmark;
@@ -57,10 +58,10 @@ const SlotsBookingCard: FC<TSlotsBookingCardProps> = ({ bookingData }) => {
           <div className="flex items-start flex-col gap-4 w-8/12">
             <div className="flex flex-col md:flex-row items-start justify-between w-full gap-3">
               <Chip color="warning" variant="dot">
-                Start Time: {startTime}
+                Start Time: {formatTo12Hour(startTime)}
               </Chip>
               <Chip color="warning" variant="dot">
-                End Time: {endTime}
+                End Time: {formatTo12Hour(endTime)}
               </Chip>
             </div>
             <div className="flex items-start flex-col md:flex-row justify-between w-full gap-3">
@@ -71,7 +72,7 @@ const SlotsBookingCard: FC<TSlotsBookingCardProps> = ({ bookingData }) => {
               </Chip>
               <Chip>
                 <p className="text-lg font-bold text-primaryColor">
-                  ${price.toFixed(2)}
+                  ৳{price.toFixed(2)}
                 </p>
               </Chip>
             </div>

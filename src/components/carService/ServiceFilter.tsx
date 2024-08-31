@@ -93,13 +93,13 @@ const ServiceFilter: FC<ServiceFilterProps> = ({
           <DropdownMenu aria-label="Filter options" selectionMode="single">
             <DropdownItem
               key="createdAt"
-              onClick={() => handleItemClick("createdAt")}
+              onClick={() => handleItemClick("-createdAt")}
             >
               New
             </DropdownItem>
             <DropdownItem
               key="-createdAt"
-              onClick={() => handleItemClick("-createdAt")}
+              onClick={() => handleItemClick("createdAt")}
             >
               Old
             </DropdownItem>

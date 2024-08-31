@@ -32,6 +32,8 @@ const CWTextarea = ({
           <Textarea
             {...field}
             label={label}
+            color="warning"
+            variant="bordered"
             defaultValue={defaultValue}
             placeholder={placeholder}
             endContent={endContent}

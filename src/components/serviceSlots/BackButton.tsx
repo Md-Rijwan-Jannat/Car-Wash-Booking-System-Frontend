@@ -1,9 +1,11 @@
 import { Button } from "@nextui-org/react";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 type TBackButtonProps = object;
 
 const BackButton: FC<TBackButtonProps> = () => {
+  const navigate = useNavigate();
   return (
     <div className="my-6 flex justify-between">
       <Button
@@ -13,11 +15,7 @@ const BackButton: FC<TBackButtonProps> = () => {
       >
         Go Back
       </Button>
-      <Button
-        color="warning"
-        variant="bordered"
-        onClick={() => (window.location.href = "/")}
-      >
+      <Button color="warning" variant="bordered" onClick={() => navigate("/")}>
         Go Home
       </Button>
     </div>

@@ -14,9 +14,8 @@ import { FC } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
 import { useTheme } from "next-themes";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { useAppSelector } from "../../redux/hook";
 import {
-  logout,
   TUser,
   useCurrentUser,
   useCurrentUserToken,
@@ -30,8 +29,6 @@ type TNavBarProps = object;
 
 const NavBar: FC<TNavBarProps> = () => {
   const { theme } = useTheme();
-
-  const dispatch = useAppDispatch();
   const userData = useAppSelector(useCurrentUser) as TUser;
   const navigate = useNavigate();
   const { data: userDetails } = useGetMeQuery(userData?.email);
@@ -49,6 +46,8 @@ const NavBar: FC<TNavBarProps> = () => {
   if (token) {
     user = verifyToken(token);
   }
+
+  console.log("userDetails", userDetails);
 
   return (
     <Navbar shouldHideOnScroll disableAnimation isBordered className="w-full">
@@ -107,16 +106,7 @@ const NavBar: FC<TNavBarProps> = () => {
         <NavbarContent>
           <div className="flex items-center gap-3">
             <NavbarItem className="hidden lg:flex">
-              {user ? (
-                <Button
-                  as={NavLink}
-                  color="warning"
-                  variant="flat"
-                  onClick={() => dispatch(logout())}
-                >
-                  Logout
-                </Button>
-              ) : (
+              {!user && (
                 <Button
                   as={NavLink}
                   to="/auth/login"
@@ -132,11 +122,16 @@ const NavBar: FC<TNavBarProps> = () => {
             </NavbarItem>
 
             <NavbarItem>
-              {user && (
-                <>
-                  <Avatar isBordered src={userDetails?.profileImg} />
-                </>
-              )}
+              <div
+                onClick={() => navigate("/dashboard")}
+                className="cursor-pointer"
+              >
+                {user && (
+                  <>
+                    <Avatar isBordered src={userDetails?.data?.profileImg} />
+                  </>
+                )}
+              </div>
             </NavbarItem>
             <NavbarItem>
               <div
@@ -180,17 +175,7 @@ const NavBar: FC<TNavBarProps> = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>
-          {user ? (
-            <Button
-              as={NavLink}
-              to="/auth/login"
-              color="warning"
-              variant="flat"
-              onClick={() => dispatch(logout())}
-            >
-              Logout
-            </Button>
-          ) : (
+          {user && (
             <Button
               as={NavLink}
               to="/auth/login"

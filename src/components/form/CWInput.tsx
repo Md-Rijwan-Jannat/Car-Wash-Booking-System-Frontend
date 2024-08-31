@@ -10,7 +10,7 @@ type TCWInputProps = {
   placeholder: string;
   type?: string;
   icon?: JSX.Element;
-  defaultValue?: string;
+  defaultValue?: string | undefined;
   required?: boolean;
 };
 
@@ -42,7 +42,7 @@ const CWInput: FC<TCWInputProps> = ({
           endContent={icon}
           variant="bordered"
           color="warning"
-          required={required ? required : true}
+          required={required}
           value={field.value || defaultValue}
         />
       )}

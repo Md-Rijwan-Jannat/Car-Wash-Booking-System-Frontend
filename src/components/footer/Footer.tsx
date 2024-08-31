@@ -5,10 +5,9 @@ import {
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
+  FaHandsWash,
 } from "react-icons/fa";
-import { Image } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import brandLogo from "../../../public/car-wash-brand-logo.png";
 import { motion } from "framer-motion";
 
 type TFooterProps = object;
@@ -26,18 +25,22 @@ const Footer: FC<TFooterProps> = () => {
       <div className="container mx-auto px-4">
         {/* Logo and Description */}
         <motion.div
-          className="flex flex-col items-center sm:flex-row sm:justify-start gap-5 mb-8"
+          className="flex flex-col items-center md:flex-row justify-center md:justify-start gap-5 mb-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Image
-            className={`w-20 md:w-24 px-3 rounded-md ${
-              theme === "dark" ? "bg-gray-50 bg-opacity-50" : "bg-[#FEF1DC]"
+          <div
+            className={`flex items-center gap-3 border rounded-full px-3 py-1 justify-center w-full md:w-[200px] ${
+              theme === "dark" ? "border-gray-100 border-opacity-15" : ""
             }`}
-            src={brandLogo}
-          />
-          <p className="mt-4 sm:mt-0 text-center sm:text-left max-w-md">
+          >
+            <FaHandsWash className="text-warning" size={35} />
+            <h2 className="font-semibold text-warning text-sm md:text-xl hidden md:block">
+              Car Wash
+            </h2>
+          </div>
+          <p className="mt-4 sm:mt-0 text-center  md:text-left max-w-md">
             Providing top-notch car wash services with the best products and
             professionals in the industry.
           </p>
@@ -45,12 +48,12 @@ const Footer: FC<TFooterProps> = () => {
 
         {/* Footer Links */}
         <motion.div
-          className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8"
+          className="flex flex-col items-center justify-center md:flex-row md:justify-between md:items-start gap-8 mb-8"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div>
+          <div className="flex flex-col items-center justify-center md:flex-col md:justify-between md:items-start">
             <h4 className="font-semibold mb-4">Services</h4>
             <Link
               to="/services"
@@ -71,7 +74,7 @@ const Footer: FC<TFooterProps> = () => {
               Waxing
             </Link>
           </div>
-          <div>
+          <div className="flex flex-col items-center justify-center md:flex-col md:justify-between md:items-start">
             <h4 className="font-semibold mb-4">Company</h4>
             <Link
               to="/aboutUs"
@@ -92,7 +95,7 @@ const Footer: FC<TFooterProps> = () => {
               Dashboard
             </Link>
           </div>
-          <div>
+          <div className="flex flex-col items-center justify-center md:flex-col md:justify-between md:items-start">
             <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex justify-center sm:justify-start gap-4">
               <Link

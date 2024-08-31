@@ -9,12 +9,14 @@ import { FaClock } from "react-icons/fa6";
 import { useTheme } from "next-themes";
 import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 type TFeaturedServicesProps = object;
 
 const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   const { theme } = useTheme();
   const [itemsCount, setItemsCount] = useState(1);
+  const navigate = useNavigate();
 
   const { data: servicesData, isLoading } = useGetAllServicesQuery({
     limit: "6",
@@ -39,6 +41,10 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
     window.addEventListener("resize", updateItemsCount);
     return () => window.removeEventListener("resize", updateItemsCount);
   }, []);
+
+  const handleDetailsPage = (id: string) => {
+    navigate(`/service-details/${id}`);
+  };
 
   if (isLoading || !services || services.length === 0) {
     // Show loading placeholders
@@ -100,11 +106,14 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
         }}
       >
         {services.map((service) => (
-          <SwiperSlide key={service._id}>
+          <SwiperSlide
+            onClick={() => handleDetailsPage(service?._id)}
+            key={service._id}
+          >
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className={`shadow-lg rounded-xl overflow-hidden w-full h-[450px] relative ${
+              className={`rounded-xl overflow-hidden w-full h-[450px] relative ${
                 theme === "dark"
                   ? "bg-blend-darken text-white border border-gray-50 border-opacity-15"
                   : "bg-white text-gray-900 border"

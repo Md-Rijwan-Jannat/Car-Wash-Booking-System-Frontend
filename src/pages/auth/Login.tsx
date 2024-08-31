@@ -62,6 +62,7 @@ const Login: FC = () => {
             name="email"
             label="Email"
             placeholder="Enter your email"
+            required={true}
             type="email"
             icon={<IoMdMail className="text-2xl text-warning" />}
           />
@@ -69,6 +70,7 @@ const Login: FC = () => {
             name="password"
             label="Password"
             placeholder="Enter your password"
+            required={true}
             type="password"
             icon={<IoMdLock className="text-2xl text-warning" />}
           />

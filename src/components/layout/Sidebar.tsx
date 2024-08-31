@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/layout/Sidebar.tsx
-import { FC, createContext, useState, useContext } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { FC, createContext, useState, useContext, useEffect } from "react";
 import { MoreVertical } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useGetMeQuery } from "../../redux/features/auth/authApi";
 import { Avatar } from "@nextui-org/react";
 import { useAppSelector } from "../../redux/hook";
@@ -19,8 +18,8 @@ interface SidebarContextType {
 export interface SidebarItemProps {
   icon: React.ReactNode;
   text: string;
-  active: boolean;
   link: string;
+  active: boolean;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -34,17 +33,32 @@ export const useSidebarContext = () => {
 };
 
 export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
   const { theme } = useTheme();
   const user = useAppSelector(useCurrentUser) as TUser;
   const { data: userData } = useGetMeQuery(user?.email);
-
   const data = userData?.data as TUserData;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setExpanded(true);
+      } else {
+        setExpanded(false);
+      }
+    };
+
+    handleResize(); // Set the initial state based on the current window size
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <aside className="h-screen">
       <nav
-        className={`h-full flex flex-col bg-white border-r shadow-sm ${
+        className={`h-full flex flex-col bg-white border-r ${
           theme === "dark"
             ? "bg-opacity-5 border-r border-gray-100 border-opacity-15"
             : ""
@@ -52,6 +66,7 @@ export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
       >
         <div className="p-4 pb-2 flex justify-between items-center">
           <div
+            onClick={() => navigate("/")}
             className={`flex items-center gap-3 border rounded-full px-2 py-1 justify-center ${
               expanded ? "w-full" : "hidden duration-500"
             } ${theme === "dark" ? "border-gray-100 border-opacity-15" : ""}`}
@@ -106,7 +121,7 @@ export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 export const SidebarItem: FC<SidebarItemProps> = ({ icon, text, link }) => {
-  const { expanded }: any = useContext(SidebarContext);
+  const { expanded } = useSidebarContext();
   const { theme } = useTheme();
 
   return (
@@ -119,11 +134,11 @@ export const SidebarItem: FC<SidebarItemProps> = ({ icon, text, link }) => {
         to={link}
         className={({ isActive }) =>
           isActive
-            ? `text-warning border-warning  border px-2 py-1 ${
-                expanded ? "rounded-md" : "rounded-full"
-              } bg-warning-50 `
+            ? `text-warning border-warning border px-2 py-1 ${
+                expanded ? "rounded-md my-2" : "rounded-full"
+              } bg-warning-50`
             : `hover:bg-warning-50 text-gray-600 border px-2 py-1 ${
-                expanded ? "rounded-md" : "rounded-full"
+                expanded ? "rounded-md my-2" : "rounded-full"
               } hover:border-warning transition-transform-colors-opacity duration-300 transition-colors ${
                 theme === "dark" ? "border-gray-100 border-opacity-15" : ""
               }`

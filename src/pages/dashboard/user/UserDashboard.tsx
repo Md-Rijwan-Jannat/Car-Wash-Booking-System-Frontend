@@ -1,8 +1,12 @@
 import { FC } from "react";
-import { useAppSelector } from "../../../redux/hook";
-import { TUser, useCurrentUser } from "../../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+import {
+  logout,
+  TUser,
+  useCurrentUser,
+} from "../../../redux/features/auth/authSlice";
 import { useGetMeQuery } from "../../../redux/features/auth/authApi";
-import { Avatar, Chip } from "@nextui-org/react";
+import { Avatar, Button, Chip } from "@nextui-org/react";
 import { TUserData } from "../../../types";
 import { useTheme } from "next-themes";
 import { IoMail } from "react-icons/io5";
@@ -12,6 +16,7 @@ import { GiTargetDummy } from "react-icons/gi";
 import { LuClipboardPaste } from "react-icons/lu";
 import UserImageModal from "../../../components/modal/UserImageModal";
 import UserDetailsModal from "../../../components/modal/UserDetailsModal";
+import { NavLink } from "react-router-dom";
 
 type TUserDashboardProps = object;
 
@@ -19,6 +24,7 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
   const user = useAppSelector(useCurrentUser) as TUser;
   const { data: userData } = useGetMeQuery(user?.email);
   const { theme } = useTheme();
+  const dispatch = useAppDispatch();
 
   const userDetails = userData?.data as TUserData;
   return (
@@ -37,6 +43,17 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
           <Chip>{userDetails?.name}</Chip>
         </div>
         <UserImageModal />
+        <div className="flex items-center justify-center">
+          <Button
+            className="mt-3"
+            as={NavLink}
+            color="warning"
+            variant="flat"
+            onClick={() => dispatch(logout())}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 my-10">
         <div

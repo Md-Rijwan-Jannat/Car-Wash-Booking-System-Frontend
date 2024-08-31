@@ -21,12 +21,15 @@ const authApi = baseApi.injectEndpoints({
         url: `/auth/${email}`,
         method: "GET",
       }),
+      providesTags: ["userInfo"],
     }),
     updateUser: builder.mutation({
-      query: (id) => ({
+      query: ({ id, data }) => ({
         url: `/auth/${id}`,
         method: "PATCH",
+        body: data,
       }),
+      invalidatesTags: ["userInfo"],
     }),
   }),
 });

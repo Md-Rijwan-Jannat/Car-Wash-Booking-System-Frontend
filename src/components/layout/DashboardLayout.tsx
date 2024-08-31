@@ -4,11 +4,12 @@ import { Outlet } from "react-router-dom";
 import { SidebarItem, Sidebar } from "./Sidebar";
 import { useAppSelector } from "../../redux/hook";
 import { TUser, useCurrentUser } from "../../redux/features/auth/authSlice";
-import { FaCalendar, FaBook, FaTools } from "react-icons/fa";
+import { FaCalendar, FaBook, FaUsers, FaUser } from "react-icons/fa";
 import { GiTargetDummy } from "react-icons/gi";
 import { SiNewrelic } from "react-icons/si";
 import { LuClipboardPaste } from "react-icons/lu";
 import BackButton from "../serviceSlots/BackButton";
+import { FaCheckToSlot, FaServicestack } from "react-icons/fa6";
 
 const DashboardLayout: FC = () => {
   const { role } = useAppSelector(useCurrentUser) as TUser;
@@ -19,34 +20,40 @@ const DashboardLayout: FC = () => {
         {role === "admin" && (
           <>
             <SidebarItem
-              icon={<FaTools />}
-              text="All Bookings"
-              active={false}
-              link="/dashboard/all-bookings"
-            />
-            <SidebarItem
-              icon={<FaTools />}
+              icon={<FaServicestack />}
               text="All Services"
               active={false}
               link="/dashboard/all-services"
             />
             <SidebarItem
-              icon={<FaTools />}
+              icon={<FaCheckToSlot />}
               text="All Slots"
               active={false}
               link="/dashboard/all-slots"
             />
             <SidebarItem
-              icon={<FaTools />}
+              icon={<GiTargetDummy />}
+              text="All Bookings"
+              active={false}
+              link="/dashboard/all-bookings"
+            />
+            <SidebarItem
+              icon={<FaUser />}
               text="All User Bookings"
               active={false}
               link="/dashboard/all-user-bookings"
             />
             <SidebarItem
-              icon={<FaTools />}
+              icon={<FaUsers />}
               text="All Users"
               active={false}
               link="/dashboard/all-users"
+            />
+            <SidebarItem
+              icon={<FaUsers />}
+              text="All Admins"
+              active={false}
+              link="/dashboard/all-admins"
             />
           </>
         )}
@@ -76,13 +83,13 @@ const DashboardLayout: FC = () => {
           icon={<FaCalendar />}
           text="Calendar"
           active={false}
-          link="/#"
+          link="/calender"
         />
         <SidebarItem
           icon={<FaBook />}
           text="Documentation"
           active={false}
-          link="/$"
+          link="/documentation"
         />
       </Sidebar>
       <div className="px-2 md:px=4 py-4 w-full">

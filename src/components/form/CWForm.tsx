@@ -22,9 +22,14 @@ const CWForm = <T extends FieldValues = FieldValues>({
     defaultValues,
   });
 
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    await onSubmit(data);
+    methods.reset();
+  };
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(handleSubmit)}>{children}</form>
     </FormProvider>
   );
 };

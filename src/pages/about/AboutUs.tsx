@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import BackButton from "../../components/serviceSlots/BackButton";
 
 type TAboutUsProps = object;
 
@@ -31,7 +30,6 @@ const AboutUs: FC<TAboutUsProps> = () => {
 
   return (
     <div>
-      <BackButton />
       <div
         className={`p-2 rounded-lg border  ${
           theme === "dark" ? "border-gray-100 border-opacity-15" : ""

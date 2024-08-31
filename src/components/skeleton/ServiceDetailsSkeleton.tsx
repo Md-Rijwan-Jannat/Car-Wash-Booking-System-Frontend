@@ -1,5 +1,6 @@
 import { Divider, Skeleton } from "@nextui-org/react";
 import { useTheme } from "next-themes";
+import SlotSkeleton from "./ServiceSlotSkeleton";
 
 const ServiceDetailsSkeleton = () => {
   const { theme } = useTheme();
@@ -15,7 +16,7 @@ const ServiceDetailsSkeleton = () => {
         <Skeleton className="w-[80px] rounded-xl h-[40px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto bg-white bg-opacity-10 rounded-xl shadow-lg p-6">
+      <div className="max-w-7xl mx-auto bg-white bg-opacity-10 rounded-xl p-6">
         <div className="flex flex-col md:flex-row items-start justify-between gap-5 w-full">
           <div className="flex flex-col gap-3 w-full">
             <Skeleton className="w-[100px] h-[30px] rounded-full" />
@@ -37,7 +38,7 @@ const ServiceDetailsSkeleton = () => {
         <div className="flex flex-col mt-6">
           <Skeleton className="w-[80px] rounded-xl h-[25px]" />
           <div className="mt-5">
-            <Skeleton className="w-full h-[200px] rounded-xl" />
+            <SlotSkeleton />
           </div>
         </div>
       </div>

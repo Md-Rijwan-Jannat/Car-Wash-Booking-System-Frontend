@@ -5,11 +5,11 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const images = [
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_01.jpg",
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_05.jpg",
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_04.jpg",
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_03.jpg",
-  "http://aqualine.like-themes.com/wp-content/uploads/2018/02/SLIDE_02.jpg",
+  "https://i.ibb.co/hX3wGvp/car-wash-banner1.jpg",
+  "https://i.ibb.co/5F1YqWL/car-wash-banner2.jpg",
+  "https://i.ibb.co/MnpfZNG/car-wash-banner3.jpg",
+  "https://i.ibb.co/tbZFZWZ/car-wash-banner4.jpg",
+  "https://i.ibb.co/28VrJWq/car-wash-banner5.jpg",
 ];
 
 const Banner = () => {
@@ -36,7 +36,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden -mt-[40px] mr-1">
+    <div className="relative w-full h-[600px] md:h-[700px] overflow-hidden -mt-[90px]">
       <AnimatePresence initial={false}>
         {images.map((image, index) =>
           index === currentIndex ? (
@@ -101,14 +101,14 @@ const Banner = () => {
       <Button
         onClick={prevSlide}
         size="sm"
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black rounded-full shadow-md focus:outline-none hidden md:block"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black rounded-md focus:outline-none hidden md:block"
       >
         <IoMdArrowDropleft size={25} />
       </Button>
       <Button
         onClick={nextSlide}
         size="sm"
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black rounded-full shadow-md focus:outline-none hidden md:block"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black rounded-md focus:outline-none hidden md:block"
       >
         <IoMdArrowDropright size={25} />
       </Button>

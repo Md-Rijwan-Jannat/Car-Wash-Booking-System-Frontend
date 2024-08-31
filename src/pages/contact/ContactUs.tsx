@@ -14,7 +14,6 @@ import CWTextarea from "../../components/form/CWTextarea";
 import { Button, Checkbox } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import BackButton from "../../components/serviceSlots/BackButton";
 
 type TContactUsFormValues = {
   name: string;
@@ -55,7 +54,6 @@ const ContactUs: FC = () => {
 
   return (
     <div>
-      <BackButton />
       <motion.div
         className={`flex flex-col items-center justify-center gap-8 p-2  ${
           theme === "dark" ? "" : ""
