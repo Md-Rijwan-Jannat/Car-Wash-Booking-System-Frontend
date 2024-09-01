@@ -34,24 +34,11 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
     useGetAllCarBookingSlotsWithServiceQuery(slotsId);
   const slotsData = serviceWithSlotsData?.data;
 
-  const isValidDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return !isNaN(date.getTime());
-  };
-
-  const formatDate = (date: Date) => {
-    const day = `0${date.getDate()}`.slice(-2);
-    const month = `0${date.getMonth() + 1}`.slice(-2);
-    const year = date.getFullYear();
-    return `${month}-${day}-${year}`; // Adjusted to format as MM-DD-YYYY
-  };
-
   const getUniqueDates = () => {
     const uniqueDates = new Set<string>();
     slotsData?.forEach((slot: TSlot) => {
-      if (isValidDate(slot.date)) {
-        const formattedDate = formatDate(new Date(slot.date));
-        uniqueDates.add(formattedDate);
+      if (slot.date) {
+        uniqueDates.add(slot.date);
       }
     });
     return Array.from(uniqueDates);
@@ -60,6 +47,7 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
   const uniqueDates = useMemo(() => getUniqueDates(), [slotsData]);
 
   console.log("uniqueDates", uniqueDates);
+  console.log("selectedDate", selectedDate);
 
   useEffect(() => {
     if (availableDays) {
@@ -68,14 +56,10 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
   }, [uniqueDates, availableDays]);
 
   const filteredSlots = useMemo(() => {
-    if (!selectedDate || !isValidDate(selectedDate)) return slotsData;
-
-    const selectedDateISO = formatDate(new Date(selectedDate));
+    if (!selectedDate) return slotsData;
 
     return slotsData?.filter((slot: TSlot) => {
-      const slotDateISO = formatDate(new Date(slot.date));
-      console.log("ISO date format", selectedDateISO, slotDateISO);
-      return slotDateISO === selectedDateISO;
+      return selectedDate === slot.date;
     });
   }, [slotsData, selectedDate]);
 

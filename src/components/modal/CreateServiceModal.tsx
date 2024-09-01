@@ -83,7 +83,6 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
       }
     } catch (err) {
       toast.dismiss(toastId);
-      toast.error("An error occurred while creating the service");
     }
   };
 

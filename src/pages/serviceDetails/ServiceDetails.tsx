@@ -94,7 +94,7 @@ const ServiceDetails: FC = () => {
                 onFocusChange={(date) => {
                   setFocusedDate(date);
                   setSelectedDate(
-                    date ? `${date.year}-${date.month}-${date.day}` : null
+                    date ? `${date.day}-${date.month}-${date.year}` : null
                   );
                 }}
               />

@@ -25,7 +25,7 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
     sort: "-createdAt",
-    limit: "9",
+    limit: "10",
     page: page.toString(),
   };
   const { data: bookingData, isLoading } = useGetAllBookingsQuery(
@@ -59,16 +59,14 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
       switch (columnKey) {
         case "service":
           return (
-            <div className="flex flex-col ">
-              <User
-                avatarProps={{
-                  radius: "full",
-                  src: booking.service?.[0]?.image,
-                }}
-                description={"৳ " + booking.service[0]?.price}
-                name={booking.service[0]?.name}
-              />
-            </div>
+            <User
+              avatarProps={{
+                radius: "full",
+                src: booking.service?.[0]?.image,
+              }}
+              description={"৳ " + booking.service[0]?.price}
+              name={booking.service[0]?.name}
+            />
           );
         case "vehicleBrand":
           return (

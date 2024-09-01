@@ -23,7 +23,7 @@ import CWDateInput from "../form/CwDateInput";
 
 const CreateSlotModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { data: services } = useGetAllServicesQuery(undefined);
+  const { data: services } = useGetAllServicesQuery({ limit: "1000000" });
   const [createSlot, { isLoading }] = useCreateSlotsMutation();
   const { theme } = useTheme();
 
@@ -61,7 +61,6 @@ const CreateSlotModal: FC = () => {
       }
     } catch (err) {
       toast.dismiss(toastId);
-      toast.error("Something went wrong");
     }
   };
 

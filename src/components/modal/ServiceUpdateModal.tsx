@@ -62,7 +62,6 @@ const ServiceUpdateModal: FC<TServiceUpdateModalProps> = ({ service }) => {
       }
     } catch (err) {
       toast.dismiss(toastId);
-      toast.error("An error occurred while updating the service");
     }
   };
 

@@ -68,10 +68,7 @@ const UserImageModal: FC = () => {
         }
         onOpenChange();
       } catch (error) {
-        toast.error("Something went wrong", {
-          id: toastId,
-          duration: 3000,
-        });
+        console.log(error);
       }
     } else {
       toast.error("Please select an image to upload", {

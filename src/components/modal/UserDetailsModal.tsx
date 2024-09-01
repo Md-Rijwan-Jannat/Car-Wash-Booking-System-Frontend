@@ -52,7 +52,6 @@ const UserDetailsModal: FC = () => {
       }
     } catch (err) {
       toast.dismiss(toastId);
-      toast.error("Something went wrong");
     }
   };
 

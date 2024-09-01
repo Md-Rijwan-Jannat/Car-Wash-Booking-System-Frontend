@@ -16,7 +16,7 @@ const AllSlots: FC<TAllSlotsProps> = () => {
   const [page, setPage] = useState(1);
   const queryParams: Record<string, string> = {
     sort: "-createdAt",
-    limit: "9",
+    limit: "10",
     page: page.toString(),
   };
   const { theme } = useTheme();
@@ -72,12 +72,12 @@ const AllSlots: FC<TAllSlotsProps> = () => {
               >
                 {slot.date}
               </Chip>
-              <div className="flex items-center justify-between gap-3 mt-5">
+              <div className="flex flex-row items-center justify-between gap-3 mt-5">
                 <Chip color="warning" variant="dot">
-                  Start Time: {formatTo12Hour(slot.startTime)}
+                  Start: {formatTo12Hour(slot.startTime)}
                 </Chip>
                 <Chip color="warning" variant="dot">
-                  End Time: {formatTo12Hour(slot.endTime)}
+                  End: {formatTo12Hour(slot.endTime)}
                 </Chip>
               </div>
               <SlotStatusDropdown slot={slot} />

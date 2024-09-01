@@ -68,18 +68,14 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
           );
         case "service":
           return (
-            <div className="flex flex-col ">
-              <p className="text-bold text-sm capitalize whitespace-nowrap "></p>
-              <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400"></p>
-              <User
-                avatarProps={{
-                  radius: "full",
-                  src: booking.service?.[0]?.image,
-                }}
-                description={"৳ " + booking.service[0]?.price}
-                name={booking.service[0]?.name}
-              />
-            </div>
+            <User
+              avatarProps={{
+                radius: "full",
+                src: booking.service?.[0]?.image,
+              }}
+              description={"৳ " + booking.service[0]?.price}
+              name={booking.service[0]?.name}
+            />
           );
         case "vehicleBrand":
           return (

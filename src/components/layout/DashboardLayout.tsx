@@ -83,13 +83,13 @@ const DashboardLayout: FC = () => {
           icon={<FaCalendar />}
           text="Calendar"
           active={false}
-          link="/calender"
+          link="/dashboard/calender"
         />
         <SidebarItem
           icon={<FaBook />}
           text="Documentation"
           active={false}
-          link="/documentation"
+          link="/dashboard/documentation"
         />
       </Sidebar>
       <div className="px-2 md:px=4 py-4 w-full">

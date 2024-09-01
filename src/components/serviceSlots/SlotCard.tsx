@@ -27,10 +27,10 @@ const SlotCard: FC<SlotCardProps> = ({ slot, onBookSlot }) => {
       </Chip>
       <div className="flex items-center justify-between gap-3 mb-5 mt-2">
         <Chip color="warning" variant="dot">
-          Start Time: {formatTo12Hour(slot.startTime)}
+          Start: {formatTo12Hour(slot.startTime)}
         </Chip>
         <Chip color="warning" variant="dot">
-          End Time: {formatTo12Hour(slot.endTime)}
+          End: {formatTo12Hour(slot.endTime)}
         </Chip>
       </div>
       <Button

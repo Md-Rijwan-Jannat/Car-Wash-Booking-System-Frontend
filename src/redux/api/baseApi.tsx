@@ -36,12 +36,28 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
+  console.log("baseApi response=>", result);
+
   if (result?.error?.status) {
     const errorData = result.error.data as TError;
 
     console.log(errorData.errorMessages?.[0]?.message, errorData);
-    if (result.error) {
+    if (result.error.status === 500) {
       toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
+    }
+    if (result.error.status === 404) {
+      toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
+    }
+    if (result.error.status === 403) {
+      toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
+    }
+    if (result.error.status === 400) {
+      toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
+    }
+    if (result.error.status === 409) {
+      toast.error(errorData.errorMessages?.[0]?.message, { duration: 3000 });
+    }
+    if (result.error.status === 401) {
       result = await baseQuery(args, api, extraOptions);
     }
   }
