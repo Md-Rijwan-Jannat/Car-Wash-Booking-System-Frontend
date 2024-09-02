@@ -3,7 +3,7 @@ import { FC, useState, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { useRouter } from "./hooks/useRoutes";
 import ScrollButton from "./components/WebsiteReview/ScrollButton";
-import Loader from "./components/Loader/loader";
+import Loader from "./components/Loader/Loader";
 
 type TAppProps = object;
 
