@@ -39,7 +39,7 @@ const WebsiteReview: FC<TWebsiteReviewProps> = () => {
     websiteReviews.reduce((acc, review) => acc + review.rating, 0) /
     websiteReviews.length;
 
-  if (reviewLoading) {
+  if (reviewLoading || !websiteReviews || websiteReviews.length === 0) {
     return <WebsiteReviewSkeleton />;
   }
   return (

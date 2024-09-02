@@ -29,7 +29,7 @@ const AboutUs: FC<TAboutUsProps> = () => {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <div
         className={`p-2 rounded-lg border  ${
           theme === "dark" ? "border-gray-100 border-opacity-15" : ""

@@ -72,7 +72,7 @@ const Services: FC = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 m-2">
       <Chip className="mb-10">
         <h2 className="font-bold text-center">Car Wash All Services</h2>
       </Chip>

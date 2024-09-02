@@ -50,7 +50,7 @@ const ServiceDetails: FC = () => {
 
   return (
     <div
-      className={`min-h-screen mt-2 ${
+      className={`min-h-screen mt-2 m-2 ${
         theme === "dark" ? "text-white" : "text-black"
       }`}
     >

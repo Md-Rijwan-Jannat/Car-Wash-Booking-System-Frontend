@@ -7,8 +7,8 @@ type TServiceSkeletonProps = {
 
 const ServiceSkeleton: FC<TServiceSkeletonProps> = ({ itemsCount = 9 }) => {
   return (
-    <div>
-      <div className="p-4">
+    <div className="m-4">
+      <div className="">
         <Skeleton className="w-[200px] rounded-lg mb-10">
           <div className="h-8 w-[200px] rounded-lg bg-default-300"></div>
         </Skeleton>

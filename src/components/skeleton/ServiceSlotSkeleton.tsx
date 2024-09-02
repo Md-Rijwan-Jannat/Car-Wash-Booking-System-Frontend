@@ -9,7 +9,7 @@ const SlotSkeleton: FC<TSlotSkeletonProps> = () => {
   const skeletonColor = theme === "dark" ? "" : "";
 
   return (
-    <div className={`mt-6 flex flex-col justify-center ${skeletonColor}`}>
+    <div className={`mt-6 flex flex-col justify-center m-2 ${skeletonColor}`}>
       <div className="my-3">
         <Skeleton className="w-[120px] h-[32px] rounded-xl" />
       </div>

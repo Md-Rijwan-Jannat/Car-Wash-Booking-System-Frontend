@@ -5,11 +5,11 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const images = [
-  "https://i.ibb.co/hX3wGvp/car-wash-banner1.jpg",
-  "https://i.ibb.co/5F1YqWL/car-wash-banner2.jpg",
-  "https://i.ibb.co/MnpfZNG/car-wash-banner3.jpg",
-  "https://i.ibb.co/tbZFZWZ/car-wash-banner4.jpg",
-  "https://i.ibb.co/28VrJWq/car-wash-banner5.jpg",
+  "https://res.cloudinary.com/dihqveqyc/image/upload/v1725259261/fcndoplz9igyxfozfzdn.jpg",
+  "https://res.cloudinary.com/dihqveqyc/image/upload/v1725259258/t6vsckoinzgf3p0g7ahx.jpg",
+  "https://res.cloudinary.com/dihqveqyc/image/upload/v1725259258/fvw9ynggqnc3m212tswl.jpg",
+  "https://res.cloudinary.com/dihqveqyc/image/upload/v1725259258/dpultgpvxg9usomnixky.jpg",
+  "https://res.cloudinary.com/dihqveqyc/image/upload/v1725259255/gk4aqiclmfl1kevc4cmq.jpg",
 ];
 
 const Banner = () => {

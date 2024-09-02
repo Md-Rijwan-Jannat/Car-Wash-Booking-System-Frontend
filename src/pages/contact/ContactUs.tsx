@@ -53,7 +53,7 @@ const ContactUs: FC = () => {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <motion.div
         className={`flex flex-col items-center justify-center gap-8 p-2  ${
           theme === "dark" ? "" : ""

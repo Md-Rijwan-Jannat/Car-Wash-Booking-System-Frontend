@@ -45,18 +45,18 @@ const NavBar: FC<TNavBarProps> = () => {
     { name: "Dashboard", path: `/dashboard` },
     { name: "About Us", path: "/aboutUs" },
     { name: "Contact Us", path: "/contactUs" },
-  ].filter(Boolean); // Remove undefined values from the array
+  ].filter(Boolean); /// Remove undefined values from the array
 
   const token = useAppSelector(useCurrentUserToken);
   let user;
   if (token) {
     user = verifyToken(token);
   }
-  const dateString = booking?.data?.[0]?.slot?.[0]?.date;
+  const dateString = booking?.data?.[0]?.slot?.[0]?.date || "01-12-2070";
 
   // Convert date string from DD-MM-YYYY to YYYY-MM-DD
   const [day, month, year]: any = dateString?.split("-");
-  const formattedDateString = `${year}-${month}-${day}`;
+  const formattedDateString = dateString ? `${year}-${month}-${day}` : "";
 
   // Parse the formatted date string
   const targetDate = new Date(formattedDateString);
@@ -106,18 +106,19 @@ const NavBar: FC<TNavBarProps> = () => {
           </NavbarBrand>
         </div>
         <div className="flex items-center justify-center gap-6">
-          {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  isActive ? "text-warning font-medium" : "text-foreground"
-                }
-              >
-                {item.name}
-              </NavLink>
-            </NavbarItem>
-          ))}
+          {Array.isArray(menuItems) &&
+            menuItems.map((item, index) => (
+              <NavbarItem key={index}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    isActive ? "text-warning font-medium" : "text-foreground"
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              </NavbarItem>
+            ))}
         </div>
       </NavbarContent>
 
@@ -204,15 +205,7 @@ const NavBar: FC<TNavBarProps> = () => {
             <NavLink
               to={item.path}
               className={({ isActive }) =>
-                `w-full ${
-                  isActive
-                    ? index === 2
-                      ? "text-warning"
-                      : index === menuItems.length - 1
-                      ? "text-danger"
-                      : "text-foreground"
-                    : "text-foreground"
-                }`
+                `w-full ${isActive ? "text-warning" : ""}`
               }
             >
               {item.name}

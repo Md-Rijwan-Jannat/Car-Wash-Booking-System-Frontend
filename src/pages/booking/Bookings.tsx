@@ -5,7 +5,7 @@ type TBookingsProps = object;
 
 const Bookings: FC<TBookingsProps> = () => {
   return (
-    <div>
+    <div className="p-2">
       <SlotBooking />
     </div>
   );
