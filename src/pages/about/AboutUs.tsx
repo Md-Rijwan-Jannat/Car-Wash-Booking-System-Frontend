@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import { Chip } from "@nextui-org/react";
 
 type TAboutUsProps = object;
 
@@ -75,12 +76,10 @@ const AboutUs: FC<TAboutUsProps> = () => {
           animate="visible"
           variants={containerVariants}
         >
-          <motion.h3
-            className="text-2xl font-semibold"
-            custom={4}
-            variants={textVariants}
-          >
-            Our Mission
+          <motion.h3 custom={4} variants={textVariants}>
+            <Chip variant="bordered" size="lg">
+              Our Mission
+            </Chip>
           </motion.h3>
           <motion.p custom={5} variants={textVariants}>
             Our mission is to provide top-quality car washing and detailing
@@ -101,7 +100,9 @@ const AboutUs: FC<TAboutUsProps> = () => {
             custom={6}
             variants={textVariants}
           >
-            Why Choose Us?
+            <Chip variant="bordered" size="lg">
+              Why Choose Us?
+            </Chip>
           </motion.h3>
           <motion.ul
             className="list-disc list-inside space-y-2"
@@ -127,7 +128,9 @@ const AboutUs: FC<TAboutUsProps> = () => {
             custom={8}
             variants={textVariants}
           >
-            Customer Testimonials
+            <Chip variant="bordered" size="lg">
+              Customer align
+            </Chip>
           </motion.h3>
           <motion.blockquote
             className="border-l-4 border-warning pl-4 italic"
