@@ -49,30 +49,35 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   if (isLoading || !services || services.length === 0) {
     // Show loading placeholders
     return (
-      <div className="flex flex-row gap-5 mt-10">
-        {[...Array(itemsCount)].map((_, index) => (
-          <Card key={index} className="w-full space-y-5" radius="lg">
-            <Skeleton className="rounded-lg">
-              <div className="h-64 rounded-lg bg-default-300"></div>
-            </Skeleton>
-            <div className="space-y-3 p-3">
-              <Skeleton className="w-3/5 rounded-lg">
-                <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+      <div className="mt-10">
+        <Chip variant="bordered" size="lg">
+          Featured Services
+        </Chip>
+        <div className="flex flex-row gap-5 mt-5">
+          {[...Array(itemsCount)].map((_, index) => (
+            <Card key={index} className="w-full space-y-5" radius="lg">
+              <Skeleton className="rounded-lg">
+                <div className="h-64 rounded-lg bg-default-300"></div>
               </Skeleton>
-              <Skeleton className="w-4/5 rounded-lg">
-                <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
-              </Skeleton>
-              <div className="flex justify-between gap-3 mt-10">
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-8 w-2/5 rounded-lg bg-default-300"></div>
+              <div className="space-y-3 p-3">
+                <Skeleton className="w-3/5 rounded-lg">
+                  <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
                 </Skeleton>
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-8 w-2/5 rounded-lg bg-default-300"></div>
+                <Skeleton className="w-4/5 rounded-lg">
+                  <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
                 </Skeleton>
+                <div className="flex justify-between gap-3 mt-10">
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-8 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                  <Skeleton className="w-2/5 rounded-lg">
+                    <div className="h-8 w-2/5 rounded-lg bg-default-300"></div>
+                  </Skeleton>
+                </div>
               </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }
