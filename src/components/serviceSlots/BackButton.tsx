@@ -7,7 +7,7 @@ type TBackButtonProps = object;
 const BackButton: FC<TBackButtonProps> = () => {
   const navigate = useNavigate();
   return (
-    <div className="my-6 flex justify-between mr-1">
+    <div className="my-6 flex justify-between mr-1 ml-1">
       <Button
         color="warning"
         variant="flat"

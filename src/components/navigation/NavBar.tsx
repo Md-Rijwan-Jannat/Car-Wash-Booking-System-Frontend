@@ -4,6 +4,7 @@ import {
   Avatar,
   Badge,
   Button,
+  Chip,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -27,8 +28,8 @@ import { verifyToken } from "../../utils/VerifyToken";
 import { FaHandsWash, FaShopify } from "react-icons/fa";
 import { useGetMeQuery } from "../../redux/features/auth/authApi";
 import { getAllSlotBooking } from "../../redux/features/user/slotBookmarkSlice";
-import CountdownTimer from "../../pages/dashboard/user/Bookings/Countdown";
 import { useGetAllMyBookingsQuery } from "../../redux/features/user/slotBokingApi";
+import Countdown from "../../pages/dashboard/user/Bookings/Countdown";
 
 type TNavBarProps = object;
 
@@ -52,22 +53,7 @@ const NavBar: FC<TNavBarProps> = () => {
   if (token) {
     user = verifyToken(token);
   }
-  const dateString = booking?.data?.[0]?.slot?.[0]?.date || "01-12-2070";
 
-  // Convert date string from DD-MM-YYYY to YYYY-MM-DD
-  const [day, month, year]: any = dateString?.split("-");
-  const formattedDateString = dateString ? `${year}-${month}-${day}` : "";
-
-  // Parse the formatted date string
-  const targetDate = new Date(formattedDateString);
-
-  console.log("Date String:", dateString);
-  console.log("Parsed Date:", targetDate);
-
-  if (isNaN(targetDate.getTime()) || targetDate <= new Date()) {
-    console.warn("Invalid or past target date:", targetDate);
-    return <span>No valid date provided</span>;
-  }
   return (
     <Navbar shouldHideOnScroll disableAnimation isBordered className="w-full">
       <div className="flex justify-start">
@@ -145,7 +131,12 @@ const NavBar: FC<TNavBarProps> = () => {
                       theme === "dark" ? "text-white" : ""
                     }`}
                   >
-                    <CountdownTimer targetTime={targetDate} />
+                    <Chip color="warning" variant="faded">
+                      <Countdown
+                        recentDate={booking?.data?.[0]?.slot?.[0]?.date}
+                        recentTime={booking?.data?.[0]?.slot?.[0]?.startTime}
+                      />
+                    </Chip>
                   </div>
                 )}
               </NavbarItem>
@@ -195,7 +186,12 @@ const NavBar: FC<TNavBarProps> = () => {
                   theme === "dark" ? "text-white" : ""
                 }`}
               >
-                <CountdownTimer targetTime={targetDate} />
+                <Chip color="warning" variant="faded">
+                  <Countdown
+                    recentDate={booking?.data?.[0]?.slot?.[0]?.date}
+                    recentTime={booking?.data?.[0]?.slot?.[0]?.startTime}
+                  />
+                </Chip>
               </div>
             )}
           </NavbarItem>

@@ -7,6 +7,7 @@ import LoaderSkeleton from "../../../../components/skeleton/LoaderSkeleton";
 import NoData from "../../../../components/serviceSlots/NoData";
 import { formatTo12Hour } from "../../../../utils/FormatDate";
 import { FaClock } from "react-icons/fa";
+import Countdown from "./Countdown";
 
 type TUpcomingBookingProps = object;
 
@@ -40,19 +41,6 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
     const [day, month, year] = dateString.split("-").map(Number);
     const [hours, minutes] = timeString.split(":").map(Number);
     return new Date(year, month - 1, day, hours, minutes); // Months are 0-indexed
-  };
-
-  const getCountdown = (startDateTime: Date) => {
-    const timeDiff = startDateTime.getTime() - currentDate.getTime();
-    if (timeDiff <= 0) return "Start Vehicle Service";
-
-    const hours = Math.floor(
-      (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-    return `${hours}h ${minutes}m ${seconds}s`;
   };
 
   if (isLoading) {
@@ -105,7 +93,10 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
                         } mb-3`}
                       >
                         <p>
-                          {getCountdown(parseDate(slot.date, slot.startTime))}
+                          <Countdown
+                            recentDate={slot.date}
+                            recentTime={slot.startTime}
+                          />
                         </p>
                         <p className="text-[14px] font-normal">
                           Service starting time
