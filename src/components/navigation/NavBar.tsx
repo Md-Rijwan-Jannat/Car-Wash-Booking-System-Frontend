@@ -223,8 +223,10 @@ const NavBar: FC<TNavBarProps> = () => {
       </NavbarMenu>
       <NavbarContent className="sm:hidden" justify="end">
         <div
-          className={`border size-10 flex items-center justify-center rounded-full text-warning ${
-            theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+          className={`border size-10 bg-orange-50 flex items-center justify-center rounded-full text-warning ${
+            theme === "dark"
+              ? "border-gray-100 bg-opacity-10 border-opacity-15"
+              : ""
           }`}
         >
           <NavbarMenuToggle />

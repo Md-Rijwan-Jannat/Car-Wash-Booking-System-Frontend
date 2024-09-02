@@ -147,7 +147,11 @@ export const SidebarItem: FC<SidebarItemProps> = ({ icon, text, link }) => {
         <div
           className={`flex items-center ${
             theme === "dark" ? "text-gray-400" : ""
-          } ${expanded ? "" : "size-7 flex items-center justify-center"}`}
+          } ${
+            expanded
+              ? ""
+              : "w-7 h-[36px] rounded-full flex items-center justify-center"
+          }`}
         >
           {icon}
           <span

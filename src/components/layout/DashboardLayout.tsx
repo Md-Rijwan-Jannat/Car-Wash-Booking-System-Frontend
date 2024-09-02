@@ -20,37 +20,37 @@ const DashboardLayout: FC = () => {
         {role === "admin" && (
           <>
             <SidebarItem
-              icon={<FaServicestack />}
+              icon={<FaServicestack className="text-[20px] md:text-[16px]" />}
               text="All Services"
               active={false}
               link="/dashboard/all-services"
             />
             <SidebarItem
-              icon={<FaCheckToSlot />}
+              icon={<FaCheckToSlot className="text-[20px] md:text-[16px]" />}
               text="All Slots"
               active={false}
               link="/dashboard/all-slots"
             />
             <SidebarItem
-              icon={<GiTargetDummy />}
+              icon={<GiTargetDummy className="text-[20px] md:text-[16px]" />}
               text="All Bookings"
               active={false}
               link="/dashboard/all-bookings"
             />
             <SidebarItem
-              icon={<FaUser />}
+              icon={<FaUser className="text-[20px] md:text-[16px]" />}
               text="All User Bookings"
               active={false}
               link="/dashboard/all-user-bookings"
             />
             <SidebarItem
-              icon={<FaUsers />}
+              icon={<FaUsers className="text-[20px] md:text-[16px]" />}
               text="All Users"
               active={false}
               link="/dashboard/all-users"
             />
             <SidebarItem
-              icon={<FaUsers />}
+              icon={<FaUsers className="text-[20px] md:text-[16px]" />}
               text="All Admins"
               active={false}
               link="/dashboard/all-admins"
@@ -60,25 +60,25 @@ const DashboardLayout: FC = () => {
         {role === "user" && (
           <>
             <SidebarItem
-              icon={<GiTargetDummy />}
+              icon={<GiTargetDummy className="text-[20px] md:text-[16px]" />}
               text="My Bookings"
               active={false}
               link="/dashboard/my-bookings"
             />
             <SidebarItem
-              icon={<SiNewrelic />}
+              icon={<SiNewrelic className="text-[20px] md:text-[16px]" />}
               text="New Bookings"
               active={false}
               link="/dashboard/new-bookings"
             />
             <SidebarItem
-              icon={<LuClipboardPaste />}
+              icon={<LuClipboardPaste className="text-[20px] md:text-[16px]" />}
               text="Past Bookings"
               active={false}
               link="/dashboard/past-bookings"
             />
             <SidebarItem
-              icon={<LuClipboardPaste />}
+              icon={<LuClipboardPaste className="text-[20px] md:text-[16px]" />}
               text="Upcoming Bookings"
               active={false}
               link="/dashboard/upcoming-bookings"
@@ -86,13 +86,13 @@ const DashboardLayout: FC = () => {
           </>
         )}
         <SidebarItem
-          icon={<FaCalendar />}
+          icon={<FaCalendar className="text-[20px] md:text-[16px]" />}
           text="Calendar"
           active={false}
           link="/dashboard/calender"
         />
         <SidebarItem
-          icon={<FaBook />}
+          icon={<FaBook className="text-[20px] md:text-[16px]" />}
           text="Documentation"
           active={false}
           link="/dashboard/documentation"
