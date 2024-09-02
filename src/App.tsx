@@ -24,7 +24,7 @@ const App: FC<TAppProps> = () => {
 
   return (
     <main>
-      {!loading && <Loader />}
+      {loading && <Loader />}
       <RouterProvider router={router} />
       <ScrollButton />
     </main>
