@@ -24,7 +24,7 @@ const CWForm = <T extends FieldValues = FieldValues>({
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
     await onSubmit(data);
-    methods.reset();
+    methods.reset(); // This should reset the form inputs
   };
 
   return (

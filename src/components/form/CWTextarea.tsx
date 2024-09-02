@@ -1,6 +1,6 @@
 import { Textarea, TextAreaProps } from "@nextui-org/react";
 import { useFormContext, Controller } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, FC } from "react";
 
 type CWTextareaProps = {
   name: string;
@@ -11,7 +11,7 @@ type CWTextareaProps = {
   defaultValue?: string;
 } & TextAreaProps;
 
-const CWTextarea = ({
+const CWTextarea: FC<CWTextareaProps> = ({
   name,
   label,
   placeholder,
@@ -19,7 +19,7 @@ const CWTextarea = ({
   rows,
   defaultValue,
   ...textareaProps
-}: CWTextareaProps) => {
+}) => {
   const { control } = useFormContext();
 
   return (
@@ -34,11 +34,10 @@ const CWTextarea = ({
             label={label}
             color="warning"
             variant="bordered"
-            defaultValue={defaultValue}
             placeholder={placeholder}
             endContent={endContent}
             rows={rows}
-            value={field.value || defaultValue}
+            value={field.value || ""}
             status={error ? "error" : undefined}
             {...textareaProps}
           />

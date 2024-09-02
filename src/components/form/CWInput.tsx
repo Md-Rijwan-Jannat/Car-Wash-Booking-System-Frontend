@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "@nextui-org/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { FC } from "react";
@@ -37,13 +36,12 @@ const CWInput: FC<TCWInputProps> = ({
           {...field}
           label={label}
           placeholder={placeholder}
-          defaultValue={defaultValue}
           type={type}
           endContent={icon}
           variant="bordered"
           color="warning"
           required={required}
-          value={field.value || defaultValue}
+          value={field.value || ""} // Ensure the value resets to an empty string
         />
       )}
     />
