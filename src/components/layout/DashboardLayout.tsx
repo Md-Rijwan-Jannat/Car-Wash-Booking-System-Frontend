@@ -77,6 +77,12 @@ const DashboardLayout: FC = () => {
               active={false}
               link="/dashboard/past-bookings"
             />
+            <SidebarItem
+              icon={<LuClipboardPaste />}
+              text="Upcoming Bookings"
+              active={false}
+              link="/dashboard/upcoming-bookings"
+            />
           </>
         )}
         <SidebarItem

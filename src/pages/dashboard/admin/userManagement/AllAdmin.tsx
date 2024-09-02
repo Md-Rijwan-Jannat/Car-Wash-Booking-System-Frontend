@@ -79,7 +79,7 @@ const AllAdmins: FC<TAllAdminsProps> = () => {
             showControls
             total={meta.totalPage}
             initialPage={page}
-            className={`px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
+            className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
               theme === "dark" ? " bg-opacity-30" : ""
             }`}
             onChange={(newPage) => handlePageChange(newPage)}

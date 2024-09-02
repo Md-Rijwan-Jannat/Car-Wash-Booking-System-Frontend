@@ -19,7 +19,6 @@ import { useGetMeQuery } from "../../redux/features/auth/authApi";
 import { TUser, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { TUserData } from "../../types";
 import { vehicleTypeItems } from "../../constants/user";
-import emptyImage from "../../assets/images/Empty_Image.png";
 import { useCreateSlotBookingsMutation } from "../../redux/features/user/slotBokingApi";
 
 const SlotBooking: FC = () => {
@@ -41,6 +40,8 @@ const SlotBooking: FC = () => {
 
   const serviceIds = slotBookingData.map((item) => item.serviceId);
   const slotIds = slotBookingData.map((item) => item.slotId);
+
+  console.log(slotBookingData);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
@@ -99,18 +100,9 @@ const SlotBooking: FC = () => {
             </div>
           </div>
           <div className="flex flex-col gap-5  mt-11">
-            {slotBookingData?.length === 0 && undefined ? (
+            {slotBookingData?.length === 0 || undefined ? (
               <div className="flex flex-col items-center justify-center">
                 <NoData text="There are no slots! Please bookmark slot" />
-                <img
-                  className={`w-[200px] animate-bounce mt-14 ${
-                    theme === "dark"
-                      ? "bg-gray-50 bg-opacity-30 rounded-lg"
-                      : ""
-                  }`}
-                  src={emptyImage}
-                  alt=""
-                />
               </div>
             ) : (
               <>

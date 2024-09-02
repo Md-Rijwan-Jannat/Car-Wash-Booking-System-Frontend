@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Card, Chip } from "@nextui-org/react";
+import { Button, Card, Chip, Tooltip } from "@nextui-org/react";
 import { TService } from "../../types";
 import { useTheme } from "next-themes";
 import { FaClock } from "react-icons/fa6";
@@ -18,7 +18,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
   };
   return (
     <Card
-      className={`overflow-hidden h-[440px] border ${
+      className={`overflow-hidden h-[450px] border ${
         theme === "dark" ? "border-gray-100 border-opacity-15" : ""
       }`}
     >
@@ -29,7 +29,13 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
       />
       <div className="p-4 relative">
         <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
-        <p className="text-gray-600 mb-4">{service.description}</p>
+        <Tooltip className="w-[300px]" content={service?.description}>
+          <p className="text-gray-500 mb-4">
+            {service.description?.length > 15
+              ? `${service.description.slice(0, 70)}...`
+              : service.description}
+          </p>
+        </Tooltip>
         <div className="mt-5 absolute inset-0 top-[120px] z-20 px-4">
           <div className="flex justify-between items-center">
             <Chip color="warning" variant="flat">
@@ -39,8 +45,8 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
               </p>
             </Chip>
             <Chip>
-              <p className="text-lg font-bold text-primaryColor">
-                ৳{service.price.toFixed(2)}
+              <p className="text-primaryColor font-medium">
+                ৳ {service.price.toFixed(2)}
               </p>
             </Chip>
           </div>

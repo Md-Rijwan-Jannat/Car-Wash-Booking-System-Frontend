@@ -44,10 +44,8 @@ const WebsiteReview: FC<TWebsiteReviewProps> = () => {
   }
   return (
     <div className="mt-10 mx-2">
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          Customer Reviews
-        </h2>
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <h2 className="text-2xl font-bold text-center">Customer Reviews</h2>
         {user ? (
           <AddReviewModal />
         ) : (

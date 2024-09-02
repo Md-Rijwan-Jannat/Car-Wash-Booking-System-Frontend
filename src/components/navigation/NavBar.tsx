@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unsafe-optional-chaining */
 import {
   Avatar,
   Badge,
@@ -9,6 +11,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  Tooltip,
 } from "@nextui-org/react";
 import { FC } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -24,6 +27,8 @@ import { verifyToken } from "../../utils/VerifyToken";
 import { FaHandsWash, FaShopify } from "react-icons/fa";
 import { useGetMeQuery } from "../../redux/features/auth/authApi";
 import { getAllSlotBooking } from "../../redux/features/user/slotBookmarkSlice";
+import CountdownTimer from "../../pages/dashboard/user/Bookings/Countdown";
+import { useGetAllMyBookingsQuery } from "../../redux/features/user/slotBokingApi";
 
 type TNavBarProps = object;
 
@@ -32,6 +37,7 @@ const NavBar: FC<TNavBarProps> = () => {
   const userData = useAppSelector(useCurrentUser) as TUser;
   const navigate = useNavigate();
   const { data: userDetails } = useGetMeQuery(userData?.email);
+  const { data: booking } = useGetAllMyBookingsQuery({ sort: "-createdAt" });
   const slotBookingData = useAppSelector(getAllSlotBooking);
 
   const menuItems = [
@@ -46,9 +52,22 @@ const NavBar: FC<TNavBarProps> = () => {
   if (token) {
     user = verifyToken(token);
   }
+  const dateString = booking?.data?.[0]?.slot?.[0]?.date;
 
-  console.log("userDetails", userDetails);
+  // Convert date string from DD-MM-YYYY to YYYY-MM-DD
+  const [day, month, year]: any = dateString?.split("-");
+  const formattedDateString = `${year}-${month}-${day}`;
 
+  // Parse the formatted date string
+  const targetDate = new Date(formattedDateString);
+
+  console.log("Date String:", dateString);
+  console.log("Parsed Date:", targetDate);
+
+  if (isNaN(targetDate.getTime()) || targetDate <= new Date()) {
+    console.warn("Invalid or past target date:", targetDate);
+    return <span>No valid date provided</span>;
+  }
   return (
     <Navbar shouldHideOnScroll disableAnimation isBordered className="w-full">
       <div className="flex justify-start">
@@ -117,10 +136,23 @@ const NavBar: FC<TNavBarProps> = () => {
                 </Button>
               )}
             </NavbarItem>
+            <Tooltip content="Resent booking slot will be start">
+              <NavbarItem className="hidden md:block">
+                {booking?.data.length && user && (
+                  <div
+                    className={`flex items-center gap-2 text-gray-700 text-sm ${
+                      theme === "dark" ? "text-white" : ""
+                    }`}
+                  >
+                    <CountdownTimer targetTime={targetDate} />
+                  </div>
+                )}
+              </NavbarItem>
+            </Tooltip>
+
             <NavbarItem>
               <ThemeSwitcher />
             </NavbarItem>
-
             <NavbarItem>
               <div
                 onClick={() => navigate("/dashboard")}
@@ -154,6 +186,19 @@ const NavBar: FC<TNavBarProps> = () => {
       </div>
 
       <NavbarMenu className="lg:hidden">
+        <Tooltip content="Resent booking slot will be start">
+          <NavbarItem>
+            {booking?.data.length && user && (
+              <div
+                className={`flex items-center gap-2 text-gray-700 text-sm ${
+                  theme === "dark" ? "text-white" : ""
+                }`}
+              >
+                <CountdownTimer targetTime={targetDate} />
+              </div>
+            )}
+          </NavbarItem>
+        </Tooltip>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <NavLink
