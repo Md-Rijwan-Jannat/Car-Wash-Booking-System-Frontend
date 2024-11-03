@@ -49,13 +49,16 @@ export default function SectionTitle({
   return (
     <motion.div
       ref={sectionRef}
-      className="text-center mb-8"
+      className="text-center mb-8 mt-12"
       initial={{ opacity: 0, y: 50 }}
       animate={controls}
     >
-      <Chip color="warning" className="text-sm md:text-lg text-black font-bold">
+      <div
+        color="warning"
+        className="rounded-xl text-sm md:text-lg text-warning-500 medium-italic"
+      >
         {subHeader}
-      </Chip>
+      </div>
       <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mt-2">
         {header}
       </h3>

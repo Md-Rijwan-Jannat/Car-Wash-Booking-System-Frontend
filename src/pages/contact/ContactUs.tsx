@@ -7,15 +7,14 @@ import {
   IoMdSend,
 } from 'react-icons/io';
 import { motion } from 'framer-motion';
-import { useTheme } from 'next-themes';
 import CWForm from '../../components/form/CWForm';
 import CWInput from '../../components/form/CWInput';
 import CWTextarea from '../../components/form/CWTextarea';
-import { Button, Checkbox } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import { Button } from '@nextui-org/react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import Location from './Location';
-import Container from '../../components/ui/Container';
+import SectionTitle from '../../components/ui/SectionTitle';
+import { toast } from 'sonner';
 
 type TContactUsFormValues = {
   name: string;
@@ -26,8 +25,6 @@ type TContactUsFormValues = {
 };
 
 const ContactUs: FC = () => {
-  const { theme } = useTheme();
-
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -52,69 +49,69 @@ const ContactUs: FC = () => {
 
   const onSubmit = (data: TContactUsFormValues) => {
     console.log('Form Submitted:', data);
+    if (data) {
+      toast.success('Message send successfully');
+    }
   };
 
   return (
-    <Container>
+    <>
+      <SectionTitle
+        subHeader="Get in Touch"
+        header="Contact Us"
+        des="We’re here to help with any questions or inquiries. Reach out to us for more information or assistance."
+      />
+
       <div className="mx-2">
         <div className="p-2">
           <motion.div
-            className={`flex flex-col items-center justify-center gap-8 p-2  ${
-              theme === 'dark' ? '' : ''
-            }`}
+            className={`flex flex-col`}
             initial="hidden"
             animate="visible"
             variants={containerVariants}
           >
-            <motion.h2
-              className="text-4xl font-bold text-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              Contact Us
-            </motion.h2>
             <CWForm<TContactUsFormValues> onSubmit={onSubmit}>
               <motion.div
-                className={`flex flex-col items-center justify-center gap-5 border bg-gray-50 ${
-                  theme === 'dark'
-                    ? 'border-gray-50 border-opacity-15 bg-opacity-10'
-                    : ''
-                } rounded-md p-3 lg:p-5 w-full md:w-[500px]`}
+                className={`space-y-3 w-full`}
                 variants={itemVariants}
               >
-                <CWInput
-                  name="name"
-                  label="Name"
-                  placeholder="Enter your name"
-                  icon={<IoMdPerson className="text-2xl text-warning" />}
-                />
-                <CWInput
-                  name="email"
-                  label="Email"
-                  placeholder="Enter your email"
-                  type="email"
-                  icon={<IoMdMail className="text-2xl text-warning" />}
-                />
-                <CWInput
-                  name="phone"
-                  label="Phone Number"
-                  placeholder="Enter your phone number"
-                  type="tel"
-                  icon={<IoMdCall className="text-2xl text-warning" />}
-                />
-                <CWTextarea
-                  name="address"
-                  label="Address"
-                  placeholder="Enter your address"
-                  endContent={
-                    <IoMdPin className="text-2xl text-warning pointer-events-none flex-shrink-0" />
-                  }
-                  variant="bordered"
-                  color="warning"
-                  rows={3}
-                  required
-                />
+                <div className="flex flex-col md:flex-row gap-3 items-center w-full">
+                  <CWInput
+                    name="name"
+                    label="Name"
+                    placeholder="Enter your name"
+                    icon={<IoMdPerson className="text-2xl text-warning" />}
+                    required
+                  />
+                  <CWInput
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    type="email"
+                    icon={<IoMdMail className="text-2xl text-warning" />}
+                    required
+                  />
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 items-center w-full">
+                  <CWInput
+                    name="phone"
+                    label="Phone Number"
+                    placeholder="Enter your phone number"
+                    type="tel"
+                    icon={<IoMdCall className="text-2xl text-warning" />}
+                    required
+                  />
+                  <CWInput
+                    name="address"
+                    label="Address"
+                    placeholder="Enter your address"
+                    icon={
+                      <IoMdPin className="text-2xl text-warning pointer-events-none flex-shrink-0" />
+                    }
+                    required
+                  />
+                </div>
+
                 <CWTextarea
                   name="message"
                   label="Your Message"
@@ -127,56 +124,19 @@ const ContactUs: FC = () => {
                   rows={5}
                   required
                 />
-                <Button color="warning" variant="flat" type="submit">
-                  Send Message
-                </Button>
-                <div className="flex py-2 px-1 justify-between w-full">
-                  <Checkbox
-                    classNames={{
-                      label: 'text-small',
-                    }}
-                    color="warning"
-                  >
-                    Subscribe to our newsletter
-                  </Checkbox>
+                <div className="flex justify-end">
+                  <Button color="warning" variant="flat" type="submit">
+                    Send Message
+                  </Button>
                 </div>
-                <Link to="/auth/login" className="mt-3 border-b text-primary">
-                  Already have an account? Log in
-                </Link>
               </motion.div>
             </CWForm>
-            <motion.div
-              className="flex flex-col items-center mt-8 space-y-4"
-              variants={containerVariants}
-            >
-              <motion.h3
-                className="text-2xl font-semibold"
-                variants={itemVariants}
-              >
-                Follow Us
-              </motion.h3>
-              <motion.div className="flex gap-4" variants={itemVariants}>
-                {/* Add your social media links here */}
-                <a href="#" className="text-2xl text-warning">
-                  <FaFacebook />
-                </a>
-                <a href="#" className="text-2xl text-warning">
-                  <FaTwitter />
-                </a>
-                <a href="#" className="text-2xl text-warning">
-                  <FaInstagram />
-                </a>
-                <a href="#" className="text-2xl text-warning">
-                  <FaLinkedin />
-                </a>
-              </motion.div>
-            </motion.div>
           </motion.div>
         </div>
 
         <Location />
       </div>
-    </Container>
+    </>
   );
 };
 

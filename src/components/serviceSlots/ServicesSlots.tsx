@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Chip, Skeleton } from "@nextui-org/react";
-import { FC, useMemo, useEffect } from "react";
-import { TSlot } from "../../types/slotManagement.type";
-import { useGetAllCarBookingSlotsWithServiceQuery } from "../../redux/features/admin/slotManagementApi";
-import NoData from "./NoData";
+import { Chip, Skeleton } from '@nextui-org/react';
+import { FC, useMemo, useEffect } from 'react';
+import { TSlot } from '../../types/slotManagement.type';
+import { useGetAllCarBookingSlotsWithServiceQuery } from '../../redux/features/admin/slotManagementApi';
+import NoData from './NoData';
 import {
   addBookmark,
   TSlotBookmark,
-} from "../../redux/features/user/slotBookmarkSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "../../redux/features/auth/authSlice";
-import SlotCard from "./SlotCard";
-import SlotSkeleton from "../skeleton/ServiceSlotSkeleton";
+} from '../../redux/features/user/slotBookmarkSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hook';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { useCurrentUser } from '../../redux/features/auth/authSlice';
+import SlotCard from './SlotCard';
+import SlotSkeleton from '../skeleton/ServiceSlotSkeleton';
 
 type TServicesSlotsProps = {
   slotsId: string | undefined;
@@ -34,7 +34,7 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
   const queryData = {
     id: slotsId,
     args: {
-      sort: "-date",
+      sort: '-date',
     },
   };
 
@@ -42,7 +42,7 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
     useGetAllCarBookingSlotsWithServiceQuery(queryData);
   const slotsData = serviceWithSlotsData?.data;
 
-  console.log("slotsData", slotsData);
+  console.log('slotsData', slotsData);
 
   const getUniqueDates = () => {
     const uniqueDates = new Set<string>();
@@ -56,8 +56,8 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
 
   const uniqueDates = useMemo(() => getUniqueDates(), [slotsData]);
 
-  console.log("uniqueDates", uniqueDates);
-  console.log("selectedDate", selectedDate);
+  console.log('uniqueDates', uniqueDates);
+  console.log('selectedDate', selectedDate);
 
   useEffect(() => {
     if (availableDays) {
@@ -73,14 +73,14 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
     });
   }, [slotsData, selectedDate]);
 
-  console.log("filteredSlot=>", filteredSlots);
+  console.log('filteredSlot=>', filteredSlots);
 
   if (slotsLoading) {
     return (
       <div className="flex flex-col mt-6">
-        <Skeleton className="w-[80px] h-[25px] rounded-lg" />
-        <div className="mt-3">
-          <Skeleton className="w-full h-[200px] rounded-lg" />
+        <Skeleton className="w-[80px] rounded-xl h-[25px]" />
+        <div className="mt-5">
+          <SlotSkeleton />
         </div>
       </div>
     );
@@ -101,12 +101,12 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
 
     if (user) {
       dispatch(addBookmark(slotBookingData));
-      toast.success("Slot successfully bookmarked!");
+      toast.success('Slot successfully bookmarked!');
     } else {
-      navigate("/auth/signup");
+      navigate('/auth/signup');
     }
 
-    console.log("Slot booking data:", slotBookingData);
+    console.log('Slot booking data:', slotBookingData);
   };
 
   if (slotsLoading) {

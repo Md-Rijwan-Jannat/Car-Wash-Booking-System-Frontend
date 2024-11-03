@@ -92,13 +92,11 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
 
   return (
     <div className="mt-10 relative max-w-7xl md:mx-auto mx-2">
-      <div className="mb-3">
-        <SectionTitle
-          subHeader="Featured Services"
-          header="Professional Car Care Services"
-          des="Choose a service that suits your needs. From quick washes to full detailing, we offer everything to keep your car looking its best."
-        />
-      </div>
+      <SectionTitle
+        subHeader="Featured Services"
+        header="Professional Car Care Services"
+        des="Choose a service that suits your needs. From quick washes to full detailing, we offer everything to keep your car looking its best."
+      />
       <Swiper
         slidesPerView={1}
         spaceBetween={20}

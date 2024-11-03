@@ -16,7 +16,7 @@ const FeatureCard: FC<FeatureCardProps> = ({ service, onClick, theme }) => (
     whileHover={{ scale: 1.02 }}
     transition={{ duration: 0.3 }}
     onClick={onClick}
-    className={`rounded-xl overflow-hidden w-full h-[325px] cursor-pointer my-5 ${
+    className={`rounded-xl overflow-hidden w-full h-[325px] hover:shadow-lg transition-shadow duration-300 cursor-pointer text-center transform ${
       theme === 'dark'
         ? 'bg-blend-darken text-white border border-gray-50 border-opacity-15'
         : 'bg-white text-gray-900 border'

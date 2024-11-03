@@ -1,6 +1,6 @@
-import { Divider, Skeleton } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import SlotSkeleton from "./ServiceSlotSkeleton";
+import { Divider, Skeleton } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import SlotSkeleton from './ServiceSlotSkeleton';
 
 const ServiceDetailsSkeleton = () => {
   const { theme } = useTheme();
@@ -8,7 +8,7 @@ const ServiceDetailsSkeleton = () => {
   return (
     <div
       className={`min-h-screen mt-2  m-2${
-        theme === "dark" ? "text-white" : "text-black"
+        theme === 'dark' ? 'text-white' : 'text-black'
       }`}
     >
       <div className="mb-4 flex items-center justify-between mt-5">
@@ -35,12 +35,6 @@ const ServiceDetailsSkeleton = () => {
           </div>
         </div>
         <Divider className="my-4" />
-        <div className="flex flex-col mt-6">
-          <Skeleton className="w-[80px] rounded-xl h-[25px]" />
-          <div className="mt-5">
-            <SlotSkeleton />
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ const ServiceHighlights: React.FC = () => {
   return (
     <motion.section
       ref={ref}
-      className="py-12 rounded-md"
+      className="rounded-md"
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}

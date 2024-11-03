@@ -121,7 +121,7 @@ const WebsiteReview: FC = () => {
       ) : (
         <Swiper
           modules={[Navigation, Autoplay]}
-          spaceBetween={30}
+          spaceBetween={10}
           slidesPerView={3} // Adjust based on your responsiveness needs
           autoplay={{ delay: 5000 }}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -135,7 +135,7 @@ const WebsiteReview: FC = () => {
           {websiteReviews.map((review) => (
             <SwiperSlide key={review._id}>
               <motion.div
-                className={`p-4 border rounded-lg bg bg-default-50 my-3`}
+                className={`p-4 border rounded-lg bg bg-default-50 my-3 hover:shadow-lg transition-shadow duration-300 cursor-pointer`}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >

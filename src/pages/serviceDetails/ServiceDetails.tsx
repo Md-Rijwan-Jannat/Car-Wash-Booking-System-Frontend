@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
-import { FC, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useGetSingleServiceQuery } from "../../redux/features/admin/serviceManagementApi";
-import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
-import { Button, Calendar, Chip, Divider } from "@nextui-org/react";
-import { FaClock } from "react-icons/fa";
-import ServicesSlots from "../../components/serviceSlots/ServicesSlots";
-import NoData from "../../components/serviceSlots/NoData";
-import ServiceDetailsSkeleton from "../../components/skeleton/ServiceDetailsSkeleton";
-import { formatCalenderDate } from "../../utils/FormatDate";
-import { parseDate } from "@internationalized/date";
+import { FC, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useGetSingleServiceQuery } from '../../redux/features/admin/serviceManagementApi';
+import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
+import { Button, Calendar, Chip, Divider } from '@nextui-org/react';
+import { FaClock } from 'react-icons/fa';
+import ServicesSlots from '../../components/serviceSlots/ServicesSlots';
+import NoData from '../../components/serviceSlots/NoData';
+import ServiceDetailsSkeleton from '../../components/skeleton/ServiceDetailsSkeleton';
+import { formatCalenderDate } from '../../utils/FormatDate';
+import { parseDate } from '@internationalized/date';
 
 const ServiceDetails: FC = () => {
   const [focusedDate, setFocusedDate] = useState<any>();
@@ -51,7 +51,7 @@ const ServiceDetails: FC = () => {
   return (
     <div
       className={`min-h-screen mt-2 m-2 ${
-        theme === "dark" ? "text-white" : "text-black"
+        theme === 'dark' ? 'text-white' : 'text-black'
       }`}
     >
       <motion.div
