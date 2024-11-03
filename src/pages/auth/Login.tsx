@@ -8,7 +8,7 @@ import CWInput from "../../components/form/CWInput";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hook";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { setUser, TUser } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { verifyToken } from "../../utils/VerifyToken";
 
@@ -30,7 +30,7 @@ const Login: FC = () => {
       const res = await loginUser(data).unwrap();
 
       if (res.token) {
-        const userData = verifyToken(res.token);
+        const userData = verifyToken(res.token) as TUser;
         dispatch(setUser({ user: userData, token: res.token }));
         navigate("/");
       }
@@ -48,10 +48,8 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h2 className="flex flex-col gap-1 text-xl md:text-2xl font-bold my-2">
-        Log in
-      </h2>
+    <div className="flex flex-col md:items-center justify-center my-5 h-screen p-2">
+      <h2 className="text-center md:text-2xl font-bold my-2">Log in</h2>
       <CWForm onSubmit={onSubmit}>
         <div
           className={`flex flex-col items-center justify-center gap-5 border ${
@@ -95,7 +93,10 @@ const Login: FC = () => {
           >
             Sign in
           </Button>
-          <Link to="/auth/signup" className="mt-3 border-b text-primary">
+          <Link
+            to="/auth/signup"
+            className="mt-3 border-b border-default-300 text-primary"
+          >
             Create new account
           </Link>
         </div>

@@ -1,13 +1,14 @@
-import { FC } from "react";
-import SlotBooking from "../../components/slotBooking/SlotBooking";
+import { FC } from 'react';
+import SlotBooking from '../../components/slotBooking/SlotBooking';
+import Container from '../../components/ui/Container';
 
 type TBookingsProps = object;
 
 const Bookings: FC<TBookingsProps> = () => {
   return (
-    <div className="p-2">
+    <Container>
       <SlotBooking />
-    </div>
+    </Container>
   );
 };
 

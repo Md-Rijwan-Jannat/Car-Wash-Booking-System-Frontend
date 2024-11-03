@@ -14,16 +14,21 @@ import {
   REGISTER,
 } from "redux-persist";
 
-const persistConfig = {
-  key: "root",
+const authPersistConfig = {
+  key: "auth",
+  storage,
+};
+
+const slotBookmarkPersistConfig = {
+  key: "slotBookmarks",
   storage,
 };
 
 // Auth persist
-const persistedAuthReducer = persistReducer(persistConfig, AuthReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, AuthReducer);
 // Slot booking persist
 const persistedSlotBookmarkReducer = persistReducer(
-  persistConfig,
+  slotBookmarkPersistConfig,
   SlotBookmarkReducer
 );
 

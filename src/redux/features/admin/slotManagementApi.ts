@@ -51,10 +51,20 @@ const slotManagementApi = baseApi.injectEndpoints({
       },
     }),
     getAllCarBookingSlotsWithService: builder.query({
-      query: (id) => ({
-        url: `/slots/${id}`,
-        method: "GET",
-      }),
+      query: (data) => {
+        const params = new URLSearchParams();
+        if (data.args) {
+          Object.entries(data.args).forEach(([name, value]) => {
+            params.append(name, value as string);
+          });
+        }
+
+        return {
+          url: `/slots/${data.id}`,
+          method: "GET",
+          params,
+        };
+      },
     }),
     createSlots: builder.mutation({
       query: (data) => ({

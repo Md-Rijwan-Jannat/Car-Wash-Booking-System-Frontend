@@ -6,7 +6,6 @@ import { IoMdCall, IoMdMail, IoMdPerson, IoMdPin } from "react-icons/io";
 import CWTextarea from "../form/CWTextarea";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useTheme } from "next-themes";
-import BackButton from "../serviceSlots/BackButton";
 import CWSelect from "../form/CWSelect";
 import SlotsBookingCard from "./SlotsBookingCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
@@ -65,7 +64,7 @@ const SlotBooking: FC = () => {
       const result = await createSlotBooking(payload);
       if (result.data.success) {
         window.location.href = result.data.data.paymentSession.payment_url;
-        console.log("Booking successful 2", result);
+        console.log("Booking successful", result);
       }
 
       dispatch(clearBookmarks());
@@ -76,8 +75,6 @@ const SlotBooking: FC = () => {
 
   return (
     <div className="mt-4">
-      <BackButton />
-
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 w-full">
         {/* Left Side */}
         <div className="w-full">

@@ -1,8 +1,10 @@
-import { FC } from "react";
-import { Button, Chip } from "@nextui-org/react";
-import { TSlot } from "../../types/slotManagement.type";
-import { useTheme } from "next-themes";
-import { formatTo12Hour } from "../../utils/FormatDate";
+import { FC } from 'react';
+import { Button, Chip } from '@nextui-org/react';
+import { TSlot } from '../../types/slotManagement.type';
+import { useTheme } from 'next-themes';
+import { formatTo12Hour } from '../../utils/FormatDate';
+import { useAppSelector } from '../../redux/hook';
+import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 
 type SlotCardProps = {
   slot: TSlot;
@@ -11,16 +13,17 @@ type SlotCardProps = {
 
 const SlotCard: FC<SlotCardProps> = ({ slot, onBookSlot }) => {
   const { theme } = useTheme();
+  const user = useAppSelector(useCurrentUser) as TUser;
 
   return (
     <div
       key={slot._id}
       className={`flex flex-col gap-3 items-start border px-3 py-2 rounded-md ${
-        theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+        theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
       }`}
     >
       <Chip
-        color={slot.isBooked === "available" ? "warning" : "default"}
+        color={slot.isBooked === 'available' ? 'warning' : 'default'}
         variant="faded"
       >
         {slot.date}
@@ -34,13 +37,15 @@ const SlotCard: FC<SlotCardProps> = ({ slot, onBookSlot }) => {
         </Chip>
       </div>
       <Button
-        color={`${slot.isBooked === "available" ? "warning" : "default"}`}
+        color={`${slot.isBooked === 'available' ? 'warning' : 'default'}`}
         variant="bordered"
         size="sm"
-        disabled={slot.isBooked !== "available"}
+        disabled={slot.isBooked !== 'available'}
         onClick={() => onBookSlot(slot)}
       >
-        {slot.isBooked === "available" ? "Book this slot" : "Slot Unavailable"}
+        {slot.isBooked === 'available' && user?.role === 'user'
+          ? 'Book this slot'
+          : 'Slot Unavailable'}
       </Button>
     </div>
   );

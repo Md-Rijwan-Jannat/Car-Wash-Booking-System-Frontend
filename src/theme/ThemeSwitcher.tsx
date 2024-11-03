@@ -1,8 +1,8 @@
-import { Switch } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { IoIosSunny } from "react-icons/io";
-import { IoIosMoon } from "react-icons/io";
+import { Switch } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { IoIosSunny } from 'react-icons/io';
+import { IoIosMoon } from 'react-icons/io';
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -15,12 +15,12 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   const handleThemeChange = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
     <Switch
-      checked={theme === "dark"}
+      checked={theme === 'dark'}
       onChange={handleThemeChange}
       size="lg"
       color="warning"

@@ -32,11 +32,13 @@ const AdminDashboard: FC<TUserDashboardProps> = () => {
   return (
     <div
       className={`p-6 ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+        theme === "dark"
+          ? "bg-default-50 bg-opacity-30 text-white"
+          : "bg-white text-black"
       }`}
     >
       <div
-        className={`border p-4 rounded-md shadow-md ${
+        className={`border border-default-50 p-4 rounded-md relative ${
           theme === "dark" ? "border-gray-600" : "border-gray-200"
         }`}
       >
@@ -52,6 +54,7 @@ const AdminDashboard: FC<TUserDashboardProps> = () => {
           <Button
             as={NavLink}
             color="warning"
+            size="sm"
             variant="flat"
             className="w-[100px] mt-4"
             onClick={() => dispatch(logout())}
@@ -59,11 +62,13 @@ const AdminDashboard: FC<TUserDashboardProps> = () => {
             Logout
           </Button>
         </div>
-        <UserImageModal />
+        <div>
+          <UserImageModal />
+        </div>
       </div>
       <div className="flex flex-col md:flex-row items-start justify-between gap-6 mt-10">
         <div
-          className={`border rounded-md p-4 shadow-md ${
+          className={`border border-default-50 rounded-md p-4 ${
             theme === "dark" ? "border-gray-600" : "border-gray-200"
           }`}
         >
@@ -105,7 +110,7 @@ const AdminDashboard: FC<TUserDashboardProps> = () => {
           </div>
         </div>
         <div
-          className={`border rounded-md p-4 shadow-md ${
+          className={`border border-default-50 rounded-md p-4 ${
             theme === "dark" ? "border-gray-600" : "border-gray-200"
           }`}
         >

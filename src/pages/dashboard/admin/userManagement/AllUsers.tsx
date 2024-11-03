@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useState } from "react";
 import {
+  Chip,
   Pagination,
   Table,
   TableBody,
@@ -46,6 +47,9 @@ const AllUsers: FC<TAllUsersProps> = () => {
 
   return (
     <div>
+      <div className="mb-3">
+        <Chip variant="bordered">All Bookings Users</Chip>
+      </div>
       <Table aria-label="Users Overview Table">
         <TableHeader>
           <TableColumn>User</TableColumn>

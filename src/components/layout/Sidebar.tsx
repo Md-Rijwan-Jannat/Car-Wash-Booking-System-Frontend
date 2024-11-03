@@ -56,7 +56,7 @@ export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <aside className="h-screen">
+    <aside className="max-h-fit h-screen">
       <nav
         className={`h-full flex flex-col bg-white border-r ${
           theme === "dark"
@@ -78,20 +78,20 @@ export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className={`p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 ml-2 ${
+            className={`md:p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 md:ml-2 ${
               theme === "dark" ? "bg-opacity-5 hover:bg-opacity-10" : ""
             }`}
           >
             {expanded ? (
-              <LuChevronFirst size={35} />
+              <LuChevronFirst className="text-[25px] md:text-[35px]" />
             ) : (
-              <LuChevronLast size={35} />
+              <LuChevronLast className="text-[25px] md:text-[35px]" />
             )}
           </button>
         </div>
 
         <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
+          <ul className="flex-1 p-2 md:px-3">{children}</ul>
         </SidebarContext.Provider>
 
         <div
@@ -126,7 +126,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({ icon, text, link }) => {
 
   return (
     <li
-      className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-all group ${
+      className={`relative flex items-center p-1 md:py-2 md:px-3 my-1 font-medium rounded-md cursor-pointer transition-all group ${
         expanded ? "mb-2" : "mb-5 mt-2"
       }`}
     >
@@ -150,7 +150,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({ icon, text, link }) => {
           } ${
             expanded
               ? ""
-              : "w-7 h-[36px] rounded-full flex items-center justify-center"
+              : "w-4 h-[20px] md:w-7 md:h-[36px] rounded-full flex items-center justify-center"
           }`}
         >
           {icon}

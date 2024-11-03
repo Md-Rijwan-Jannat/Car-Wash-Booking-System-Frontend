@@ -30,7 +30,7 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
   return (
     <div>
       <div
-        className={`border p-2 py-5 rounded-md relative ${
+        className={`border border-default-50 p-2 py-5 rounded-md relative ${
           theme === "dark" ? "border-gray-50 border-opacity-15" : ""
         }`}
       >
@@ -46,6 +46,7 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
         <div className="flex items-center justify-center">
           <Button
             className="mt-3"
+            size="sm"
             as={NavLink}
             color="warning"
             variant="flat"
@@ -57,7 +58,7 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
       </div>
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 my-10">
         <div
-          className={`border w-full rounded-md p-2 ${
+          className={`border border-default-50 w-full rounded-md p-2 ${
             theme === "dark" ? "border-gray-50 border-opacity-15" : ""
           }`}
         >
@@ -95,7 +96,7 @@ const UserDashboard: FC<TUserDashboardProps> = () => {
           </div>
         </div>
         <div
-          className={`border w-full rounded-md p-2 ${
+          className={`border border-default-50 w-full rounded-md p-2 ${
             theme === "dark" ? "border-gray-50 border-opacity-15" : ""
           }`}
         >

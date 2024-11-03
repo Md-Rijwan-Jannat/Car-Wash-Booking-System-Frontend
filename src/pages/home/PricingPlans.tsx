@@ -55,12 +55,7 @@ const PricingPlans: React.FC = () => {
             </Chip>
             <ul className="mt-4 space-y-2">
               {plan.features.map((feature, idx) => (
-                <li
-                  key={idx}
-                  className={`text-gray-700 ${
-                    theme === "dark" ? "text-gray-400" : ""
-                  }`}
-                >
+                <li key={idx} className={`text-default-500`}>
                   {feature}
                 </li>
               ))}

@@ -149,6 +149,9 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
 
   return (
     <div>
+      <div className="mb-3">
+        <Chip variant="bordered">Overview All Bookings</Chip>
+      </div>
       <Table aria-label="Bookings Overview Table">
         <TableHeader columns={columns}>
           {(column) => (

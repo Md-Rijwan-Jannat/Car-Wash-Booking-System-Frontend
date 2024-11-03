@@ -30,9 +30,19 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(useCurrentUser);
+
+  const queryData = {
+    id: slotsId,
+    args: {
+      sort: "-date",
+    },
+  };
+
   const { data: serviceWithSlotsData, isLoading: slotsLoading } =
-    useGetAllCarBookingSlotsWithServiceQuery(slotsId);
+    useGetAllCarBookingSlotsWithServiceQuery(queryData);
   const slotsData = serviceWithSlotsData?.data;
+
+  console.log("slotsData", slotsData);
 
   const getUniqueDates = () => {
     const uniqueDates = new Set<string>();

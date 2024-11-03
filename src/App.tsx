@@ -1,4 +1,3 @@
-// src/App.tsx
 import { FC, useState, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { useRouter } from "./hooks/useRoutes";
@@ -12,21 +11,25 @@ const App: FC<TAppProps> = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const handleLoading = () => setLoading(false);
-
-    // Listen for the router to finish loading
-    window.addEventListener("load", handleLoading);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Adjust the timeout as needed
 
     return () => {
-      window.removeEventListener("load", handleLoading);
+      clearTimeout(timer);
     };
   }, []);
 
   return (
     <main>
-      {loading && <Loader />}
-      <RouterProvider router={router} />
-      <ScrollButton />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <RouterProvider router={router} />
+          <ScrollButton />
+        </>
+      )}
     </main>
   );
 };

@@ -13,7 +13,7 @@ import CWForm from "../../components/form/CWForm";
 import CWInput from "../../components/form/CWInput";
 import { useSignUpMutation } from "../../redux/features/auth/authApi";
 import CWTextarea from "../../components/form/CWTextarea";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 type TSignUpFormValues = {
@@ -27,6 +27,7 @@ type TSignUpFormValues = {
 const SignUp: FC = () => {
   const { theme } = useTheme();
   const [signupUser] = useSignUpMutation();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: TSignUpFormValues) => {
     const toastId = toast.loading("Register in...");
@@ -44,6 +45,7 @@ const SignUp: FC = () => {
           id: toastId,
           duration: 3000,
         });
+        navigate("/auth/login");
       } else {
         toast.dismiss(toastId);
       }
@@ -53,8 +55,8 @@ const SignUp: FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h2 className="flex flex-col gap-1 text-xl md:text-2xl font-bold my-2">
+    <div className="flex flex-col md:items-center justify-center my-5 md:h-screen p-2">
+      <h2 className="text-center text-xl md:text-2xl font-bold my-2">
         Sign Up
       </h2>
       <CWForm<TSignUpFormValues> onSubmit={onSubmit}>
@@ -119,7 +121,10 @@ const SignUp: FC = () => {
               I agree to the terms and conditions
             </Checkbox>
           </div>
-          <Link to="/auth/login" className="mt-3 border-b text-primary">
+          <Link
+            to="/auth/login"
+            className="mt-3 border-b border-default-300 text-primary"
+          >
             Already have an account? Log in
           </Link>
         </div>

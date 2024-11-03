@@ -1,23 +1,24 @@
-import { FC } from "react";
-import Banner from "../../components/banner/Banner";
-import FeaturedServices from "../../components/featuredServices/FeaturedServices";
-import WebsiteReview from "../../components/WebsiteReview/WebsiteReview";
-import ServiceHighlights from "./ServiceHighligts";
-import PricingPlans from "./PricingPlans";
+import { FC } from 'react';
+import Banner from '../../components/banner/Banner';
+import FeaturedServices from '../../components/featuredServices/FeaturedServices';
+import WebsiteReview from '../../components/WebsiteReview/WebsiteReview';
+import ServiceHighlights from './ServiceHighligts';
+import PricingPlans from './PricingPlans';
+import Container from '../../components/ui/Container';
 
 type THomeProps = object;
 
 const Home: FC<THomeProps> = () => {
   return (
-    <div className="md:ml-0.5 md:mr-1">
+    <>
       <Banner />
-      <div className="px-2">
-        <ServiceHighlights />
+      <Container>
         <FeaturedServices />
+        <ServiceHighlights />
         <PricingPlans />
         <WebsiteReview />
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 

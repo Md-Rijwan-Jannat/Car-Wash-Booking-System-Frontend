@@ -1,15 +1,15 @@
-import { FC, useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/autoplay";
-import { Pagination, Autoplay } from "swiper/modules";
-import { Card, Chip, Image, Skeleton } from "@nextui-org/react";
-import { FaDollarSign } from "react-icons/fa";
-import { FaClock } from "react-icons/fa6";
-import { useTheme } from "next-themes";
-import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { FC, useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import { Pagination, Autoplay } from 'swiper/modules';
+import { Card, Chip, Skeleton } from '@nextui-org/react';
+import { FaDollarSign } from 'react-icons/fa';
+import { FaClock } from 'react-icons/fa6';
+import { useTheme } from 'next-themes';
+import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 type TFeaturedServicesProps = object;
 
@@ -19,8 +19,8 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   const navigate = useNavigate();
 
   const { data: servicesData, isLoading } = useGetAllServicesQuery({
-    limit: "6",
-    sort: "createdAt",
+    limit: '6',
+    sort: 'createdAt',
   });
   const services = servicesData?.data;
 
@@ -38,8 +38,8 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
     };
 
     updateItemsCount();
-    window.addEventListener("resize", updateItemsCount);
-    return () => window.removeEventListener("resize", updateItemsCount);
+    window.addEventListener('resize', updateItemsCount);
+    return () => window.removeEventListener('resize', updateItemsCount);
   }, []);
 
   const handleDetailsPage = (id: string) => {
@@ -50,9 +50,11 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
     // Show loading placeholders
     return (
       <div className="mt-10">
-        <Chip variant="bordered" size="lg">
-          Featured Services
-        </Chip>
+        <div className=" my-3">
+          <Chip variant="bordered" size="lg">
+            Featured Services
+          </Chip>
+        </div>
         <div className="flex flex-row gap-5 mt-5">
           {[...Array(itemsCount)].map((_, index) => (
             <Card key={index} className="w-full space-y-5" radius="lg">
@@ -84,6 +86,11 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
 
   return (
     <div className="mt-10 relative max-w-7xl md:mx-auto mx-2">
+      <div className=" mb-3">
+        <Chip variant="bordered" size="lg" className="text-xl">
+          Featured Services
+        </Chip>
+      </div>
       <Swiper
         slidesPerView={1}
         spaceBetween={20}
@@ -118,18 +125,18 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className={`rounded-xl overflow-hidden w-full h-[450px] relative ${
-                theme === "dark"
-                  ? "bg-blend-darken text-white border border-gray-50 border-opacity-15"
-                  : "bg-white text-gray-900 border"
+              className={`rounded-xl overflow-hidden w-full h-[350px] relative cursor-pointer ${
+                theme === 'dark'
+                  ? 'bg-blend-darken text-white border border-gray-50 border-opacity-15'
+                  : 'bg-white text-gray-900 border'
               }`}
             >
-              <Image
+              <img
                 src={service.image}
                 alt={service.name}
                 width={600}
-                height={300}
-                className="w-full h-64 object-cover"
+                height={600}
+                className="w-full h-[200px] object-cover"
               />
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{service.name}</h3>

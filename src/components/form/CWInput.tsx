@@ -41,7 +41,7 @@ const CWInput: FC<TCWInputProps> = ({
           variant="bordered"
           color="warning"
           required={required}
-          value={field.value || ""} // Ensure the value resets to an empty string
+          value={field.value || ""}
         />
       )}
     />

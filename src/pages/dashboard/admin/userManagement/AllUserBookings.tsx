@@ -131,6 +131,9 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
 
   return (
     <div>
+      <div className="mb-3">
+        <Chip variant="bordered">All Bookings Users</Chip>
+      </div>
       <Table aria-label="Bookings Overview Table">
         <TableHeader columns={columns}>
           {(column) => (
