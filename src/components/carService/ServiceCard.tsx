@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { Button, Card, Chip, Tooltip } from "@nextui-org/react";
-import { TService } from "../../types";
-import { useTheme } from "next-themes";
-import { FaClock } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { FC } from 'react';
+import { Button, Card, Chip, Tooltip } from '@nextui-org/react';
+import { TService } from '../../types';
+import { useTheme } from 'next-themes';
+import { FaClock } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 interface ServiceCardProps {
   service: TService;
@@ -19,7 +19,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
   return (
     <Card
       className={`overflow-hidden h-[450px] border ${
-        theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+        theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
       }`}
     >
       <img
@@ -40,7 +40,7 @@ const ServiceCard: FC<ServiceCardProps> = ({ service }) => {
           <div className="flex justify-between items-center">
             <Chip color="warning" variant="flat">
               <p className="text-sm flex items-center gap-2">
-                <FaClock size={16} className="mb-0.5" /> {service.duration}{" "}
+                <FaClock size={16} className="mb-0.5" /> {service.duration}{' '}
                 minutes
               </p>
             </Chip>

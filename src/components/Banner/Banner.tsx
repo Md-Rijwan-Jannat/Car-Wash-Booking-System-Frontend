@@ -8,6 +8,7 @@ const images = [
   'https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg',
   'https://img.freepik.com/premium-photo/man-washing-car-with-word-spray-hood_763111-289060.jpg',
   'https://img.freepik.com/premium-photo/photo-portrait-cleaning-service-man-washing-car_763111-288929.jpg',
+  'https://img.freepik.com/premium-photo/photo-portrait-man-washing-car-cleaning-car_763111-223754.jpg?w=996',
 ];
 
 const Banner: React.FC = () => {
@@ -32,7 +33,7 @@ const Banner: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[80vh] overflow-hidden -mt-[90px]">
+    <div className="relative w-full h-[85vh] overflow-hidden -mt-[90px]">
       {/* Image Container */}
       <div className="relative w-full h-full">
         <AnimatePresence>
@@ -86,16 +87,24 @@ const Banner: React.FC = () => {
           Pamper your car with premier full wash complete with interior vacuum
           and window cleaning.
         </motion.p>
-        <Button
-          className="animate-smooth-bounce duration-700 ease-in-out text-white mt-10"
+        <motion.button
+          className="animate-bounce hover:animate-none duration-700 ease-in-out text-white mt-10 h-[45px]"
           onClick={() => navigate('/services')}
-          radius="full"
-          color="warning"
-          variant="bordered"
-          size="lg"
+          style={{
+            borderRadius: '9999px',
+            border: '2px solid #FFA500',
+            padding: '0 24px',
+            backgroundColor: 'transparent',
+          }}
+          whileHover={{
+            scale: 1.05,
+            backgroundColor: '#FFA500',
+            color: '#FFFFFF',
+          }}
+          transition={{ duration: 0.3 }}
         >
           Start Now
-        </Button>
+        </motion.button>
       </div>
 
       {/* Navigation Buttons */}

@@ -53,147 +53,153 @@ const NavBar: FC = () => {
   ].filter(Boolean);
 
   return (
-    <div className="p-3">
-      <Navbar maxWidth="xl" className="bg-default-50 bg-opacity-10 rounded-lg">
-        <NavbarContent className="sm:hidden" justify="start">
-          <NavbarBrand>
-            <Logo />
-          </NavbarBrand>
-        </NavbarContent>
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarBrand>
-            <Logo />
-          </NavbarBrand>
-          <div className="flex items-center justify-center gap-6">
-            {menuItems.map((item, index) => (
-              <NavbarItem key={index}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    isActive ? 'text-warning font-medium' : 'text-white'
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              </NavbarItem>
-            ))}
-          </div>
-        </NavbarContent>
-
-        <div className="flex justify-end">
-          <NavbarContent>
-            <div className="flex items-center gap-3">
-              <Tooltip content="Recent booking slot will start">
-                <NavbarItem className="hidden md:block mt-3">
-                  {booking?.data?.length && role === 'user' && (
-                    <NavBarCountDown
-                      slotDates={
-                        booking?.data?.[0].slot
-                          ? [[booking.data[0].slot[0].date]]
-                          : []
-                      } // Pass the first slot date
-                    />
-                  )}
-                </NavbarItem>
-              </Tooltip>
-              <NavbarItem>
-                <ThemeSwitcher />
-              </NavbarItem>
-              <NavbarItem>
-                <div
-                  onClick={() => navigate('/dashboard')}
-                  className="cursor-pointer"
-                >
-                  {user && <Avatar name={name} src={profileImg || undefined} />}
-                </div>
-              </NavbarItem>
-              <NavbarItem>
-                <div
-                  onClick={() => navigate('/booking')}
-                  className="cursor-pointer animate-pulse"
-                >
-                  {role === 'user' && (
-                    <Badge
-                      content={slotBookingData?.length || 0}
-                      color="warning"
-                      variant="flat"
-                      className="border-none"
-                    >
-                      <FaShopify className="text-warning" size={30} />
-                    </Badge>
-                  )}
-                </div>
-              </NavbarItem>
-              <NavbarItem className="hidden lg:flex">
-                {!user && (
-                  <Button
-                    className="text-white"
-                    as={NavLink}
-                    to="/auth/login"
-                    color="warning"
-                    variant="shadow"
-                    radius="full"
-                  >
-                    Login
-                  </Button>
-                )}
-              </NavbarItem>
-            </div>
-          </NavbarContent>
-        </div>
-
-        <NavbarMenu className="lg:hidden">
-          <Tooltip content="Recent booking slot will start">
-            <NavbarItem>
-              {booking?.data.length && role === 'user' && (
-                <NavBarCountDown
-                  slotDates={
-                    booking?.data?.[0].slot
-                      ? [[booking.data[0].slot[0].date]]
-                      : []
-                  } // Pass the first slot date
-                />
-              )}
-            </NavbarItem>
-          </Tooltip>
+    <Navbar
+      isBlurred={false}
+      maxWidth="xl"
+      className="bg-black bg-opacity-40 mb-2.5"
+    >
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarBrand>
+          <Logo />
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarBrand>
+          <Logo />
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <div className="flex items-center justify-center gap-6">
           {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.name}-${index}`}>
+            <NavbarItem key={index}>
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  `w-full ${isActive ? 'text-warning' : ''}`
+                  isActive
+                    ? 'text-white border-b-4 border-warning font-medium'
+                    : 'text-white'
                 }
               >
                 {item.name}
               </NavLink>
-            </NavbarMenuItem>
+            </NavbarItem>
           ))}
-          <NavbarMenuItem>
-            {user && (
-              <Button
-                as={NavLink}
-                to="/auth/login"
-                color="default"
-                variant="flat"
+        </div>
+      </NavbarContent>
+
+      <div className="flex justify-end">
+        <NavbarContent>
+          <div className="flex items-center gap-3">
+            <Tooltip content="Recent booking slot will start">
+              <NavbarItem className="hidden md:block mt-3">
+                {booking?.data?.length && role === 'user' && (
+                  <NavBarCountDown
+                    slotDates={
+                      booking?.data?.[0].slot
+                        ? [[booking.data[0].slot[0].date]]
+                        : []
+                    } // Pass the first slot date
+                  />
+                )}
+              </NavbarItem>
+            </Tooltip>
+            <NavbarItem>
+              <ThemeSwitcher />
+            </NavbarItem>
+            <NavbarItem>
+              <div
+                onClick={() => navigate('/dashboard')}
+                className="cursor-pointer"
               >
-                Login
-              </Button>
-            )}
-          </NavbarMenuItem>
-        </NavbarMenu>
-        <NavbarContent className="sm:hidden" justify="end">
-          <div
-            className={`border size-10 bg-orange-50 flex items-center justify-center rounded-full text-warning ${
-              theme === 'dark'
-                ? 'border-gray-100 bg-opacity-10 border-opacity-15'
-                : ''
-            }`}
-          >
-            <NavbarMenuToggle />
+                {user && <Avatar name={name} src={profileImg || undefined} />}
+              </div>
+            </NavbarItem>
+            <NavbarItem>
+              <div
+                onClick={() => navigate('/booking')}
+                className="cursor-pointer animate-pulse"
+              >
+                {role === 'user' && (
+                  <Badge
+                    content={slotBookingData?.length || 0}
+                    color="warning"
+                    variant="flat"
+                    className="border-none"
+                  >
+                    <FaShopify className="text-warning" size={30} />
+                  </Badge>
+                )}
+              </div>
+            </NavbarItem>
+            <NavbarItem className="hidden lg:flex">
+              {!user && (
+                <Button
+                  className="text-white"
+                  as={NavLink}
+                  to="/auth/login"
+                  color="warning"
+                  variant="shadow"
+                  radius="full"
+                >
+                  Login
+                </Button>
+              )}
+            </NavbarItem>
           </div>
         </NavbarContent>
-      </Navbar>
-    </div>
+      </div>
+
+      <NavbarMenu className="lg:hidden">
+        <Tooltip content="Recent booking slot will start">
+          <NavbarItem>
+            {booking?.data.length && role === 'user' && (
+              <NavBarCountDown
+                slotDates={
+                  booking?.data?.[0].slot
+                    ? [[booking.data[0].slot[0].date]]
+                    : []
+                } // Pass the first slot date
+              />
+            )}
+          </NavbarItem>
+        </Tooltip>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.name}-${index}`}>
+            <NavLink
+              to={item.path}
+              className={({ isActive }) =>
+                `w-full ${isActive ? 'text-warning' : ''}`
+              }
+            >
+              {item.name}
+            </NavLink>
+          </NavbarMenuItem>
+        ))}
+        <NavbarMenuItem>
+          {user && (
+            <Button
+              as={NavLink}
+              to="/auth/login"
+              color="default"
+              variant="flat"
+            >
+              Login
+            </Button>
+          )}
+        </NavbarMenuItem>
+      </NavbarMenu>
+      <NavbarContent className="sm:hidden" justify="end">
+        <div
+          className={`border size-10 bg-orange-50 flex items-center justify-center rounded-full text-warning ${
+            theme === 'dark'
+              ? 'border-gray-100 bg-opacity-10 border-opacity-15'
+              : ''
+          }`}
+        >
+          <NavbarMenuToggle />
+        </div>
+      </NavbarContent>
+    </Navbar>
   );
 };
 

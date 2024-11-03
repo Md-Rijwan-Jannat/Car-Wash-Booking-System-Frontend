@@ -1,80 +1,113 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Button, Chip } from "@nextui-org/react";
-import { useTheme } from "next-themes";
+import SectionTitle from '../../components/ui/SectionTitle';
+import { motion } from 'framer-motion';
 
-const plans = [
-  {
-    name: "Basic Wash",
-    price: "৳850", // Updated to BDT
-    features: ["Exterior Wash", "Tire Shine", "Quick Dry"],
-  },
-  {
-    name: "Premium Wash",
-    price: "৳1,700", // Updated to BDT
-    features: ["Exterior Wash", "Interior Vacuum", "Tire Shine", "Wax Finish"],
-  },
-  {
-    name: "Ultimate Wash",
-    price: "৳2,550", // Updated to BDT
-    features: [
-      "Exterior & Interior Cleaning",
-      "Engine Detailing",
-      "Tire Shine",
-      "Wax Finish",
-    ],
-  },
-];
+const PricingSection = () => {
+  const plans = [
+    {
+      title: 'Standard',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
+      price: '$19.90',
+      services: [
+        { name: 'Carpet Wash Service', available: true },
+        { name: 'Wheel Service', available: true },
+        { name: 'Glass Wash Service', available: true },
+        { name: 'Steering Service', available: true },
+        { name: 'Interiors VAC Service', available: false },
+        { name: 'Fuel Service', available: false },
+      ],
+      buttonColor: '', // Using your primary color for the button background
+    },
+    {
+      title: 'Premium',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
+      price: '$29.90',
+      services: [
+        { name: 'Carpet Wash Service', available: true },
+        { name: 'Wheel Service', available: true },
+        { name: 'Glass Wash Service', available: true },
+        { name: 'Steering Service', available: true },
+        { name: 'Interiors VAC Service', available: true },
+        { name: 'Fuel Service', available: false },
+      ],
+      buttonColor: 'bg-warning', // Using warning color for the button background
+    },
+    {
+      title: 'Enterprise',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
+      price: '$59.90',
+      services: [
+        { name: 'Carpet Wash Service', available: true },
+        { name: 'Wheel Service', available: true },
+        { name: 'Glass Wash Service', available: true },
+        { name: 'Steering Service', available: true },
+        { name: 'Interiors VAC Service', available: true },
+        { name: 'Full Service', available: true },
+      ],
+      buttonColor: '', // Using primary color for the button background
+    },
+  ];
 
-const PricingPlans: React.FC = () => {
-  const { theme } = useTheme();
   return (
-    <motion.section
-      className="py-12 rounded-md"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Chip size="lg" variant="bordered" className="text-xl">
-        Pricing Plans
-      </Chip>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5">
+    <section className="">
+      <SectionTitle
+        subHeader="Our Pricing"
+        header="Flexible Pricing Plans"
+        des=" Choose a plan that fits your needs and budget. Whether you need a quick wash or a full service."
+      />
+      <div className="flex flex-col md:flex-row gap-10 justify-center items-center">
         {plans.map((plan, index) => (
-          <motion.div
+          <div
             key={index}
-            className={`bg-gray-50 p-6 rounded-lg border hover:shadow transition-shadow duration-300 text-center inset-0 relative h-[300px] ${
-              theme === "dark"
-                ? "bg-opacity-5 border-gray-100 border-opacity-15"
-                : ""
+            className={`rounded-lg shadow-lg p-6 w-full md:w-1/3 ${
+              plan.title === 'Premium'
+                ? 'bg-default-100 text-default-900 h-[450px]'
+                : 'bg-default-50 text-default-700 h-[400px]'
             }`}
-            whileHover={{ scale: 1.05 }}
           >
-            <h3 className="text-xl font-bold text-warning mb-3">{plan.name}</h3>
-            <Chip color="warning" variant="faded" size="lg">
-              {plan.price}
-            </Chip>
-            <ul className="mt-4 space-y-2">
-              {plan.features.map((feature, idx) => (
-                <li key={idx} className={`text-default-500`}>
-                  {feature}
+            <h4
+              className={`text-lg font-bold ${
+                plan.title === 'Premium' ? 'text-warning' : 'text-primaryColor'
+              }`}
+            >
+              {plan.title}
+            </h4>
+            <p className="mt-2 text-sm">{plan.description}</p>
+            <div className="my-4 border-t border-gray-300"></div>
+            <ul className="mb-6">
+              {plan.services.map((service, i) => (
+                <li
+                  key={i}
+                  className={`flex items-center text-sm ${
+                    service.available
+                      ? 'text-primaryColor'
+                      : 'text-gray-400 line-through'
+                  }`}
+                >
+                  <span className="mr-2">{service.available ? '✔' : '✘'}</span>{' '}
+                  {service.name}
                 </li>
               ))}
             </ul>
-            <div className="flex items-center justify-center">
-              <Button
-                variant="faded"
-                color="warning"
-                size="sm"
-                className="mt-7 absolute z-10 bottom-3"
-              >
-                Choose Plan
-              </Button>
+            <div className="text-2xl font-bold mb-4">
+              {plan.price}/<span className="text-base">Service</span>
             </div>
-          </motion.div>
+            <motion.button
+              className={`w-full py-2 rounded-full ${
+                plan.buttonColor
+                  ? `${plan.buttonColor} text-white mt-10`
+                  : 'bg-transparent text-default-900 border border-warning hover:bg-warning hover:text-white'
+              }  hover:opacity-90 transition-all duration-600`}
+            >
+              Booking Now
+            </motion.button>
+          </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
-export default PricingPlans;
+export default PricingSection;
