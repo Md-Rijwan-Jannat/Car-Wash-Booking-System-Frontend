@@ -22,12 +22,13 @@ import {
   useCurrentUserToken,
 } from '../../redux/features/auth/authSlice';
 import { verifyToken } from '../../utils/VerifyToken';
-import { FaShopify } from 'react-icons/fa';
+import { FaHeart, FaShopify } from 'react-icons/fa';
 import { useGetMeQuery } from '../../redux/features/auth/authApi';
 import { getAllSlotBooking } from '../../redux/features/user/slotBookmarkSlice';
 import { useGetAllMyBookingsQuery } from '../../redux/features/user/slotBokingApi';
 import NavBarCountDown from './NavBarCountDown';
 import Logo from '../ui/Logo';
+import { getAllFavoriteServices } from '../../redux/features/service/serviceSlice';
 
 const NavBar: FC = () => {
   const { theme } = useTheme();
@@ -40,6 +41,8 @@ const NavBar: FC = () => {
   const token = useAppSelector(useCurrentUserToken);
   let user;
 
+  const allFavoriteServices = useAppSelector(getAllFavoriteServices);
+
   if (token) {
     user = verifyToken(token);
   }
@@ -49,14 +52,14 @@ const NavBar: FC = () => {
     { name: 'Services', path: '/services' },
     { name: 'Dashboard', path: `/dashboard` },
     { name: 'About Us', path: '/aboutUs' },
-    { name: 'Contact Us', path: '/contactUs' },
   ].filter(Boolean);
 
   return (
     <Navbar
+      position="static"
       isBlurred={false}
       maxWidth="xl"
-      className="bg-black bg-opacity-40 mb-2.5"
+      className="bg-transparent"
     >
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarBrand>
@@ -76,8 +79,8 @@ const NavBar: FC = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   isActive
-                    ? 'text-white border-b-4 border-warning font-medium'
-                    : 'text-white'
+                    ? 'text-warning border-b-4 border-warning font-medium'
+                    : 'text-default-900'
                 }
               >
                 {item.name}
@@ -87,69 +90,83 @@ const NavBar: FC = () => {
         </div>
       </NavbarContent>
 
-      <div className="flex justify-end">
-        <NavbarContent>
-          <div className="flex items-center gap-3">
-            <Tooltip content="Recent booking slot will start">
-              <NavbarItem className="hidden md:block mt-3">
-                {booking?.data?.length && role === 'user' && (
-                  <NavBarCountDown
-                    slotDates={
-                      booking?.data?.[0].slot
-                        ? [[booking.data[0].slot[0].date]]
-                        : []
-                    } // Pass the first slot date
-                  />
-                )}
-              </NavbarItem>
-            </Tooltip>
-            <NavbarItem>
-              <ThemeSwitcher />
-            </NavbarItem>
-            <NavbarItem>
-              <div
-                onClick={() => navigate('/dashboard')}
-                className="cursor-pointer"
-              >
-                {user && <Avatar name={name} src={profileImg || undefined} />}
-              </div>
-            </NavbarItem>
-            <NavbarItem>
-              <div
-                onClick={() => navigate('/booking')}
-                className="cursor-pointer animate-pulse"
-              >
-                {role === 'user' && (
-                  <Badge
-                    content={slotBookingData?.length || 0}
-                    color="warning"
-                    variant="flat"
-                    className="border-none"
-                  >
-                    <FaShopify className="text-warning" size={30} />
-                  </Badge>
-                )}
-              </div>
-            </NavbarItem>
-            <NavbarItem className="hidden lg:flex">
-              {!user && (
-                <Button
-                  className="text-white"
-                  as={NavLink}
-                  to="/auth/login"
-                  color="warning"
-                  variant="shadow"
-                  radius="full"
-                >
-                  Login
-                </Button>
+      <NavbarContent justify="end">
+        <div className="flex items-center gap-3">
+          <Tooltip content="Recent booking slot will start">
+            <NavbarItem className="hidden md:block mt-3">
+              {booking?.data?.length && role === 'user' && (
+                <NavBarCountDown
+                  slotDates={
+                    booking?.data?.[0].slot
+                      ? [[booking.data[0].slot[0].date]]
+                      : []
+                  } // Pass the first slot date
+                />
               )}
             </NavbarItem>
-          </div>
-        </NavbarContent>
-      </div>
+          </Tooltip>
+          <NavbarItem className="hidden lg:flex">
+            <ThemeSwitcher />
+          </NavbarItem>
+          <NavbarMenuItem className="hidden lg:flex">
+            <div
+              onClick={() => navigate('/favorites-services')}
+              className="cursor-pointer mt-2"
+            >
+              <Badge
+                content={`${allFavoriteServices?.length || 0}`}
+                color="warning"
+                variant="flat"
+                className="border-none text-default-900"
+              >
+                <FaHeart size={25} className="text-red-500" />
+              </Badge>
+            </div>
+          </NavbarMenuItem>
 
-      <NavbarMenu className="lg:hidden">
+          <NavbarItem>
+            <div
+              onClick={() => navigate('/dashboard')}
+              className="cursor-pointer"
+            >
+              {user && <Avatar name={name} src={profileImg || undefined} />}
+            </div>
+          </NavbarItem>
+          <NavbarItem>
+            <div
+              onClick={() => navigate('/booking')}
+              className="cursor-pointer animate-pulse"
+            >
+              {role === 'user' && (
+                <Badge
+                  content={slotBookingData?.length || 0}
+                  color="warning"
+                  variant="flat"
+                  className="border-none"
+                >
+                  <FaShopify className="text-warning" size={30} />
+                </Badge>
+              )}
+            </div>
+          </NavbarItem>
+          <NavbarItem className="hidden lg:flex">
+            {!user && (
+              <Button
+                className="text-white"
+                as={NavLink}
+                to="/auth/login"
+                color="warning"
+                variant="shadow"
+                radius="full"
+              >
+                Login
+              </Button>
+            )}
+          </NavbarItem>
+        </div>
+      </NavbarContent>
+
+      <NavbarMenu className="lg:hidden flex flex-col items-center pt-5">
         <Tooltip content="Recent booking slot will start">
           <NavbarItem>
             {booking?.data.length && role === 'user' && (
@@ -176,16 +193,35 @@ const NavBar: FC = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>
-          {user && (
+          <div
+            onClick={() => navigate('/favorites-services')}
+            className="cursor-pointer mt-2"
+          >
+            <Badge
+              content={`${allFavoriteServices?.length || 0}`}
+              color="warning"
+              variant="flat"
+              className="border-none text-default-900"
+            >
+              <FaHeart size={25} className="text-red-500" />
+            </Badge>
+          </div>
+        </NavbarMenuItem>
+        <NavbarMenuItem className="flex gap-3">
+          {!user && (
             <Button
+              className="text-white"
+              size="sm"
               as={NavLink}
               to="/auth/login"
-              color="default"
-              variant="flat"
+              color="warning"
+              variant="shadow"
+              radius="full"
             >
               Login
             </Button>
           )}
+          <ThemeSwitcher />
         </NavbarMenuItem>
       </NavbarMenu>
       <NavbarContent className="sm:hidden" justify="end">

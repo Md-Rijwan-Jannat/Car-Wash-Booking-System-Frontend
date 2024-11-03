@@ -1,3 +1,4 @@
+import { Button, Link } from '@nextui-org/react';
 import SectionTitle from '../../components/ui/SectionTitle';
 import { motion } from 'framer-motion';
 
@@ -7,7 +8,7 @@ const PricingSection = () => {
       title: 'Standard',
       description:
         'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
-      price: '$19.90',
+      price: '৳190',
       services: [
         { name: 'Carpet Wash Service', available: true },
         { name: 'Wheel Service', available: true },
@@ -22,7 +23,7 @@ const PricingSection = () => {
       title: 'Premium',
       description:
         'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
-      price: '$29.90',
+      price: '৳990',
       services: [
         { name: 'Carpet Wash Service', available: true },
         { name: 'Wheel Service', available: true },
@@ -37,7 +38,7 @@ const PricingSection = () => {
       title: 'Enterprise',
       description:
         'Lorem ipsum dolor sit amet consectetur adipiscing elit utelit tellus.',
-      price: '$59.90',
+      price: '৳590',
       services: [
         { name: 'Carpet Wash Service', available: true },
         { name: 'Wheel Service', available: true },
@@ -94,15 +95,18 @@ const PricingSection = () => {
             <div className="text-2xl font-bold mb-4">
               {plan.price}/<span className="text-base">Service</span>
             </div>
-            <motion.button
-              className={`w-full py-2 rounded-full ${
+            <Button
+              href="/services"
+              as={Link}
+              target="_self"
+              className={`w-full py-2 rounded-full text-center cursor-pointer ${
                 plan.buttonColor
                   ? `${plan.buttonColor} text-white mt-10`
                   : 'bg-transparent text-default-900 border border-warning hover:bg-warning hover:text-white'
               }  hover:opacity-90 transition-all duration-600`}
             >
               Booking Now
-            </motion.button>
+            </Button>
           </div>
         ))}
       </div>

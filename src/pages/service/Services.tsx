@@ -11,19 +11,20 @@ import Container from '../../components/ui/Container';
 const Services: FC = () => {
   const [sortItem, setSortItem] = useState('price');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterSearchTerm, setFilterSearchTerm] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
 
+  console.log(minPrice, maxPrice);
+
   const queryParams: Record<string, string> = {
     sort: sortItem,
-    limit: '9',
+    limit: '16',
     page: page.toString(),
   };
 
-  if (filterSearchTerm) queryParams.searchTerm = filterSearchTerm;
+  if (searchTerm) queryParams.searchTerm = searchTerm;
 
   const { data: servicesData, isLoading } = useGetAllServicesQuery(queryParams);
   const services = servicesData?.data as TService[];
@@ -44,40 +45,30 @@ const Services: FC = () => {
           : true;
         const matchesSearchTerm = service.name
           .toLowerCase()
-          .includes(filterSearchTerm.toLowerCase());
+          .includes(searchTerm.toLowerCase());
 
         return isAboveMinPrice && isBelowMaxPrice && matchesSearchTerm;
       });
 
       setFilteredServices(filtered);
     }
-  }, [services, filterSearchTerm, minPrice, maxPrice]);
-
-  const handleApplyFilter = () => {
-    setPage(1);
-    setFilterSearchTerm(searchTerm);
-  };
-
-  const handleResetFilter = () => {
-    setMinPrice('');
-    setMaxPrice('');
-    setSearchTerm('');
-    setFilterSearchTerm('');
-    setFilteredServices(services);
-  };
+  }, [services, searchTerm, minPrice, maxPrice]);
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
   if (isLoading || !services) {
-    return <ServiceSkeleton />;
+    return (
+      <Container>
+        {' '}
+        <ServiceSkeleton />
+      </Container>
+    );
   }
 
   return (
     <Container>
-      <div className="p-4 m-2">
-        <Chip className="mb-10">
-          <h2 className="font-bold text-center">Car Wash All Services</h2>
-        </Chip>
+      <div className="m-2 md:m-2">
+        <h2 className="font-medium text-start">Home/Services</h2>
 
         <ServiceFilter
           sortItem={sortItem}
@@ -88,13 +79,10 @@ const Services: FC = () => {
           setMaxPrice={setMaxPrice}
           minPrice={minPrice}
           setMinPrice={setMinPrice}
-          onApplyFilter={handleApplyFilter}
-          onResetFilter={handleResetFilter}
-          filterSearchTerm={''}
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {(filterSearchTerm || minPrice || maxPrice
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
+          {(searchTerm || minPrice || maxPrice
             ? filteredServices
             : services
           )?.map((service) => (
@@ -102,7 +90,7 @@ const Services: FC = () => {
           ))}
         </div>
 
-        {meta && (
+        {meta && services?.length > 16 && (
           <div className="mt-10 flex justify-center items-start">
             <Pagination
               color="default"

@@ -113,7 +113,7 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
     return <SlotSkeleton />;
   }
   return (
-    <div className="mt-6 flex flex-col justify-center">
+    <div className="mt-6 flex flex-col justify-center p-2 md:p-6">
       <div className="my-3">
         <Chip variant="faded">Services slots</Chip>
       </div>

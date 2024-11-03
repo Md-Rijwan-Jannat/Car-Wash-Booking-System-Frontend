@@ -1,38 +1,38 @@
-import AboutUs from "../pages/about/AboutUs";
-import Bookings from "../pages/booking/Bookings";
-import ContactUs from "../pages/contact/ContactUs";
-import Home from "../pages/home/Home";
-import Services from "../pages/service/Services";
-import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
-import Success from "../pages/success/Success";
+import AboutUs from '../pages/about/AboutUs';
+import Bookings from '../pages/booking/Bookings';
+import FavoriteService from '../pages/favorite';
+import Home from '../pages/home/Home';
+import Services from '../pages/service/Services';
+import ServiceDetails from '../pages/serviceDetails/ServiceDetails';
+import Success from '../pages/success/Success';
 
 export const MainRoutes = [
   {
-    path: "",
+    path: '',
     element: <Home />,
   },
   {
-    path: "services",
+    path: 'services',
     element: <Services />,
   },
   {
-    path: "booking",
+    path: 'booking',
     element: <Bookings />,
   },
   {
-    path: "aboutUs",
+    path: 'aboutUs',
     element: <AboutUs />,
   },
   {
-    path: "contactUs",
-    element: <ContactUs />,
+    path: 'favorites-services',
+    element: <FavoriteService />,
   },
   {
-    path: "service-details/:id",
+    path: 'service-details/:id',
     element: <ServiceDetails />,
   },
   {
-    path: "success",
+    path: 'success',
     element: <Success />,
   },
 ];

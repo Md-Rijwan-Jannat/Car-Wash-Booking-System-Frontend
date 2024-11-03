@@ -1,5 +1,16 @@
-import { Card, Skeleton } from "@nextui-org/react";
-import { FC } from "react";
+import {
+  Card,
+  Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Skeleton,
+  Slider,
+} from '@nextui-org/react';
+import { FC } from 'react';
+import { FaFilter } from 'react-icons/fa';
+import { FiSearch } from 'react-icons/fi';
 
 type TServiceSkeletonProps = {
   itemsCount?: number;
@@ -8,72 +19,103 @@ type TServiceSkeletonProps = {
 const ServiceSkeleton: FC<TServiceSkeletonProps> = ({ itemsCount = 9 }) => {
   return (
     <div className="m-4">
-      <div className="">
-        <Skeleton className="w-[200px] rounded-lg mb-10">
-          <div className="h-8 w-[200px] rounded-lg bg-default-300"></div>
-        </Skeleton>
-      </div>
-      <div className=" flex items-center justify-center gap-3 -mt-3">
-        <Skeleton className="w-[400px] rounded-lg">
-          <div className="h-10 w-[400px] rounded-lg bg-default-300"></div>
-        </Skeleton>
-        <Skeleton className="w-[80px] rounded-lg">
-          <div className="h-10 w-[80px] rounded-lg bg-default-300"></div>
-        </Skeleton>
-      </div>
-      <div className="flex flex-row gap-3 justify-between mb-4 mt-10">
-        <div className="flex flex-col justify-start gap-5">
-          <div className="flex flex-col md:flex-row items-center justify-start gap-4">
-            <Skeleton className="w-[200px] rounded-lg ">
-              <div className="h-10 w-[200px] rounded-lg bg-default-300"></div>
-            </Skeleton>
-            <Skeleton className="w-[200px] rounded-lg ">
-              <div className="h-10 w-[200px] rounded-lg bg-default-300"></div>
-            </Skeleton>
-          </div>
-          <div className="flex items-center justify-start gap-3">
-            <Skeleton className="w-[80px] rounded-lg mb-10">
-              <div className="h-8 w-[60px] rounded-lg bg-default-300"></div>
-            </Skeleton>
-            <Skeleton className="w-[80px] rounded-lg mb-10">
-              <div className="h-8 w-[60px] rounded-lg bg-default-300"></div>
-            </Skeleton>
-          </div>
+      <h2 className="font-medium text-start">Home/Services</h2>
+      <div className="mb-6">
+        <div className="flex items-center mx-auto rounded-full bg-default-50 border border-default-200 w-full md:w-1/3 px-2 py-1 my-5">
+          <input
+            type="text"
+            className="w-full px-4 py-2 rounded-full outline-none bg-default-50"
+            placeholder="Find your service here"
+          />
+          <button className="p-2 text-warning-600">
+            <FiSearch size={25} />
+          </button>
         </div>
 
-        <div>
-          <Skeleton className="w-[50px] rounded-lg">
-            <div className="h-6 w-[50px] rounded-lg bg-default-300"></div>
-          </Skeleton>
+        {/* Price Range Slider and Reset Button */}
+        <div className="flex flex-row gap-3 justify-between items-center mb-4">
+          <div className="flex flex-col justify-start gap-5">
+            <div className="flex flex-col md:flex-row items-center justify-start gap-4">
+              <Slider
+                size="sm"
+                label="Price Range"
+                minValue={0}
+                maxValue={1000}
+                step={2}
+                classNames={{
+                  base: 'max-w-md gap-3',
+                  track: 'border-s-warning-100',
+                  filler: 'bg-gradient-to-r from-warning-100 to-warning-500',
+                }}
+                renderThumb={(props) => (
+                  <div
+                    {...props}
+                    className="group p-1 top-1/2 bg-background border-small border-default-200 dark:border-default-400/50 shadow-medium rounded-full cursor-grab data-[dragging=true]:cursor-grabbing"
+                  >
+                    <span className="transition-transform bg-gradient-to-br shadow-small from-warning-100 to-warning-500 rounded-full w-5 h-5 block group-data-[dragging=true]:scale-80" />
+                  </div>
+                )}
+              />
+            </div>
+          </div>
+
+          {/* Sort Dropdown */}
+          <Dropdown>
+            <DropdownTrigger>
+              <Chip
+                variant="flat"
+                color="default"
+                endContent={<FaFilter size={14} />}
+              >
+                Filter
+              </Chip>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Filter options" selectionMode="single">
+              <DropdownItem key="createdAt">New</DropdownItem>
+              <DropdownItem key="-createdAt">Old</DropdownItem>
+              <DropdownItem key="-price">Price (High to low)</DropdownItem>
+              <DropdownItem key="price">Price (Low to high)</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
         {[...Array(itemsCount)].map((_, index) => (
-          <Card key={index} className="w-full space-y-5 h-[440px]" radius="lg">
-            <Skeleton className="rounded-lg">
-              <div className="h-48 rounded-lg bg-default-300"></div>
+          <Card
+            key={index}
+            className="w-full h-[370px] md:h-[380px] border border-default-100 rounded"
+            radius="lg"
+          >
+            <Skeleton className="rounded">
+              <div className="h-[130px] w-full rounded bg-default-300"></div>
             </Skeleton>
             <div className="space-y-3 p-3">
-              <Skeleton className="w-3/5 rounded-lg">
-                <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+              <Skeleton className="w-3/5 rounded-full">
+                <div className="h-3 w-3/5 rounded-full bg-default-200"></div>
               </Skeleton>
-              <Skeleton className="w-4/5 rounded-lg">
-                <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+              <Skeleton className="w-4/5 rounded-full">
+                <div className="h-3 w-4/5 rounded-full bg-default-200"></div>
               </Skeleton>
-              <div className="flex justify-between gap-3 mt-12">
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-8 w-2/4 rounded-lg bg-default-300"></div>
+              <div
+                style={{ marginTop: '70px' }}
+                className="flex justify-between gap-3"
+              >
+                <Skeleton className="w-2/5 rounded-full">
+                  <div className="h-6 w-2/4 rounded-full bg-default-300"></div>
                 </Skeleton>
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-8 w-2/4 rounded-lg bg-default-300"></div>
+                <Skeleton className="w-2/5 rounded-full">
+                  <div className="h-6 w-2/4 rounded-full bg-default-300"></div>
                 </Skeleton>
               </div>
-              <div className="flex justify-between gap-3 mt-10">
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-10 w-2/5 rounded-lg bg-default-300"></div>
+              <div
+                style={{ marginTop: '30px' }}
+                className="flex justify-between gap-3 mt-16"
+              >
+                <Skeleton className="w-2/5 rounded-full">
+                  <div className="h-6 w-2/5 rounded-full bg-default-300"></div>
                 </Skeleton>
-                <Skeleton className="w-2/5 rounded-lg">
-                  <div className="h-10 w-2/5 rounded-lg bg-default-300"></div>
+                <Skeleton className="w-2/5 rounded-full">
+                  <div className="h-6 w-2/5 rounded-full bg-default-300"></div>
                 </Skeleton>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@nextui-org/react';
 import { IoCaretBackCircle, IoCaretForwardCircle } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import SearchInput from './SearchInput';
 
 const images = [
   'https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg',
@@ -33,7 +34,7 @@ const Banner: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[85vh] overflow-hidden -mt-[90px]">
+    <div className="relative w-full h-[75vh] overflow-hidden">
       {/* Image Container */}
       <div className="relative w-full h-full">
         <AnimatePresence>
@@ -60,7 +61,8 @@ const Banner: React.FC = () => {
       </div>
 
       {/* Banner Text with Parallax Effect */}
-      <div className="absolute inset-0 flex bg-black bg-opacity-40 flex-col justify-center items-center text-center px-4 mt-20">
+      <div className="absolute inset-0 flex bg-black bg-opacity-40 flex-col justify-center items-center text-center px-4">
+        <SearchInput />
         <motion.p
           className="text-gray-50 text-lg uppercase tracking-wide mb-3"
           initial={{ y: -20, opacity: 0 }}

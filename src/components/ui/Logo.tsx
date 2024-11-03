@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <Link to={'/'}>
       <div
-        className={`flex items-center gap-3rounded-full px-3 py-1 justify-center w-full`}
+        className={`flex items-center gap-3rounded-full md:px-3 py-1 justify-center w-full`}
       >
         <FaHandsWash className="text-warning" size={35} />
         <h2 className="font-semibold text-warning text-sm md:text-xl hidden md:block">

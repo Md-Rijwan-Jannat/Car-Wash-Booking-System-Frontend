@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import AuthReducer from "./features/auth/authSlice";
-import SlotBookmarkReducer from "./features/user/slotBookmarkSlice";
-import { baseApi } from "./api/baseApi";
-import storage from "redux-persist/lib/storage";
+import { configureStore } from '@reduxjs/toolkit';
+import AuthReducer from './features/auth/authSlice';
+import SlotBookmarkReducer from './features/user/slotBookmarkSlice';
+import FavoriteServiceReducer from './features/service/serviceSlice'; // Import favoriteServiceSlice
+import { baseApi } from './api/baseApi';
+import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
   persistReducer,
@@ -12,24 +13,32 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
+} from 'redux-persist';
 
 const authPersistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
 };
 
 const slotBookmarkPersistConfig = {
-  key: "slotBookmarks",
+  key: 'slotBookmarks',
   storage,
 };
 
-// Auth persist
+const favoriteServicePersistConfig = {
+  key: 'favoriteServices',
+  storage,
+};
+
+// Persisted reducers
 const persistedAuthReducer = persistReducer(authPersistConfig, AuthReducer);
-// Slot booking persist
 const persistedSlotBookmarkReducer = persistReducer(
   slotBookmarkPersistConfig,
   SlotBookmarkReducer
+);
+const persistedFavoriteServiceReducer = persistReducer(
+  favoriteServicePersistConfig,
+  FavoriteServiceReducer
 );
 
 export const store = configureStore({
@@ -37,6 +46,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     slotBookmarks: persistedSlotBookmarkReducer,
+    favoriteServices: persistedFavoriteServiceReducer, // Add the persisted favorite services reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

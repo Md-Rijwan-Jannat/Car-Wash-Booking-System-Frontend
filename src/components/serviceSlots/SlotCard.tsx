@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Button, Chip } from '@nextui-org/react';
 import { TSlot } from '../../types/slotManagement.type';
-import { useTheme } from 'next-themes';
 import { formatTo12Hour } from '../../utils/FormatDate';
 import { useAppSelector } from '../../redux/hook';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
+import { motion } from 'framer-motion';
 
 type SlotCardProps = {
   slot: TSlot;
@@ -12,15 +12,20 @@ type SlotCardProps = {
 };
 
 const SlotCard: FC<SlotCardProps> = ({ slot, onBookSlot }) => {
-  const { theme } = useTheme();
   const user = useAppSelector(useCurrentUser) as TUser;
 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div
+    <motion.div
       key={slot._id}
-      className={`flex flex-col gap-3 items-start border px-3 py-2 rounded-md ${
-        theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
-      }`}
+      className={`flex flex-col gap-3 items-start border px-3 py-2 rounded-md border-default-100 bg-default-50`}
+      variants={itemVariants}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       <Chip
         color={slot.isBooked === 'available' ? 'warning' : 'default'}
@@ -47,7 +52,7 @@ const SlotCard: FC<SlotCardProps> = ({ slot, onBookSlot }) => {
           ? 'Book this slot'
           : 'Slot Unavailable'}
       </Button>
-    </div>
+    </motion.div>
   );
 };
 

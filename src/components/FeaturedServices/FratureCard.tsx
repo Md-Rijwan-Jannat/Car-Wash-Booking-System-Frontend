@@ -2,8 +2,9 @@
 import { FC } from 'react';
 import { Chip } from '@nextui-org/react';
 import { motion } from 'framer-motion';
-import { FaDollarSign, FaClock } from 'react-icons/fa6';
+import { FaDollarSign } from 'react-icons/fa6';
 import { TService } from '../../types';
+import { ImFire } from 'react-icons/im';
 
 interface FeatureCardProps {
   service: TService;
@@ -16,7 +17,7 @@ const FeatureCard: FC<FeatureCardProps> = ({ service, onClick, theme }) => (
     whileHover={{ scale: 1.02 }}
     transition={{ duration: 0.3 }}
     onClick={onClick}
-    className={`rounded-xl overflow-hidden w-full h-[325px] hover:shadow-lg transition-shadow duration-300 cursor-pointer text-center transform ${
+    className={`rounded-xl overflow-hidden w-full h-[325px] hover:shadow-lg transition-shadow duration-300 cursor-pointer text-center transform mb-4 ${
       theme === 'dark'
         ? 'bg-blend-darken text-white border border-gray-50 border-opacity-15'
         : 'bg-white text-gray-900 border'
@@ -40,11 +41,11 @@ const FeatureCard: FC<FeatureCardProps> = ({ service, onClick, theme }) => (
           <p>{service.price}</p>
         </Chip>
         <Chip
-          startContent={<FaClock size={18} />}
+          startContent={<ImFire className="text-warning-500" size={18} />}
           variant="flat"
           color="warning"
         >
-          <p>{service.duration} minutes</p>
+          Trending
         </Chip>
       </div>
     </div>

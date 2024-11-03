@@ -72,9 +72,9 @@ const WebsiteReview: FC = () => {
         des="Read real testimonials from our satisfied clients. We pride ourselves on our quality of service and customer satisfaction."
       />
       <div className="flex items-center justify-between gap-3 mb-6">
-        <div className="text-center flex items-center gap-3 font-semibold bg-default-300 px-4 py-1 rounded-lg">
+        <div className="text-center flex items-center gap-3 font-semibold">
           Overall website rating: {overallRating.toFixed(1)} / 5{' '}
-          <RatingDisplay rating={overallRating} size={14} color="#ffffff" />
+          <RatingDisplay rating={overallRating} size={14} color="#D4D4D8" />
         </div>
 
         {user ? (
@@ -84,31 +84,13 @@ const WebsiteReview: FC = () => {
             onClick={reviewHandler}
             color="warning"
             variant="shadow"
+            size="sm"
             radius="full"
             className="text-white"
           >
             Add Review
           </Button>
         )}
-      </div>
-
-      <div className="flex items-center justify-end gap-3">
-        <Button
-          isIconOnly
-          radius="full"
-          startContent={<IoIosArrowBack size={25} />}
-          onClick={handlePrevSlide}
-          aria-label="Previous review"
-          className="bg-default-200 p-1 rounded-full text-warning-500"
-        />
-        <Button
-          isIconOnly
-          radius="full"
-          startContent={<IoIosArrowForward size={25} />}
-          onClick={handleNextSlide}
-          aria-label="Next review"
-          className="bg-default-200 p-1 rounded-full text-warning-500"
-        />
       </div>
 
       {websiteReviews.length === 0 ? (
@@ -169,6 +151,25 @@ const WebsiteReview: FC = () => {
           ))}
         </Swiper>
       )}
+
+      <div className="flex items-center justify-center gap-3">
+        <Button
+          isIconOnly
+          radius="full"
+          startContent={<IoIosArrowBack size={25} />}
+          onClick={handlePrevSlide}
+          aria-label="Previous review"
+          className="bg-default-200 p-1 rounded-full text-warning-500"
+        />
+        <Button
+          isIconOnly
+          radius="full"
+          startContent={<IoIosArrowForward size={25} />}
+          onClick={handleNextSlide}
+          aria-label="Next review"
+          className="bg-default-200 p-1 rounded-full text-warning-500"
+        />
+      </div>
     </div>
   );
 };

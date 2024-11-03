@@ -58,15 +58,15 @@ const ServiceDetails: FC = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto bg-white bg-opacity-10 rounded-lg shadow-lg p-6"
+        className="max-w-7xl mx-auto"
       >
-        <div className="flex flex-col md:flex-row items-start justify-between gap-5">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-5 bg-default-50 p-2 md:p-6 rounded-lg">
           <div className="flex flex-col gap-3">
             <Chip variant="faded">{name}</Chip>
             <img
               src={image}
               alt={name}
-              className="w-full h-64 object-cover mb-4 rounded-lg"
+              className="w-full md:w-1/2 h-64 object-cover mb-4 rounded-lg"
             />
             <p className="text-lg mb-4">{description}</p>
             <div className="flex items-center gap-3 justify-between">
