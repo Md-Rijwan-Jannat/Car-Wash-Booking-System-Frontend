@@ -4,20 +4,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { Chip, Skeleton } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
 import { useNavigate } from 'react-router-dom';
 import SectionTitle from '../ui/SectionTitle';
-import ServiceCard from '../carService/ServiceCard';
 import FeatureCard from './FratureCard';
+import Container from '../ui/Container';
 
 type TFeaturedServicesProps = object;
 
 // SkeletonCard Component
 const SkeletonCard: FC = () => (
-  <div className="w-full space-y-5 h-[300px]">
-    <Skeleton className="rounded-lg">
+  <div className="w-full space-y-5 h-[300px] border border-default-100 rounded">
+    <Skeleton className="rounded">
       <div className="h-[170px] rounded-lg bg-default-300"></div>
     </Skeleton>
     <div className="space-y-3 p-3">
@@ -52,13 +52,13 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   useEffect(() => {
     const updateItemsCount = () => {
       if (window.innerWidth >= 1280) {
-        setItemsCount(4);
+        setItemsCount(5);
       } else if (window.innerWidth >= 1024) {
-        setItemsCount(3);
+        setItemsCount(4);
       } else if (window.innerWidth >= 768) {
-        setItemsCount(2);
+        setItemsCount(3);
       } else {
-        setItemsCount(1);
+        setItemsCount(2);
       }
     };
 
@@ -91,36 +91,38 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   }
 
   return (
-    <div className="mt-10 relative max-w-7xl md:mx-auto mx-2">
-      <SectionTitle
-        subHeader="Featured Services"
-        header="Professional Car Care Services"
-        des="Choose a service that suits your needs. From quick washes to full detailing, we offer everything to keep your car looking its best."
-      />
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={20}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 2000, disableOnInteraction: false }}
-        modules={[Pagination, Autoplay]}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
-        }}
-      >
-        {services.map((service) => (
-          <SwiperSlide key={service._id}>
-            <FeatureCard
-              service={service}
-              onClick={() => handleDetailsPage(service._id)}
-              theme={theme}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <Container>
+      <div className="mt-10 relative max-w-7xl md:mx-auto mx-2">
+        <SectionTitle
+          subHeader="Featured Services"
+          header="Professional Car Care Services"
+          des="Choose a service that suits your needs. From quick washes to full detailing, we offer everything to keep your car looking its best."
+        />
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={20}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          modules={[Pagination, Autoplay]}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
+            1280: { slidesPerView: 5 },
+          }}
+        >
+          {services.map((service) => (
+            <SwiperSlide key={service._id}>
+              <FeatureCard
+                service={service}
+                onClick={() => handleDetailsPage(service._id)}
+                theme={theme}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </Container>
   );
 };
 

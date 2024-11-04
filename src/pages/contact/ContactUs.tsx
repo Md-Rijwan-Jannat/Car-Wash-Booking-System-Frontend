@@ -11,10 +11,10 @@ import CWForm from '../../components/form/CWForm';
 import CWInput from '../../components/form/CWInput';
 import CWTextarea from '../../components/form/CWTextarea';
 import { Button } from '@nextui-org/react';
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import Location from './Location';
 import SectionTitle from '../../components/ui/SectionTitle';
 import { toast } from 'sonner';
+import Container from '../../components/ui/Container';
 
 type TContactUsFormValues = {
   name: string;
@@ -55,7 +55,7 @@ const ContactUs: FC = () => {
   };
 
   return (
-    <>
+    <Container>
       <SectionTitle
         subHeader="Get in Touch"
         header="Contact Us"
@@ -136,7 +136,7 @@ const ContactUs: FC = () => {
 
         <Location />
       </div>
-    </>
+    </Container>
   );
 };
 

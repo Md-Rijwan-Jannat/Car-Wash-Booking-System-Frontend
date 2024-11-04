@@ -50,7 +50,7 @@ const ServiceDetails: FC = () => {
 
   return (
     <div
-      className={`min-h-screen mt-2 m-2 ${
+      className={`min-h-screen${
         theme === 'dark' ? 'text-white' : 'text-black'
       }`}
     >
@@ -66,7 +66,7 @@ const ServiceDetails: FC = () => {
             <img
               src={image}
               alt={name}
-              className="w-full md:w-1/2 h-64 object-cover mb-4 rounded-lg"
+              className="w-full md:w-[420px] h-64 object-cover mb-4 rounded-lg"
             />
             <p className="text-lg mb-4">{description}</p>
             <div className="flex items-center gap-3 justify-between">

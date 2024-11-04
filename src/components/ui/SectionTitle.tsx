@@ -1,7 +1,6 @@
 // SectionTitle.tsx
 import { useEffect, useState, useRef } from 'react';
 import { useAnimation, motion } from 'framer-motion';
-import { Chip } from '@nextui-org/react';
 
 interface TSectionTitleProps {
   subHeader: string;

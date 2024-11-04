@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Checkbox } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { FC } from "react";
-import { IoMdLock, IoMdMail } from "react-icons/io";
-import CWForm from "../../components/form/CWForm";
-import CWInput from "../../components/form/CWInput";
-import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hook";
-import { setUser, TUser } from "../../redux/features/auth/authSlice";
-import { toast } from "sonner";
-import { verifyToken } from "../../utils/VerifyToken";
+import { Button, Checkbox } from '@nextui-org/react';
+import { FC } from 'react';
+import { IoMdLock, IoMdMail } from 'react-icons/io';
+import CWForm from '../../components/form/CWForm';
+import CWInput from '../../components/form/CWInput';
+import { useLoginMutation } from '../../redux/features/auth/authApi';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/hook';
+import { setUser, TUser } from '../../redux/features/auth/authSlice';
+import { toast } from 'sonner';
+import { verifyToken } from '../../utils/VerifyToken';
+import Container from '../../components/ui/Container';
 
 type TLoginFormValues = {
   email: string;
@@ -18,13 +18,12 @@ type TLoginFormValues = {
 };
 
 const Login: FC = () => {
-  const { theme } = useTheme();
   const [loginUser, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (data: TLoginFormValues) => {
-    const toastId = toast.loading("Logging in...");
+    const toastId = toast.loading('Logging in...');
 
     try {
       const res = await loginUser(data).unwrap();
@@ -32,15 +31,15 @@ const Login: FC = () => {
       if (res.token) {
         const userData = verifyToken(res.token) as TUser;
         dispatch(setUser({ user: userData, token: res.token }));
-        navigate("/");
+        navigate('/');
       }
 
-      toast.success("Successfully logged in", {
+      toast.success('Successfully logged in', {
         id: toastId,
         duration: 3000,
       });
     } catch (error) {
-      toast.error("Something went wrong", {
+      toast.error('Something went wrong', {
         id: toastId,
         duration: 3000,
       });
@@ -48,60 +47,68 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:items-center justify-center my-5 h-screen p-2">
-      <h2 className="text-center md:text-2xl font-bold my-2">Log in</h2>
-      <CWForm onSubmit={onSubmit}>
-        <div
-          className={`flex flex-col items-center justify-center gap-5 border ${
-            theme === "dark" ? "border-gray-50 border-opacity-15" : ""
-          } rounded-md p-3 lg:p-5 w-full md:w-[400px]`}
-        >
-          <CWInput
-            name="email"
-            label="Email"
-            placeholder="Enter your email"
-            required={true}
-            type="email"
-            icon={<IoMdMail className="text-2xl text-warning" />}
-          />
-          <CWInput
-            name="password"
-            label="Password"
-            placeholder="Enter your password"
-            required={true}
-            type="password"
-            icon={<IoMdLock className="text-2xl text-warning" />}
-          />
-          <div className="flex py-2 px-1 justify-between w-full">
-            <Checkbox
-              classNames={{
-                label: "text-small",
-              }}
-              color="warning"
+    <Container>
+      <div className="flex flex-col-reverse md:flex-row md:items-center justify-center h-screen ">
+        <div className="w-full h-[400px] max-w-md bg-white rounded-l-md p-6">
+          <CWForm onSubmit={onSubmit}>
+            <h2 className="text-center text-3xl font-bold my-4 text-warning">
+              Log in
+            </h2>
+            <div
+              className={`flex flex-col items-center justify-center gap-5 rounded-md p-5 w-full`}
             >
-              Remember me
-            </Checkbox>
-            <Link className="text-[14px] text-primary" to="#">
-              Forgot password?
-            </Link>
-          </div>
-          <Button
-            isLoading={isLoading}
-            color="warning"
-            variant="flat"
-            type="submit"
-          >
-            Sign in
-          </Button>
-          <Link
-            to="/auth/signup"
-            className="mt-3 border-b border-default-300 text-primary"
-          >
-            Create new account
-          </Link>
+              <CWInput
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
+                required={true}
+                type="email"
+                icon={<IoMdMail className="text-2xl text-warning" />}
+              />
+              <CWInput
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
+                required={true}
+                type="password"
+                icon={<IoMdLock className="text-2xl text-warning" />}
+              />
+              <div className="flex py-2 justify-between w-full">
+                <Checkbox
+                  classNames={{
+                    label: 'text-small',
+                  }}
+                  color="warning"
+                >
+                  Remember me
+                </Checkbox>
+                <Button
+                  isLoading={isLoading}
+                  color="warning"
+                  type="submit"
+                  radius="full"
+                  className="transition duration-200 ease-in-out transform hover:scale-105 text-white w-[100px]"
+                >
+                  Sign in
+                </Button>
+              </div>
+            </div>
+          </CWForm>
         </div>
-      </CWForm>
-    </div>
+        <div className="flex flex-col items-center justify-center w-full h-[400px] bg-warning rounded-r-md p-4">
+          <h3 className="text-white text-2xl font-semibold mb-4">
+            Welcome Back
+          </h3>
+          <Button
+            as={Link}
+            to="/auth/signup"
+            className="rounded-full bg-white text-black hover:text-white hover:bg-warning-600 transition duration-300"
+          >
+            Signup
+          </Button>
+        </div>
+      </div>
+    </Container>
   );
 };
 

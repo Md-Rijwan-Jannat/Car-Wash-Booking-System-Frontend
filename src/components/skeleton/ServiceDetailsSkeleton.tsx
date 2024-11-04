@@ -1,6 +1,5 @@
 import { Divider, Skeleton } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
-import SlotSkeleton from './ServiceSlotSkeleton';
 
 const ServiceDetailsSkeleton = () => {
   const { theme } = useTheme();

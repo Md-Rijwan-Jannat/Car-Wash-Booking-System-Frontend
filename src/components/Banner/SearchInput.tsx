@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 import { GoArrowUpRight } from 'react-icons/go';

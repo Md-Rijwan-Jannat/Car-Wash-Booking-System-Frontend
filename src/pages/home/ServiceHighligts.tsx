@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useAnimation, useInView } from 'framer-motion';
 import {
   FaCar,
   FaWater,
@@ -8,8 +8,8 @@ import {
   FaTint,
   FaWind,
 } from 'react-icons/fa';
-import { useTheme } from 'next-themes';
 import SectionTitle from '../../components/ui/SectionTitle';
+import Container from '../../components/ui/Container';
 
 const services = [
   {
@@ -50,9 +50,39 @@ const services = [
 ];
 
 const ServiceHighlights: React.FC = () => {
-  const { theme } = useTheme();
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
+
+  const controls = useAnimation();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.8) {
+          setIsVisible(true);
+        }
+      }
+    };
+
+    // Initial check
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      controls.start({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, ease: 'easeOut' },
+      });
+    }
+  }, [controls, isVisible]);
 
   // Animation variants
   const containerVariants = {
@@ -75,38 +105,62 @@ const ServiceHighlights: React.FC = () => {
   return (
     <motion.section
       ref={ref}
-      className="rounded-md -mt-4"
+      className="relative  pb-20 pt-2 px-4 bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://as2.ftcdn.net/v2/jpg/10/29/80/47/1000_F_1029804726_4cR964jwvgXuakphKhFmeTLQyzozTIIx.jpg')",
+      }}
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
     >
-      <SectionTitle
-        subHeader="Our Services"
-        header="Explore Our Car Care Options"
-        des="Choose a service tailored to your vehicle's needs, ensuring it stays clean and well-maintained."
-      />
-
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5"
-        variants={containerVariants}
-      >
-        {services.map((service, index) => (
+      {/* Overlay for darkening the background */}
+      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <Container>
+        {' '}
+        {/* Content */}
+        <div className="relative z-10 mx-auto text-white">
+          <SectionTitle subHeader="" header="" des="" />
           <motion.div
-            key={index}
-            className={`p-6 rounded-lg border hover:shadow-lg transition-shadow duration-300 cursor-pointer text-center transform bg-default-50 text-default-900 border-default-100 flex flex-col items-center justify-center
-            `}
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            ref={sectionRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={controls}
+            className="flex flex-col gap-1 items-center justify-center mb-4"
           >
-            <h2 className="text-default-800">{service.icon}</h2>
-            <h3 className="text-xl font-semibold mt-4 text-default-900">
-              {service.title}
+            <div className="rounded-xl text-sm md:text-lg text-warning-500 italic">
+              Our Services
+            </div>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mt-2">
+              Explore Our Car Care Options
             </h3>
-            <p className="mt-2 text-default-600">{service.description}</p>
+            <p className="text-white mt-2 max-w-md mx-auto text-xs text-center">
+              Choose a service tailored to your vehicle's needs, ensuring it
+              stays clean and well-maintained.
+            </p>
           </motion.div>
-        ))}
-      </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5"
+            variants={containerVariants}
+          >
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                className="p-6 rounded-lg border hover:shadow-lg transition-shadow duration-300 cursor-pointer text-center transform bg-white text-gray-900 border-gray-200 flex flex-col items-center justify-center"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div>{service.icon}</div>
+                <h3 className="text-xl font-semibold mt-4 text-gray-900">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-gray-600">{service.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </Container>
     </motion.section>
   );
 };

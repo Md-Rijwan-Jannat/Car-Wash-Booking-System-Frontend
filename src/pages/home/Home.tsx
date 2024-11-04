@@ -13,13 +13,12 @@ const Home: FC<THomeProps> = () => {
   return (
     <>
       <Banner />
-      <Container>
-        <FeaturedServices />
-        <ServiceHighlights />
-        <PricingPlans />
-        <WebsiteReview />
-        <ContactUs />
-      </Container>
+
+      <FeaturedServices />
+      <ServiceHighlights />
+      <PricingPlans />
+      <WebsiteReview />
+      <ContactUs />
     </>
   );
 };
