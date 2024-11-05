@@ -10,6 +10,7 @@ const images = [
   'https://img.freepik.com/premium-photo/man-washing-car-with-word-spray-hood_763111-289060.jpg',
   'https://img.freepik.com/premium-photo/photo-portrait-cleaning-service-man-washing-car_763111-288929.jpg',
   'https://img.freepik.com/premium-photo/photo-portrait-man-washing-car-cleaning-car_763111-223754.jpg?w=996',
+  'https://images.unsplash.com/photo-1650356060624-1b5909c58b8c?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 ];
 
 const Banner: React.FC = () => {

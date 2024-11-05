@@ -34,7 +34,7 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
   const queryData = {
     id: slotsId,
     args: {
-      sort: '-date',
+      sort: 'isBooked',
     },
   };
 

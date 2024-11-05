@@ -1,22 +1,22 @@
-import { FC, useState } from "react";
-import { useGetAllServicesSlotsQuery } from "../../../../redux/features/admin/slotManagementApi";
-import { TMeta, TSlot } from "../../../../types";
-import { useTheme } from "next-themes";
-import { Chip, Pagination, Tooltip } from "@nextui-org/react";
-import { FaClock } from "react-icons/fa";
-import CreateSlotModal from "../../../../components/modal/CreateSlotsModal";
-import SlotStatusDropdown from "./SlotStatusDropdown";
-import NoData from "../../../../components/serviceSlots/NoData";
-import SlotSkeleton from "../../../../components/skeleton/ServiceSlotSkeleton";
-import { formatTo12Hour } from "../../../../utils/FormatDate";
+import { FC, useState } from 'react';
+import { useGetAllServicesSlotsQuery } from '../../../../redux/features/admin/slotManagementApi';
+import { TMeta, TSlot } from '../../../../types';
+import { useTheme } from 'next-themes';
+import { Chip, Pagination, Tooltip } from '@nextui-org/react';
+import { FaClock } from 'react-icons/fa';
+import CreateSlotModal from '../../../../components/modal/CreateSlotsModal';
+import SlotStatusDropdown from './SlotStatusDropdown';
+import NoData from '../../../../components/serviceSlots/NoData';
+import SlotSkeleton from '../../../../components/skeleton/ServiceSlotSkeleton';
+import { formatTo12Hour } from '../../../../utils/FormatDate';
 
 type TAllSlotsProps = object;
 
 const AllSlots: FC<TAllSlotsProps> = () => {
   const [page, setPage] = useState(1);
   const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "10",
+    sort: '-createdAt',
+    limit: '9',
     page: page.toString(),
   };
   const { theme } = useTheme();
@@ -48,7 +48,7 @@ const AllSlots: FC<TAllSlotsProps> = () => {
             <div
               key={slot._id}
               className={`flex flex-col gap-3 items-start border px-3 py-2 rounded-md ${
-                theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+                theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
               }`}
             >
               <div className="flex items-center justify-between gap-3 w-full">
@@ -61,13 +61,13 @@ const AllSlots: FC<TAllSlotsProps> = () => {
                 </Tooltip>
                 <Chip color="warning" variant="flat">
                   <p className="text-sm flex items-center gap-2">
-                    <FaClock size={16} className="mb-0.5" />{" "}
+                    <FaClock size={16} className="mb-0.5" />{' '}
                     {slot?.service?.duration} minutes
                   </p>
                 </Chip>
               </div>
               <Chip
-                color={slot.isBooked === "available" ? "warning" : "default"}
+                color={slot.isBooked === 'available' ? 'warning' : 'default'}
                 variant="faded"
               >
                 {slot.date}
@@ -94,7 +94,7 @@ const AllSlots: FC<TAllSlotsProps> = () => {
             total={meta.totalPage}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === "dark" ? " bg-opacity-30" : ""
+              theme === 'dark' ? ' bg-opacity-30' : ''
             }`}
             onChange={(newPage) => handlePageChange(newPage)}
           />

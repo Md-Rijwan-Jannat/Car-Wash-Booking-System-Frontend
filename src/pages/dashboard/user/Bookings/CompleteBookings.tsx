@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useCallback, useState } from 'react';
 import {
@@ -10,28 +11,40 @@ import {
   Chip,
   Pagination,
   Avatar,
+  Tooltip,
 } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
-import { useGetAllBookingsQuery } from '../../../../redux/features/admin/serviceManagementApi';
-import { TMeta, TSlotBooking } from '../../../../types';
+import { useGetAllMyBookingsQuery } from '../../../../redux/features/user/slotBokingApi';
+import { TSlotBooking } from '../../../../types';
+import { formatTo12Hour } from '../../../../utils/FormatDate';
 import LoaderSkeleton from '../../../../components/skeleton/LoaderSkeleton';
 import NoData from '../../../../components/serviceSlots/NoData';
-import { formatTo12Hour } from '../../../../utils/FormatDate';
 
-type TAllUserBookingsProps = object;
+type TCompleteBookingProps = object;
 
-const AllUserBookings: FC<TAllUserBookingsProps> = () => {
+const CompleteBooking: FC<TCompleteBookingProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
-  const queryParams: Record<string, string> = {
-    sort: '-createdAt',
-    limit: '9',
-    page: page.toString(),
-  };
-  const { data: bookingData, isLoading } = useGetAllBookingsQuery(queryParams);
 
-  const bookings = bookingData?.data as TSlotBooking[] | undefined;
-  const meta = bookingData?.meta as TMeta;
+  const queryParams: Record<string, string> = {
+    limit: '1000000000000000000',
+    sort: 'createdAt',
+  };
+  const { data: bookingData, isLoading } = useGetAllMyBookingsQuery(
+    queryParams || undefined
+  );
+
+  const allBookings = bookingData?.data as TSlotBooking[];
+  const bookings = allBookings?.filter(
+    (item) => item.slot[0]?.isBooked === 'complete'
+  );
+
+  const limit = 7;
+  const total = bookings?.length;
+  const totalPages = Math.ceil(total / limit);
+
+  // Get the bookings for the current page
+  const currentBookings = bookings?.slice((page - 1) * limit, page * limit);
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
@@ -44,46 +57,47 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
 
   // table columns
   const columns = [
-    { uid: 'customer', name: 'Customer' },
     { uid: 'service', name: 'Service' },
+    { uid: 'email', name: 'Customer' },
     { uid: 'vehicleBrand', name: 'Vehicle Type' },
     { uid: 'slot', name: 'Slot' },
-    { uid: 'totalPrice', name: 'Total Price' },
+    { uid: 'vehicleModel', name: 'Vehicle Details' },
     { uid: 'paymentStatus', name: 'Payment Status' },
   ];
 
   const renderCell = useCallback(
     (booking: TSlotBooking, columnKey: keyof TSlotBooking | 'actions') => {
       switch (columnKey) {
-        case 'customer':
-          return (
-            <div className="flex items-center gap-2">
-              <Avatar radius="full" src={booking.customer.profileImg} />
-              <div className="flex flex-col gap-1">
-                <h2 className="text-sm whitespace-nowrap">
-                  {booking.customer.name}
-                </h2>
-                <p className="text-xs">{booking.customer.email}</p>
-              </div>
-            </div>
-          );
         case 'service':
           return (
             <div className="flex items-center gap-2">
               <Avatar radius="full" src={booking.service?.[0]?.image} />
               <div>
-                <h2 className="text-sm whitespace-nowrap">
-                  {booking.service[0]?.name}
-                </h2>
+                <Tooltip content={booking.service[0]?.name}>
+                  <h2 className="text-sm whitespace-nowrap">
+                    {booking.service[0]?.name.slice(0, 10)}...
+                  </h2>
+                </Tooltip>
                 <p className="text-xs">{'৳ ' + booking.service[0]?.price}</p>
               </div>
+            </div>
+          );
+        case 'email':
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize whitespace-nowrap">
+                {booking?.name}
+              </p>
+              <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400">
+                {booking?.email}
+              </p>
             </div>
           );
         case 'vehicleBrand':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
-                {booking.vehicleBrand} {booking.vehicleModel}
+                {booking.vehicleModel}
               </p>
               <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400">
                 {booking.vehicleType}
@@ -91,6 +105,17 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
             </div>
           );
         case 'slot':
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize whitespace-nowrap">
+                {booking.vehicleBrand}
+              </p>
+              <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400">
+                Plate No: {booking.registrationPlate}
+              </p>
+            </div>
+          );
+        case 'vehicleModel':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -102,25 +127,33 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
               </p>
             </div>
           );
-        case 'totalPrice':
-          return <p>৳{booking.totalPrice}</p>;
         case 'paymentStatus':
           return (
-            <Chip
-              className="capitalize whitespace-nowrap px-5"
-              color={statusColorMap[booking.paymentStatus] || 'default'}
-              size="sm"
-              variant="bordered"
-            >
-              {booking.paymentStatus}
-            </Chip>
+            <div className="flex flex-col gap-3 items-center">
+              <Chip
+                className="capitalize whitespace-nowrap px-5"
+                color={statusColorMap[booking.paymentStatus] || 'default'}
+                size="sm"
+                variant="bordered"
+              >
+                ৳{booking.totalPrice} {booking.paymentStatus}
+              </Chip>
+              <Chip
+                className="capitalize whitespace-nowrap px-5"
+                color={'warning'}
+                size="sm"
+                variant="bordered"
+              >
+                {booking.slot[0]?.isBooked}
+              </Chip>
+            </div>
           );
 
         default:
           return null;
       }
     },
-    []
+    [statusColorMap]
   );
 
   if (isLoading) {
@@ -128,14 +161,16 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
   }
 
   if (!bookings || (bookings?.length === 0 && undefined)) {
-    return <NoData text="There are no bookings available" />;
+    return <NoData text="There are no overview bookings available" />;
   }
+
+  console.log(bookings);
 
   return (
     <div>
-      <div className="mb-3">
-        <Chip variant="bordered">All Bookings Users</Chip>
-      </div>
+      <Chip className="mb-5" variant="bordered">
+        My All Bookings
+      </Chip>
       <Table aria-label="Bookings Overview Table">
         <TableHeader columns={columns}>
           {(column) => (
@@ -147,7 +182,7 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={bookings || []}>
+        <TableBody emptyContent={'No bookings'} items={currentBookings || []}>
           {(item) => (
             <TableRow key={item._id}>
               {(columnKey) => (
@@ -162,18 +197,18 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
           )}
         </TableBody>
       </Table>
-      {meta && (
+      {totalPages > 1 && (
         <div className="mt-10 flex justify-center items-start">
           <Pagination
             color="default"
             variant="flat"
             showControls
-            total={meta.totalPage}
+            total={totalPages}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === 'dark' ? ' bg-opacity-30' : ''
+              theme === 'dark' ? 'bg-opacity-30' : ''
             }`}
-            onChange={(newPage) => handlePageChange(newPage)}
+            onChange={handlePageChange}
           />
         </div>
       )}
@@ -181,4 +216,4 @@ const AllUserBookings: FC<TAllUserBookingsProps> = () => {
   );
 };
 
-export default AllUserBookings;
+export default CompleteBooking;

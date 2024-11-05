@@ -8,21 +8,21 @@ import {
   Button,
   useDisclosure,
   Tooltip,
-} from "@nextui-org/react";
-import { FC } from "react";
+} from '@nextui-org/react';
+import { FC } from 'react';
 import {
   FaEdit,
   FaMoneyBillWave,
   FaClock,
   FaAudioDescription,
-} from "react-icons/fa";
-import { SubmitHandler, FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+} from 'react-icons/fa';
+import { SubmitHandler, FieldValues } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import CWForm from "../form/CWForm";
-import CWInput from "../form/CWInput";
-import CWTextarea from "../form/CWTextarea";
-import { useUpdateServiceMutation } from "../../redux/features/admin/serviceManagementApi";
+import CWForm from '../form/CWForm';
+import CWInput from '../form/CWInput';
+import CWTextarea from '../form/CWTextarea';
+import { useUpdateServiceMutation } from '../../redux/features/admin/serviceManagementApi';
 
 type TServiceUpdateModalProps = {
   service: {
@@ -39,7 +39,7 @@ const ServiceUpdateModal: FC<TServiceUpdateModalProps> = ({ service }) => {
   const [updateService, { isLoading }] = useUpdateServiceMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
-    const toastId = toast.loading("Updating service...");
+    const toastId = toast.loading('Updating service...');
 
     try {
       const res = await updateService({
@@ -56,9 +56,9 @@ const ServiceUpdateModal: FC<TServiceUpdateModalProps> = ({ service }) => {
       toast.dismiss(toastId);
 
       if (res?.success) {
-        toast.success("Service updated successfully");
+        toast.success('Service updated successfully');
       } else {
-        toast.error("Failed to update service");
+        toast.error('Failed to update service');
       }
     } catch (err) {
       toast.dismiss(toastId);
@@ -77,8 +77,8 @@ const ServiceUpdateModal: FC<TServiceUpdateModalProps> = ({ service }) => {
         ></Button>
       </Tooltip>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-        <ModalContent>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
+        <ModalContent className="m-2">
           <ModalHeader className="flex flex-col gap-1">
             Update Service
           </ModalHeader>

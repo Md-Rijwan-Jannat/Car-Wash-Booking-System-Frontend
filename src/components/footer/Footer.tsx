@@ -5,7 +5,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
-  FaHandsWash,
 } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
@@ -59,7 +58,7 @@ const Footer: FC<TFooterProps> = () => {
               About Us
             </Link>
             <Link
-              to="/dashboard/admin"
+              to="/dashboard/dashboard"
               className="block hover:text-warning font-normal mb-2"
             >
               Dashboard

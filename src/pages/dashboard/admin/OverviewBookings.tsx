@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -8,16 +8,16 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  User,
   Chip,
   Pagination,
-} from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { useGetAllBookingsQuery } from "../../../redux/features/admin/serviceManagementApi";
-import { TMeta, TSlotBooking } from "../../../types";
-import LoaderSkeleton from "../../../components/skeleton/LoaderSkeleton";
-import NoData from "../../../components/serviceSlots/NoData";
-import { formatTo12Hour } from "../../../utils/FormatDate";
+  Avatar,
+} from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import { useGetAllBookingsQuery } from '../../../redux/features/admin/serviceManagementApi';
+import { TMeta, TSlotBooking } from '../../../types';
+import LoaderSkeleton from '../../../components/skeleton/LoaderSkeleton';
+import NoData from '../../../components/serviceSlots/NoData';
+import { formatTo12Hour } from '../../../utils/FormatDate';
 
 type TOverviewBookingsProps = object;
 
@@ -25,8 +25,8 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "10",
+    sort: '-createdAt',
+    limit: '10',
     page: page.toString(),
   };
   const { data: bookingData, isLoading } = useGetAllBookingsQuery(
@@ -40,36 +40,37 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
 
   // payment status mapping
   const statusColorMap: any = {
-    Pending: "warning",
-    Paid: "success",
-    Failed: "default",
+    Pending: 'warning',
+    Paid: 'success',
+    Failed: 'default',
   };
 
   // table columns
   const columns = [
-    { uid: "service", name: "Service" },
-    { uid: "vehicleBrand", name: "Vehicle Type" },
-    { uid: "slot", name: "Slot" },
-    { uid: "vehicleModel", name: "Vehicle Details" },
-    { uid: "paymentStatus", name: "Payment Status" },
-    { uid: "registrationPlate", name: "Booking Status" },
+    { uid: 'service', name: 'Service' },
+    { uid: 'vehicleBrand', name: 'Vehicle Type' },
+    { uid: 'slot', name: 'Slot' },
+    { uid: 'vehicleModel', name: 'Vehicle Details' },
+    { uid: 'paymentStatus', name: 'Payment Status' },
+    { uid: 'registrationPlate', name: 'Booking Status' },
   ];
 
   const renderCell = useCallback(
-    (booking: TSlotBooking, columnKey: keyof TSlotBooking | "actions") => {
+    (booking: TSlotBooking, columnKey: keyof TSlotBooking | 'actions') => {
       switch (columnKey) {
-        case "service":
+        case 'service':
           return (
-            <User
-              avatarProps={{
-                radius: "full",
-                src: booking.service?.[0]?.image,
-              }}
-              description={"৳ " + booking.service[0]?.price}
-              name={booking.service[0]?.name}
-            />
+            <div className="flex items-center gap-2">
+              <Avatar radius="full" src={booking.service?.[0]?.image} />
+              <div>
+                <h2 className="text-sm whitespace-nowrap">
+                  {booking.service[0]?.name}
+                </h2>
+                <p className="text-xs">{'৳ ' + booking.service[0]?.price}</p>
+              </div>
+            </div>
           );
-        case "vehicleBrand":
+        case 'vehicleBrand':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -80,7 +81,7 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
               </p>
             </div>
           );
-        case "slot":
+        case 'slot':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -91,24 +92,24 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
               </p>
             </div>
           );
-        case "vehicleModel":
+        case 'vehicleModel':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
                 {booking.slot[0]?.date}
               </p>
               <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400">
-                {formatTo12Hour(booking.slot[0]?.startTime)} -{" "}
+                {formatTo12Hour(booking.slot[0]?.startTime)} -{' '}
                 {formatTo12Hour(booking.slot[0]?.endTime)}
               </p>
             </div>
           );
-        case "paymentStatus":
+        case 'paymentStatus':
           return (
             <div className="flex flex-col items-center">
               <Chip
                 className="capitalize whitespace-nowrap px-5"
-                color={statusColorMap[booking.paymentStatus] || "default"}
+                color={statusColorMap[booking.paymentStatus] || 'default'}
                 size="sm"
                 variant="bordered"
               >
@@ -116,12 +117,12 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
               </Chip>
             </div>
           );
-        case "registrationPlate":
+        case 'registrationPlate':
           return (
             <div className="flex items-center justify-center">
               <Chip
                 className="capitalize whitespace-nowrap px-5"
-                color={"warning"}
+                color={'warning'}
                 size="sm"
                 variant="bordered"
               >
@@ -157,7 +158,7 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
+              align={column.uid === 'actions' ? 'center' : 'start'}
             >
               {column.name}
             </TableColumn>
@@ -170,7 +171,7 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
                 <TableCell>
                   {renderCell(
                     item,
-                    columnKey as keyof TSlotBooking | "actions"
+                    columnKey as keyof TSlotBooking | 'actions'
                   )}
                 </TableCell>
               )}
@@ -187,7 +188,7 @@ const OverviewBookings: FC<TOverviewBookingsProps> = () => {
             total={meta.totalPage}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === "dark" ? " bg-opacity-30" : ""
+              theme === 'dark' ? ' bg-opacity-30' : ''
             }`}
             onChange={(newPage) => handlePageChange(newPage)}
           />

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   Modal,
   ModalContent,
@@ -6,7 +6,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 type BookingDeleteModalProps = {
   isOpen: boolean;
@@ -21,7 +21,7 @@ const BookingDeleteModal: FC<BookingDeleteModalProps> = ({
 }) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose} placement="top-center">
-      <ModalContent>
+      <ModalContent className="m-2">
         <ModalHeader>Confirm Deletion</ModalHeader>
         <ModalBody>Are you sure you want to delete this booking?</ModalBody>
         <ModalFooter>

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 import {
+  Avatar,
   Chip,
   Pagination,
   Table,
@@ -9,14 +10,13 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  User,
-} from "@nextui-org/react";
-import { useGetAllUsersQuery } from "../../../../redux/features/admin/userManagementApi";
-import { TMeta, TUserData } from "../../../../types";
-import LoaderSkeleton from "../../../../components/skeleton/LoaderSkeleton";
-import UserRoleDropdown from "./UserRoleDropdown";
-import { useTheme } from "next-themes";
-import NoData from "../../../../components/serviceSlots/NoData";
+} from '@nextui-org/react';
+import { useGetAllUsersQuery } from '../../../../redux/features/admin/userManagementApi';
+import { TMeta, TUserData } from '../../../../types';
+import LoaderSkeleton from '../../../../components/skeleton/LoaderSkeleton';
+import UserRoleDropdown from './UserRoleDropdown';
+import { useTheme } from 'next-themes';
+import NoData from '../../../../components/serviceSlots/NoData';
 
 type TAllUsersProps = object;
 
@@ -24,8 +24,8 @@ const AllUsers: FC<TAllUsersProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "9",
+    sort: '-createdAt',
+    limit: '9',
     page: page.toString(),
   };
 
@@ -62,10 +62,12 @@ const AllUsers: FC<TAllUsersProps> = () => {
           {(user) => (
             <TableRow key={user._id}>
               <TableCell>
-                <User
-                  avatarProps={{ radius: "full", src: user.profileImg }}
-                  name={user.name}
-                />
+                <div className="flex items-center gap-2">
+                  <Avatar radius="full" src={user.profileImg} />
+                  <div>
+                    <h2 className="text-sm whitespace-nowrap">{user.name}</h2>
+                  </div>
+                </div>
               </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.phone}</TableCell>
@@ -86,7 +88,7 @@ const AllUsers: FC<TAllUsersProps> = () => {
             total={meta.totalPage}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === "dark" ? " bg-opacity-30" : ""
+              theme === 'dark' ? ' bg-opacity-30' : ''
             }`}
             onChange={(newPage) => handlePageChange(newPage)}
           />

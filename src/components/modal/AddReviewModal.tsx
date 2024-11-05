@@ -6,16 +6,16 @@ import {
   ModalBody,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
-import { FC, useState } from "react";
-import { IoStar } from "react-icons/io5";
-import CWForm from "../form/CWForm";
-import { useTheme } from "next-themes";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useAddWebsiteReviewMutation } from "../../redux/features/websiteReviewApi";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
-import CWTextarea from "../form/CWTextarea";
+} from '@nextui-org/react';
+import { FC, useState } from 'react';
+import { IoStar } from 'react-icons/io5';
+import CWForm from '../form/CWForm';
+import { useTheme } from 'next-themes';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { useAddWebsiteReviewMutation } from '../../redux/features/websiteReviewApi';
+import { toast } from 'sonner';
+import { motion } from 'framer-motion';
+import CWTextarea from '../form/CWTextarea';
 
 type TAddReviewModalProps = object;
 
@@ -28,7 +28,7 @@ const AddReviewModal: FC<TAddReviewModalProps> = () => {
   const [rating, setRating] = useState(0);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const toastId = toast.loading("Submitting your review...");
+    const toastId = toast.loading('Submitting your review...');
 
     const reviewData = {
       feedback: data.feedback,
@@ -39,13 +39,13 @@ const AddReviewModal: FC<TAddReviewModalProps> = () => {
       const res = await addWebsiteReview(reviewData).unwrap();
       onOpenChange();
       if (res?.success) {
-        toast.success("Review submitted successfully", {
+        toast.success('Review submitted successfully', {
           id: toastId,
           duration: 3000,
         });
       }
     } catch (err) {
-      toast.error("Something went wrong", {
+      toast.error('Something went wrong', {
         id: toastId,
         duration: 3000,
       });
@@ -58,7 +58,7 @@ const AddReviewModal: FC<TAddReviewModalProps> = () => {
         Add Review
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-        <ModalContent>
+        <ModalContent className="m-2">
           {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -68,7 +68,7 @@ const AddReviewModal: FC<TAddReviewModalProps> = () => {
                 <CWForm onSubmit={onSubmit}>
                   <div
                     className={`flex flex-col items-center justify-center gap-5 border ${
-                      theme === "dark" ? "border-gray-50 border-opacity-15" : ""
+                      theme === 'dark' ? 'border-gray-50 border-opacity-15' : ''
                     } rounded-md p-3 lg:p-5 w-full md:w-[400px]`}
                   >
                     <CWTextarea

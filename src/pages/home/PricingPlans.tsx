@@ -1,6 +1,7 @@
-import { Button, Link } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import SectionTitle from '../../components/ui/SectionTitle';
 import Container from '../../components/ui/Container';
+import { Link } from 'react-router-dom';
 
 const PricingSection = () => {
   const plans = [
@@ -101,8 +102,8 @@ const PricingSection = () => {
                 {plan.price}/<span className="text-base">Service</span>
               </div>
               <Button
-                href="/services"
                 as={Link}
+                to="/services"
                 target="_self"
                 className={`w-full py-2 rounded-full text-center cursor-pointer ${
                   plan.buttonColor

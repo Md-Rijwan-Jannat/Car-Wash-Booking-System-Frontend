@@ -1,48 +1,53 @@
-import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
-import OverviewBookings from "../pages/dashboard/admin/OverviewBookings";
-import AllServices from "../pages/dashboard/admin/serviceManagement/AllServices";
-import AllSlots from "../pages/dashboard/admin/slotManagement/AllSlots";
-import AllAdminUsers from "../pages/dashboard/admin/userManagement/AllAdmin";
-import AllUserBookings from "../pages/dashboard/admin/userManagement/AllUserBookings";
-import AllUsers from "../pages/dashboard/admin/userManagement/AllUsers";
-import Calender from "../pages/dashboard/Calender";
-import Documentation from "../pages/dashboard/Documentation";
+import AdminDashboard from '../pages/dashboard/admin/Dashboard/AdminDashboard';
+import AdminProfile from '../pages/dashboard/admin/Dashboard/AdminProfile';
+import OverviewBookings from '../pages/dashboard/admin/OverviewBookings';
+import AllServices from '../pages/dashboard/admin/serviceManagement/AllServices';
+import AllSlots from '../pages/dashboard/admin/slotManagement/AllSlots';
+import AllAdminUsers from '../pages/dashboard/admin/userManagement/AllAdmin';
+import AllUserBookings from '../pages/dashboard/admin/userManagement/AllUserBookings';
+import AllUsers from '../pages/dashboard/admin/userManagement/AllUsers';
+import Calender from '../pages/dashboard/Calender';
+import Documentation from '../pages/dashboard/Documentation';
 
 export const AdminRoutes = [
   {
-    path: "",
+    path: 'dashboard',
     element: <AdminDashboard />,
   },
   {
-    path: "all-services",
+    path: 'profile',
+    element: <AdminProfile />,
+  },
+  {
+    path: 'all-services',
     element: <AllServices />,
   },
   {
-    path: "all-slots",
+    path: 'all-slots',
     element: <AllSlots />,
   },
   {
-    path: "all-bookings",
+    path: 'all-bookings',
     element: <OverviewBookings />,
   },
   {
-    path: "all-user-bookings",
+    path: 'all-user-bookings',
     element: <AllUserBookings />,
   },
   {
-    path: "all-users",
+    path: 'all-users',
     element: <AllUsers />,
   },
   {
-    path: "all-admins",
+    path: 'all-admins',
     element: <AllAdminUsers />,
   },
   {
-    path: "calender",
+    path: 'calender',
     element: <Calender />,
   },
   {
-    path: "documentation",
+    path: 'documentation',
     element: <Documentation />,
   },
 ];

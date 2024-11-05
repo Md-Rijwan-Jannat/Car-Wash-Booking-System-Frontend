@@ -1,7 +1,5 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
-import { FaWater, FaShower, FaBroom } from 'react-icons/fa';
-import Container from '../../components/ui/Container';
 import WebsiteReview from '../../components/WebsiteReview/WebsiteReview';
 import { useNavigate } from 'react-router-dom';
 import AboutService from './AboutService';

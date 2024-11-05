@@ -4,7 +4,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { GoArrowUpRight } from 'react-icons/go';
 import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
 import { TService } from '../../types';
-import { Link } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 export default function SearchInput() {
   const [query, setQuery] = useState('');
@@ -47,7 +47,7 @@ export default function SearchInput() {
           ) : services.length > 0 ? (
             services.map((item, index) => (
               <Link
-                href={`/service-details/${item?._id}`}
+                to={`/service-details/${item?._id}`}
                 key={index}
                 className="flex items-center justify-between px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 onMouseDown={() => setQuery(item.name)} // Set input value to selected item

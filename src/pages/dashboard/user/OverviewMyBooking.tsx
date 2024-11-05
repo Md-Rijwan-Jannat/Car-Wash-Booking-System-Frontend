@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -8,16 +8,17 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  User,
   Chip,
   Pagination,
-} from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { TMeta, TSlotBooking } from "../../../types";
-import LoaderSkeleton from "../../../components/skeleton/LoaderSkeleton";
-import NoData from "../../../components/serviceSlots/NoData";
-import { formatTo12Hour } from "../../../utils/FormatDate";
-import { useGetAllMyBookingsQuery } from "../../../redux/features/user/slotBokingApi";
+  Avatar,
+  Tooltip,
+} from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import { TMeta, TSlotBooking } from '../../../types';
+import LoaderSkeleton from '../../../components/skeleton/LoaderSkeleton';
+import NoData from '../../../components/serviceSlots/NoData';
+import { formatTo12Hour } from '../../../utils/FormatDate';
+import { useGetAllMyBookingsQuery } from '../../../redux/features/user/slotBokingApi';
 
 type TOverviewMyBookingProps = object;
 
@@ -25,51 +26,62 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "10",
-    page: page.toString(),
+    limit: '1000000000000000000',
+    sort: 'createdAt',
   };
   const { data: bookingData, isLoading } = useGetAllMyBookingsQuery(
     queryParams || undefined
   );
 
-  const bookings = bookingData?.data as TSlotBooking[];
-  const meta = bookingData?.meta as TMeta;
+  const allBookings = bookingData?.data as TSlotBooking[];
+  const bookings = allBookings?.filter(
+    (item) => item.slot[0]?.isBooked === 'booked'
+  );
+
+  const limit = 7;
+  const total = bookings?.length;
+  const totalPages = Math.ceil(total / limit);
+
+  // Get the bookings for the current page
+  const currentBookings = bookings?.slice((page - 1) * limit, page * limit);
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
   // payment status mapping
   const statusColorMap: any = {
-    Pending: "warning",
-    Paid: "success",
-    Failed: "default",
+    Pending: 'warning',
+    Paid: 'success',
+    Failed: 'default',
   };
 
   // table columns
   const columns = [
-    { uid: "service", name: "Service" },
-    { uid: "email", name: "Customer" },
-    { uid: "vehicleBrand", name: "Vehicle Type" },
-    { uid: "slot", name: "Slot" },
-    { uid: "vehicleModel", name: "Vehicle Details" },
-    { uid: "paymentStatus", name: "Payment Status" },
+    { uid: 'service', name: 'Service' },
+    { uid: 'email', name: 'Customer' },
+    { uid: 'vehicleBrand', name: 'Vehicle Type' },
+    { uid: 'slot', name: 'Slot' },
+    { uid: 'vehicleModel', name: 'Vehicle Details' },
+    { uid: 'paymentStatus', name: 'Payment Status' },
   ];
 
   const renderCell = useCallback(
-    (booking: TSlotBooking, columnKey: keyof TSlotBooking | "actions") => {
+    (booking: TSlotBooking, columnKey: keyof TSlotBooking | 'actions') => {
       switch (columnKey) {
-        case "service":
+        case 'service':
           return (
-            <User
-              avatarProps={{
-                radius: "full",
-                src: booking.service?.[0]?.image,
-              }}
-              description={"৳ " + booking.service[0]?.price}
-              name={booking.service[0]?.name}
-            />
+            <div className="flex items-center gap-2">
+              <Avatar radius="full" src={booking.service?.[0]?.image} />
+              <div>
+                <Tooltip content={booking.service[0]?.name}>
+                  <h2 className="text-sm whitespace-nowrap">
+                    {booking.service[0]?.name.slice(0, 10)}...
+                  </h2>
+                </Tooltip>
+                <p className="text-xs">{'৳ ' + booking.service[0]?.price}</p>
+              </div>
+            </div>
           );
-        case "email":
+        case 'email':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -80,7 +92,7 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
               </p>
             </div>
           );
-        case "vehicleBrand":
+        case 'vehicleBrand':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -91,7 +103,7 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
               </p>
             </div>
           );
-        case "slot":
+        case 'slot':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
@@ -102,24 +114,24 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
               </p>
             </div>
           );
-        case "vehicleModel":
+        case 'vehicleModel':
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize whitespace-nowrap">
                 {booking.slot[0]?.date}
               </p>
               <p className="text-bold text-sm capitalize whitespace-nowrap text-default-400">
-                {formatTo12Hour(booking.slot[0]?.startTime)} -{" "}
+                {formatTo12Hour(booking.slot[0]?.startTime)} -{' '}
                 {formatTo12Hour(booking.slot[0]?.endTime)}
               </p>
             </div>
           );
-        case "paymentStatus":
+        case 'paymentStatus':
           return (
             <div className="flex flex-col gap-3 items-center">
               <Chip
                 className="capitalize whitespace-nowrap px-5"
-                color={statusColorMap[booking.paymentStatus] || "default"}
+                color={statusColorMap[booking.paymentStatus] || 'default'}
                 size="sm"
                 variant="bordered"
               >
@@ -127,7 +139,7 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
               </Chip>
               <Chip
                 className="capitalize whitespace-nowrap px-5"
-                color={"warning"}
+                color={'warning'}
                 size="sm"
                 variant="bordered"
               >
@@ -163,20 +175,20 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
+              align={column.uid === 'actions' ? 'center' : 'start'}
             >
               {column.name}
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={bookings || []}>
+        <TableBody emptyContent={'No bookings'} items={currentBookings || []}>
           {(item) => (
             <TableRow key={item._id}>
               {(columnKey) => (
                 <TableCell>
                   {renderCell(
                     item,
-                    columnKey as keyof TSlotBooking | "actions"
+                    columnKey as keyof TSlotBooking | 'actions'
                   )}
                 </TableCell>
               )}
@@ -184,18 +196,18 @@ const OverviewMyBooking: FC<TOverviewMyBookingProps> = () => {
           )}
         </TableBody>
       </Table>
-      {meta && (
+      {totalPages > 1 && (
         <div className="mt-10 flex justify-center items-start">
           <Pagination
             color="default"
             variant="flat"
             showControls
-            total={meta.totalPage}
+            total={totalPages}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === "dark" ? " bg-opacity-30" : ""
+              theme === 'dark' ? 'bg-opacity-30' : ''
             }`}
-            onChange={(newPage) => handlePageChange(newPage)}
+            onChange={handlePageChange}
           />
         </div>
       )}

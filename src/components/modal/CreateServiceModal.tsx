@@ -10,11 +10,11 @@ import {
   Textarea,
   useDisclosure,
   Tooltip,
-} from "@nextui-org/react";
-import { FC } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "sonner";
-import axios from "axios";
+} from '@nextui-org/react';
+import { FC } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'sonner';
+import axios from 'axios';
 import {
   FaPlus,
   FaMoneyBillWave,
@@ -22,8 +22,8 @@ import {
   FaAudioDescription,
   FaImage,
   FaUser,
-} from "react-icons/fa";
-import { useCreateServiceMutation } from "../../redux/features/admin/serviceManagementApi";
+} from 'react-icons/fa';
+import { useCreateServiceMutation } from '../../redux/features/admin/serviceManagementApi';
 
 type TCreateServiceModalProps = object;
 
@@ -41,10 +41,10 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-    const toastId = toast.loading("Creating service...");
+    const toastId = toast.loading('Creating service...');
 
     try {
-      let imgUrl = "";
+      let imgUrl = '';
       if (formData.image && formData.image.length > 0) {
         const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUDINARY_NAME
@@ -54,9 +54,9 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
         const cloudinaryName = import.meta.env.VITE_CLOUDINARY_NAME;
 
         const newFormData = new FormData();
-        newFormData.append("file", formData.image[0]);
-        newFormData.append("upload_preset", cloudinaryUploadPreset as string);
-        newFormData.append("cloud_name", cloudinaryName as string);
+        newFormData.append('file', formData.image[0]);
+        newFormData.append('upload_preset', cloudinaryUploadPreset as string);
+        newFormData.append('cloud_name', cloudinaryName as string);
 
         const { data: cloudinaryData } = await axios.post(
           cloudinaryUrl,
@@ -75,11 +75,11 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
 
       toast.dismiss(toastId);
       if (res?.success) {
-        toast.success("Service created successfully");
+        toast.success('Service created successfully');
         reset(); // Reset form fields after successful submission
         onOpenChange(); // Close the modal
       } else {
-        toast.error("Failed to create service");
+        toast.error('Failed to create service');
       }
     } catch (err) {
       toast.dismiss(toastId);
@@ -101,16 +101,21 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
         </Button>
       </Tooltip>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-        <ModalContent>
+      <Modal
+        size="lg"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+      >
+        <ModalContent className="m-2">
           <ModalHeader className="flex flex-col gap-1">
             Create Service
           </ModalHeader>
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full md:w-[400px]">
+              <div className="flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full">
                 <Input
-                  {...register("name", { required: true })}
+                  {...register('name', { required: true })}
                   label="Service Name"
                   color="warning"
                   variant="bordered"
@@ -120,7 +125,7 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
                   endContent={<FaUser className="text-2xl text-warning" />}
                 />
                 <Textarea
-                  {...register("description", { required: true })}
+                  {...register('description', { required: true })}
                   label="Description"
                   color="warning"
                   variant="bordered"
@@ -132,7 +137,7 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
                   }
                 />
                 <Input
-                  {...register("duration", { required: true })}
+                  {...register('duration', { required: true })}
                   label="Duration (minutes)"
                   color="warning"
                   variant="bordered"
@@ -142,7 +147,7 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
                   endContent={<FaClock className="text-2xl text-warning" />}
                 />
                 <Input
-                  {...register("price", { required: true })}
+                  {...register('price', { required: true })}
                   label="Price"
                   color="warning"
                   variant="bordered"
@@ -154,7 +159,7 @@ const CreateServiceModal: FC<TCreateServiceModalProps> = () => {
                   }
                 />
                 <Input
-                  {...register("image")}
+                  {...register('image')}
                   label="Service Image"
                   color="warning"
                   variant="bordered"

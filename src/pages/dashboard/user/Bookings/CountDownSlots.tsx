@@ -1,6 +1,6 @@
-import { Tooltip } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
+import { Chip, Tooltip } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from 'react';
 
 interface CountDownProps {
   slotDates: string[][];
@@ -20,7 +20,7 @@ const CountDownSlots: React.FC<CountDownProps> = ({ slotDates }) => {
   }, []);
 
   const convertToDateObject = (dateString: string) => {
-    const [day, month, year] = dateString.split("-");
+    const [day, month, year] = dateString.split('-');
     return new Date(`${year}-${month}-${day}T00:00:00`);
   };
 
@@ -28,7 +28,7 @@ const CountDownSlots: React.FC<CountDownProps> = ({ slotDates }) => {
     const diffInMilliseconds = futureDate.getTime() - currentDate.getTime();
 
     if (diffInMilliseconds <= 0) {
-      return "Date has passed";
+      return 'Date has passed';
     }
 
     const getDateDifference = (future: Date, current: Date) => {
@@ -76,17 +76,19 @@ const CountDownSlots: React.FC<CountDownProps> = ({ slotDates }) => {
   return (
     <div className="flex gap-2 items-center justify-center flex-wrap">
       {countdowns?.length === 0 ? (
-        <p>No dates available</p>
+        <Chip color="success" size="lg" variant="flat">
+          Complete
+        </Chip>
       ) : (
         countdowns?.map((dateArray, index) => (
           <div key={index}>
             {dateArray.map((countdown, i) => (
-              <Tooltip key={index} content={"Service starting countdown"}>
+              <Tooltip key={index} content={'Service starting countdown'}>
                 <div
                   className={`bg-gray-50 rounded-full py-2 px-5 font-semibold w-[200px] border text-warning ${
-                    theme === "dark"
-                      ? "bg-opacity-10 border-gray-100 border-opacity-15"
-                      : ""
+                    theme === 'dark'
+                      ? 'bg-opacity-10 border-gray-100 border-opacity-15'
+                      : ''
                   } mb-3`}
                 >
                   <p key={i}>{countdown}</p>

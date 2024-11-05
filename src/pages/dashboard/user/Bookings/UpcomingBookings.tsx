@@ -1,32 +1,40 @@
-import { FC, useState, useEffect } from "react";
-import { Chip, Pagination, Tooltip } from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { useGetAllMyBookingsQuery } from "../../../../redux/features/user/slotBokingApi";
-import { TSlotBooking } from "../../../../types";
-import LoaderSkeleton from "../../../../components/skeleton/LoaderSkeleton";
-import NoData from "../../../../components/serviceSlots/NoData";
-import { formatTo12Hour } from "../../../../utils/FormatDate";
-import { FaClock } from "react-icons/fa";
-import CountDownSlots from "./CountDownSlots";
+import { FC, useState, useEffect } from 'react';
+import { Chip, Pagination, Tooltip } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import { useGetAllMyBookingsQuery } from '../../../../redux/features/user/slotBokingApi';
+import { TSlotBooking } from '../../../../types';
+import LoaderSkeleton from '../../../../components/skeleton/LoaderSkeleton';
+import NoData from '../../../../components/serviceSlots/NoData';
+import { formatTo12Hour } from '../../../../utils/FormatDate';
+import { FaClock } from 'react-icons/fa';
+import CountDownSlots from './CountDownSlots';
 
 type TUpcomingBookingProps = object;
 
 const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
-  const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "100000",
-  };
   const [currentDate, setCurrentDate] = useState(new Date());
-  const {
-    data: bookingData,
-    isLoading,
-    error,
-  } = useGetAllMyBookingsQuery(queryParams);
 
-  const bookings = bookingData?.data as TSlotBooking[];
-  const limitPerPage = 4;
+  const queryParams: Record<string, string> = {
+    limit: '1000000000000000000',
+    sort: '-createdAt',
+  };
+  const { data: bookingData, isLoading } = useGetAllMyBookingsQuery(
+    queryParams || undefined
+  );
+
+  const allBookings = bookingData?.data as TSlotBooking[];
+  const bookings = allBookings?.filter(
+    (item) => item.slot[0]?.isBooked === 'booked'
+  );
+
+  const limit = 7;
+  const total = bookings?.length;
+  const totalPages = Math.ceil(total / limit);
+
+  // Get the bookings for the current page
+  const currentBookings = bookings?.slice((page - 1) * limit, page * limit);
 
   const handlePageChange = (newPage: number) => setPage(newPage);
 
@@ -37,17 +45,13 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
 
   // Function to parse the date string in "d-m-yyyy" format
   const parseDate = (dateString: string, timeString: string) => {
-    const [day, month, year] = dateString.split("-").map(Number);
-    const [hours, minutes] = timeString.split(":").map(Number);
+    const [day, month, year] = dateString.split('-').map(Number);
+    const [hours, minutes] = timeString.split(':').map(Number);
     return new Date(year, month - 1, day, hours, minutes); // Months are 0-indexed
   };
 
   if (isLoading) {
     return <LoaderSkeleton />;
-  }
-
-  if (error) {
-    return <NoData text="An error occurred while fetching data" />;
   }
 
   // Filter bookings that have upcoming slots
@@ -57,25 +61,17 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
     )
   );
 
-  // Paginate filtered bookings
-  const paginatedBookings = upcomingBookings?.slice(
-    (page - 1) * limitPerPage,
-    page * limitPerPage
-  );
-
-  const totalPageCount = Math.ceil(upcomingBookings.length / limitPerPage);
-
   if (!upcomingBookings || upcomingBookings.length === 0) {
     return <NoData text="There are no upcoming bookings available" />;
   }
 
   return (
-    <div className={`md:p-3 ${theme === "dark" ? " " : "bg-white text-black"}`}>
+    <div className={`md:p-3 ${theme === 'dark' ? ' ' : 'bg-white text-black'}`}>
       <Chip variant="bordered" className="mb-5">
         Upcoming Bookings
       </Chip>
       <div className="grid gap-5 grid-cols-1 md:grid-cols-2 justify-between items-center">
-        {paginatedBookings.map((booking) => {
+        {currentBookings.map((booking) => {
           const validSlots = booking.slot.filter((slot) => {
             const bookingDateTime = parseDate(slot.date, slot.startTime);
             return bookingDateTime > currentDate;
@@ -85,7 +81,7 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
             <div
               key={booking._id}
               className={`p-2 md:p-3 border rounded-md ${
-                theme === "dark" ? "border-gray-100 border-opacity-15" : ""
+                theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
               }`}
             >
               <div className="text-center flex flex-col md:flex-wrap md:flex-row gap-3 items-center justify-center md:justify-between">
@@ -139,7 +135,7 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
                       color="warning"
                       variant="faded"
                     >
-                      {formatTo12Hour(slot.startTime)} -{" "}
+                      {formatTo12Hour(slot.startTime)} -{' '}
                       {formatTo12Hour(slot.endTime)}
                     </Chip>
                   </div>
@@ -150,17 +146,21 @@ const UpcomingBooking: FC<TUpcomingBookingProps> = () => {
         })}
       </div>
       <div className="mt-10 flex justify-center items-start">
-        <Pagination
-          color="default"
-          variant="flat"
-          showControls
-          total={totalPageCount}
-          initialPage={page}
-          className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-            theme === "dark" ? " bg-opacity-30" : ""
-          }`}
-          onChange={(newPage) => handlePageChange(newPage)}
-        />
+        {totalPages > 1 && (
+          <div className="mt-10 flex justify-center items-start">
+            <Pagination
+              color="default"
+              variant="flat"
+              showControls
+              total={totalPages}
+              initialPage={page}
+              className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
+                theme === 'dark' ? 'bg-opacity-30' : ''
+              }`}
+              onChange={handlePageChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

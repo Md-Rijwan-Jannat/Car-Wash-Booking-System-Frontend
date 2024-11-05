@@ -50,7 +50,7 @@ const FavoriteService: FC = () => {
                 key={service._id}
                 className="p-4 bg-default-50 border border-default-100 rounded flex flex-row justify-between gap-3"
               >
-                <div className="flex gap-5 items-start">
+                <div className="flex flex-col md:flex-row gap-5 items-start">
                   <img
                     src={service.image}
                     alt={service.name}

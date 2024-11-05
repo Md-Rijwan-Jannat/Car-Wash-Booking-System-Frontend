@@ -29,6 +29,7 @@ import { useGetAllMyBookingsQuery } from '../../redux/features/user/slotBokingAp
 import NavBarCountDown from './NavBarCountDown';
 import Logo from '../ui/Logo';
 import { getAllFavoriteServices } from '../../redux/features/service/serviceSlice';
+import { IoHeart } from 'react-icons/io5';
 
 const NavBar: FC = () => {
   const { theme } = useTheme();
@@ -50,8 +51,10 @@ const NavBar: FC = () => {
   const menuItems = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
-    { name: 'Dashboard', path: `/dashboard` },
+    { name: 'Dashboard', path: `/dashboard/dashboard` },
     { name: 'About Us', path: '/aboutUs' },
+    { name: 'Bookings', path: '/booking' },
+    { name: 'Favorite', path: '/favorites-services' },
   ].filter(Boolean);
 
   return (
@@ -92,50 +95,45 @@ const NavBar: FC = () => {
 
       <NavbarContent justify="end">
         <div className="flex items-center gap-3">
-          <Tooltip content="Recent booking slot will start">
-            <NavbarItem className="hidden md:block mt-3">
-              {booking?.data?.length && role === 'user' && (
-                <NavBarCountDown
-                  slotDates={
-                    booking?.data?.[0].slot
-                      ? [[booking.data[0].slot[0].date]]
-                      : []
-                  } // Pass the first slot date
-                />
-              )}
-            </NavbarItem>
-          </Tooltip>
+          <NavbarItem>
+            <Tooltip content="Recent booking slot will start">
+              <NavbarItem className="hidden md:block mt-3">
+                {booking?.data?.length && role === 'user' && (
+                  <NavBarCountDown
+                    slotDates={
+                      booking?.data?.[0].slot
+                        ? [[booking.data[0].slot[0].date]]
+                        : []
+                    } // Pass the first slot date
+                  />
+                )}
+              </NavbarItem>
+            </Tooltip>
+          </NavbarItem>
           <NavbarItem className="hidden lg:flex">
             <ThemeSwitcher />
           </NavbarItem>
-          <NavbarMenuItem className="hidden lg:flex">
+          <NavbarItem>
             <div
               onClick={() => navigate('/favorites-services')}
               className="cursor-pointer mt-2"
             >
-              <Badge
-                content={`${allFavoriteServices?.length || 0}`}
-                color="warning"
-                variant="flat"
-                className="border-none text-default-900"
-              >
-                <FaHeart size={25} className="text-red-500" />
-              </Badge>
-            </div>
-          </NavbarMenuItem>
-
-          <NavbarItem>
-            <div
-              onClick={() => navigate('/dashboard')}
-              className="cursor-pointer"
-            >
-              {user && <Avatar name={name} src={profileImg || undefined} />}
+              {role === 'user' && (
+                <Badge
+                  content={`${allFavoriteServices?.length || 0}`}
+                  color="warning"
+                  variant="flat"
+                  className="border-none"
+                >
+                  <IoHeart className="text-warning" size={36} />
+                </Badge>
+              )}
             </div>
           </NavbarItem>
           <NavbarItem>
             <div
               onClick={() => navigate('/booking')}
-              className="cursor-pointer animate-pulse"
+              className="cursor-pointer mt-1"
             >
               {role === 'user' && (
                 <Badge
@@ -149,6 +147,15 @@ const NavBar: FC = () => {
               )}
             </div>
           </NavbarItem>
+          <NavbarItem>
+            <div
+              onClick={() => navigate('/dashboard/dashboard')}
+              className="cursor-pointer mb-1"
+            >
+              {user && <Avatar name={name} src={profileImg || undefined} />}
+            </div>
+          </NavbarItem>
+
           <NavbarItem className="hidden lg:flex">
             {!user && (
               <Button

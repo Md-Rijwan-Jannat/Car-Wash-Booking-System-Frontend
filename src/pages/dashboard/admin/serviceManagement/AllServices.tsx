@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -10,17 +10,17 @@ import {
   Pagination,
   Chip,
   Tooltip,
-} from "@nextui-org/react";
-import { useTheme } from "next-themes";
-import { useGetAllServicesQuery } from "../../../../redux/features/admin/serviceManagementApi";
-import { TMeta, TService } from "../../../../types";
-import LoaderSkeleton from "../../../../components/skeleton/LoaderSkeleton";
-import ServiceDeleteModal from "../../../../components/modal/ServiceDeleteModal";
-import { FaClock } from "react-icons/fa";
-import ServiceUpdateModal from "../../../../components/modal/ServiceUpdateModal";
-import ServiceImageModal from "../../../../components/modal/ServiceImageModal";
-import CreateServiceModal from "../../../../components/modal/CreateServiceModal";
-import NoData from "../../../../components/serviceSlots/NoData";
+} from '@nextui-org/react';
+import { useTheme } from 'next-themes';
+import { useGetAllServicesQuery } from '../../../../redux/features/admin/serviceManagementApi';
+import { TMeta, TService } from '../../../../types';
+import LoaderSkeleton from '../../../../components/skeleton/LoaderSkeleton';
+import ServiceDeleteModal from '../../../../components/modal/ServiceDeleteModal';
+import { FaClock } from 'react-icons/fa';
+import ServiceUpdateModal from '../../../../components/modal/ServiceUpdateModal';
+import ServiceImageModal from '../../../../components/modal/ServiceImageModal';
+import CreateServiceModal from '../../../../components/modal/CreateServiceModal';
+import NoData from '../../../../components/serviceSlots/NoData';
 
 type TAllServicesProps = object;
 
@@ -28,8 +28,8 @@ const AllServices: FC<TAllServicesProps> = () => {
   const [page, setPage] = useState(1);
   const { theme } = useTheme();
   const queryParams: Record<string, string> = {
-    sort: "-createdAt",
-    limit: "10",
+    sort: '-createdAt',
+    limit: '10',
     page: page.toString(),
   };
   const { data: servicesData, isLoading } = useGetAllServicesQuery(queryParams);
@@ -41,24 +41,24 @@ const AllServices: FC<TAllServicesProps> = () => {
 
   // table columns
   const columns = [
-    { uid: "image", name: "Image" },
-    { uid: "description", name: "Description" },
-    { uid: "duration", name: "Duration" },
-    { uid: "price", name: "Price" },
-    { uid: "actions", name: "Actions" },
+    { uid: 'image', name: 'Image' },
+    { uid: 'description', name: 'Description' },
+    { uid: 'duration', name: 'Duration' },
+    { uid: 'price', name: 'Price' },
+    { uid: 'actions', name: 'Actions' },
   ];
 
   const renderCell = useCallback(
-    (service: TService, columnKey: keyof TService | "actions") => {
+    (service: TService, columnKey: keyof TService | 'actions') => {
       switch (columnKey) {
-        case "image":
+        case 'image':
           return (
             <Tooltip content={service?.name}>
               <div className="flex items-center gap-3 justify-between">
                 <User
                   avatarProps={{
-                    radius: "md",
-                    size: "md",
+                    radius: 'full',
+                    size: 'md',
                     src: service?.image,
                   }}
                   name={
@@ -71,7 +71,7 @@ const AllServices: FC<TAllServicesProps> = () => {
               </div>
             </Tooltip>
           );
-        case "description":
+        case 'description':
           return (
             <div className="flex flex-wrap w-[200px]">
               <Tooltip className="w-[300px]" content={service.description}>
@@ -83,18 +83,18 @@ const AllServices: FC<TAllServicesProps> = () => {
               </Tooltip>
             </div>
           );
-        case "duration":
+        case 'duration':
           return (
             <div className="flex flex-col ">
               <Chip color="warning" variant="flat">
                 <p className="text-sm flex items-center gap-2">
-                  <FaClock size={16} className="mb-0.5" /> {service.duration}{" "}
+                  <FaClock size={16} className="mb-0.5" /> {service.duration}{' '}
                   minutes
                 </p>
               </Chip>
             </div>
           );
-        case "price":
+        case 'price':
           return (
             <div className="flex flex-col">
               <Chip>
@@ -104,7 +104,7 @@ const AllServices: FC<TAllServicesProps> = () => {
               </Chip>
             </div>
           );
-        case "actions":
+        case 'actions':
           return (
             <div className="flex items-center gap-3">
               <ServiceUpdateModal service={service} />
@@ -139,7 +139,7 @@ const AllServices: FC<TAllServicesProps> = () => {
           {(column) => (
             <TableColumn
               key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
+              align={column.uid === 'actions' ? 'center' : 'start'}
             >
               {column.name}
             </TableColumn>
@@ -150,7 +150,7 @@ const AllServices: FC<TAllServicesProps> = () => {
             <TableRow key={item._id}>
               {(columnKey) => (
                 <TableCell>
-                  {renderCell(item, columnKey as keyof TService | "actions")}
+                  {renderCell(item, columnKey as keyof TService | 'actions')}
                 </TableCell>
               )}
             </TableRow>
@@ -166,7 +166,7 @@ const AllServices: FC<TAllServicesProps> = () => {
             total={meta.totalPage}
             initialPage={page}
             className={`mb-5 px-5 py-1 mx-3 border-none shadow-none rounded-full bg-[#F4F4F5] ${
-              theme === "dark" ? " bg-opacity-30" : ""
+              theme === 'dark' ? ' bg-opacity-30' : ''
             }`}
             onChange={(newPage) => handlePageChange(newPage)}
           />

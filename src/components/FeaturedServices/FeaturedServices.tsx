@@ -1,16 +1,18 @@
 // FeaturedServices.tsx
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { Skeleton } from '@nextui-org/react';
+import { Button, Skeleton } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
 import { useNavigate } from 'react-router-dom';
 import SectionTitle from '../ui/SectionTitle';
 import FeatureCard from './FratureCard';
 import Container from '../ui/Container';
+import SwiperCore from 'swiper';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 type TFeaturedServicesProps = object;
 
@@ -40,11 +42,12 @@ const SkeletonCard: FC = () => (
 );
 
 const FeaturedServices: FC<TFeaturedServicesProps> = () => {
-  const { theme = 'light' } = useTheme(); // Fallback to 'light' if theme is undefined
+  const swiperRef = useRef<SwiperCore | null>(null);
+  const { theme = 'light' } = useTheme();
   const [itemsCount, setItemsCount] = useState(1);
   const navigate = useNavigate();
   const { data: servicesData, isLoading } = useGetAllServicesQuery({
-    limit: '6',
+    limit: '12',
     sort: 'createdAt',
   });
   const services = servicesData?.data;
@@ -71,6 +74,15 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
     navigate(`/service-details/${id}`);
   };
 
+  // Slider button handler
+  const handleNextSlide = () => {
+    swiperRef.current?.slideNext();
+  };
+
+  const handlePrevSlide = () => {
+    swiperRef.current?.slidePrev();
+  };
+
   if (isLoading || !services || services.length === 0) {
     return (
       <div className="mt-10">
@@ -92,17 +104,36 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
 
   return (
     <Container>
-      <div className="mt-10 relative max-w-7xl md:mx-auto mx-2">
+      <div className="my-10 relative max-w-7xl md:mx-auto mx-2">
         <SectionTitle
           subHeader="Featured Services"
           header="Professional Car Care Services"
           des="Choose a service that suits your needs. From quick washes to full detailing, we offer everything to keep your car looking its best."
         />
+        <div className="flex items-center justify-end gap-3 mb-4">
+          <Button
+            isIconOnly
+            radius="full"
+            startContent={<IoIosArrowBack size={25} />}
+            onClick={handlePrevSlide}
+            aria-label="Previous review"
+            className="bg-default-200 p-1 rounded-full text-warning-500"
+          />
+          <Button
+            isIconOnly
+            radius="full"
+            startContent={<IoIosArrowForward size={25} />}
+            onClick={handleNextSlide}
+            aria-label="Next review"
+            className="bg-default-200 p-1 rounded-full text-warning-500"
+          />
+        </div>
         <Swiper
           slidesPerView={2}
           spaceBetween={20}
           pagination={{ clickable: true }}
           autoplay={{ delay: 2000, disableOnInteraction: false }}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           modules={[Pagination, Autoplay]}
           breakpoints={{
             640: { slidesPerView: 2 },

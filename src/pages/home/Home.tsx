@@ -4,7 +4,6 @@ import FeaturedServices from '../../components/featuredServices/FeaturedServices
 import WebsiteReview from '../../components/WebsiteReview/WebsiteReview';
 import ServiceHighlights from './ServiceHighligts';
 import PricingPlans from './PricingPlans';
-import Container from '../../components/ui/Container';
 import ContactUs from '../contact/ContactUs';
 
 type THomeProps = object;

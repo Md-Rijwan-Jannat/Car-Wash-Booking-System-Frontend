@@ -6,22 +6,22 @@ import {
   ModalBody,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
-import { FC } from "react";
-import { FaAddressBook, FaEdit, FaPhone } from "react-icons/fa";
-import { IoMail } from "react-icons/io5";
-import { useTheme } from "next-themes";
-import { SubmitHandler, FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+} from '@nextui-org/react';
+import { FC } from 'react';
+import { FaAddressBook, FaEdit, FaPhone } from 'react-icons/fa';
+import { IoMail } from 'react-icons/io5';
+import { useTheme } from 'next-themes';
+import { SubmitHandler, FieldValues } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import CWForm from "../form/CWForm";
-import CWInput from "../form/CWInput";
+import CWForm from '../form/CWForm';
+import CWInput from '../form/CWInput';
 import {
   useGetMeQuery,
   useUpdateUserMutation,
-} from "../../redux/features/auth/authApi";
-import { useAppSelector } from "../../redux/hook";
-import { useCurrentUser, TUser } from "../../redux/features/auth/authSlice";
+} from '../../redux/features/auth/authApi';
+import { useAppSelector } from '../../redux/hook';
+import { useCurrentUser, TUser } from '../../redux/features/auth/authSlice';
 
 const UserDetailsModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -31,7 +31,7 @@ const UserDetailsModal: FC = () => {
   const { theme } = useTheme();
 
   const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
-    const toastId = toast.loading("Updating your profile...");
+    const toastId = toast.loading('Updating your profile...');
 
     try {
       const res = await updateUser({
@@ -48,7 +48,7 @@ const UserDetailsModal: FC = () => {
       toast.dismiss(toastId);
 
       if (res?.success) {
-        toast.success("Profile updated successfully");
+        toast.success('Profile updated successfully');
       }
     } catch (err) {
       toast.dismiss(toastId);
@@ -59,16 +59,21 @@ const UserDetailsModal: FC = () => {
     <>
       <Button onPress={onOpen} size="sm" startContent={<FaEdit size={20} />} />
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-        <ModalContent>
+      <Modal
+        size="lg"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+      >
+        <ModalContent className="m-2">
           <ModalHeader className="flex flex-col gap-1">
             Update Profile
           </ModalHeader>
           <ModalBody>
             <CWForm onSubmit={onSubmit}>
               <div
-                className={`flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full md:w-[400px] ${
-                  theme === "dark" ? "border-gray-50 border-opacity-15" : ""
+                className={`flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full ${
+                  theme === 'dark' ? 'border-gray-50 border-opacity-15' : ''
                 }`}
               >
                 <CWInput

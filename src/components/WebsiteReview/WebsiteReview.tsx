@@ -117,37 +117,39 @@ const WebsiteReview: FC = () => {
             {websiteReviews.map((review) => (
               <SwiperSlide key={review._id}>
                 <motion.div
-                  className={`p-4 border border-default-100 rounded-lg bg-default-50 my-3 hover:shadow-lg transition-shadow duration-300 cursor-pointer`}
+                  className={`p-4 border border-default-100 rounded-lg bg-default-50 my-3 hover:shadow-lg transition-shadow duration-300 cursor-pointer `}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="flex flex-col md:flex-row items-center space-x-2">
-                    <img
-                      src={review.user?.profileImg}
-                      alt={review.user?.name}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                    <div className="flex items-center justify-center flex-col md:justify-start md:items-start">
-                      <h3 className="text-sm font-semibold text-center md:text-start">
-                        {review.user?.name}
-                      </h3>
-                      <div className="flex space-x-1 text-warning">
-                        <RatingDisplay
-                          rating={review.rating}
-                          size={14}
-                          color="#E4E6E7"
-                        />
+                  <div className="flex flex-col md:flex-row justify-between gap-1 items-center ">
+                    <div className="flex flex-col md:flex-row items-center space-x-2">
+                      <img
+                        src={review.user?.profileImg}
+                        alt={review.user?.name}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                      <div className="flex items-center justify-center flex-col md:justify-start md:items-start">
+                        <h3 className="text-sm font-semibold text-center md:text-start">
+                          {review.user?.name}
+                        </h3>
+                        <div className="flex space-x-1 text-warning">
+                          <RatingDisplay
+                            rating={review.rating}
+                            size={14}
+                            color="#E4E6E7"
+                          />
+                        </div>
                       </div>
+                    </div>{' '}
+                    <div className="text-center text-xs text-default-600">
+                      {format(new Date(review.createdAt), 'MMMM dd, yyyy')}
                     </div>
-                  </div>{' '}
+                  </div>
                   <p
                     className={`mt-4 text-xs text-default-800 text-center md:text-start`}
                   >
                     {review.feedback}
                   </p>
-                  <div className="text-right text-xs text-default-600 mt-4">
-                    {format(new Date(review.createdAt), 'MMMM dd, yyyy')}
-                  </div>
                 </motion.div>
               </SwiperSlide>
             ))}

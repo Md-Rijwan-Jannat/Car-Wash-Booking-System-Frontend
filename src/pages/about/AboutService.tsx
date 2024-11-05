@@ -50,7 +50,7 @@ export default function AboutService() {
         ].map((service, i) => (
           <motion.div
             key={i}
-            whileHover={{ scale: 1.1, rotate: 1 }}
+            whileHover={{ scale: 1.05 }}
             className="bg-default-50 p-6 rounded-lg shadow-lg text-center flex-1"
             custom={i}
             initial="hidden"

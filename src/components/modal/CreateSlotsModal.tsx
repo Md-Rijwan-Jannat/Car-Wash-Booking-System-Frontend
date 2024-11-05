@@ -6,24 +6,24 @@ import {
   ModalBody,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
-import { FC } from "react";
-import { SubmitHandler, FieldValues } from "react-hook-form";
-import { toast } from "sonner";
+} from '@nextui-org/react';
+import { FC } from 'react';
+import { SubmitHandler, FieldValues } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import CWForm from "../form/CWForm";
-import CWInput from "../form/CWInput";
-import CWSelect from "../form/CWSelect";
-import { useTheme } from "next-themes";
-import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
-import { useCreateSlotsMutation } from "../../redux/features/admin/slotManagementApi";
-import { FaClock, FaPlus } from "react-icons/fa";
-import { TService } from "../../types";
-import CWDateInput from "../form/CwDateInput";
+import CWForm from '../form/CWForm';
+import CWInput from '../form/CWInput';
+import CWSelect from '../form/CWSelect';
+import { useTheme } from 'next-themes';
+import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
+import { useCreateSlotsMutation } from '../../redux/features/admin/slotManagementApi';
+import { FaClock, FaPlus } from 'react-icons/fa';
+import { TService } from '../../types';
+import CWDateInput from '../form/CwDateInput';
 
 const CreateSlotModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { data: services } = useGetAllServicesQuery({ limit: "1000000" });
+  const { data: services } = useGetAllServicesQuery({ limit: '1000000' });
   const [createSlot, { isLoading }] = useCreateSlotsMutation();
   const { theme } = useTheme();
 
@@ -35,7 +35,7 @@ const CreateSlotModal: FC = () => {
     })) || [];
 
   const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
-    const toastId = toast.loading("Creating slot...");
+    const toastId = toast.loading('Creating slot...');
     console.log(formData);
     const { day, month, year } = formData.date;
     const formattedDate = `${day}-${month}-${year}`;
@@ -52,7 +52,7 @@ const CreateSlotModal: FC = () => {
 
       console.log(res);
       if (res?.success) {
-        toast.success("Slot created successfully", {
+        toast.success('Slot created successfully', {
           id: toastId,
           duration: 3000,
         });
@@ -77,14 +77,19 @@ const CreateSlotModal: FC = () => {
         Create Slot
       </Button>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
-        <ModalContent>
+      <Modal
+        size="lg"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+      >
+        <ModalContent className="m-2">
           <ModalHeader className="flex flex-col gap-1">Create Slot</ModalHeader>
           <ModalBody>
             <CWForm onSubmit={onSubmit}>
               <div
-                className={`flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full md:w-[400px] ${
-                  theme === "dark" ? "border-gray-50 border-opacity-15" : ""
+                className={`flex flex-col items-center justify-center gap-5 border rounded-md p-3 lg:p-5 w-full ${
+                  theme === 'dark' ? 'border-gray-50 border-opacity-15' : ''
                 }`}
               >
                 <CWSelect

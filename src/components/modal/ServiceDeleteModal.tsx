@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC } from "react";
+import { FC } from 'react';
 import {
   Modal,
   ModalContent,
@@ -10,10 +10,10 @@ import {
   Button,
   Tooltip,
   useDisclosure,
-} from "@nextui-org/react";
-import { FaTrash } from "react-icons/fa";
-import { toast } from "sonner";
-import { useDeleteServiceMutation } from "../../redux/features/admin/serviceManagementApi";
+} from '@nextui-org/react';
+import { FaTrash } from 'react-icons/fa';
+import { toast } from 'sonner';
+import { useDeleteServiceMutation } from '../../redux/features/admin/serviceManagementApi';
 
 type TServiceDeleteModalProps = {
   id: string;
@@ -27,13 +27,13 @@ const ServiceDeleteModal: FC<TServiceDeleteModalProps> = ({ id }) => {
     try {
       const res: any = await deleteService(id);
       if (res?.data?.success) {
-        toast.success("Service deleted successfully");
+        toast.success('Service deleted successfully');
         onClose(); // Close modal on successful deletion
       } else {
-        toast.error("Failed to delete service");
+        toast.error('Failed to delete service');
       }
     } catch (error) {
-      toast.error("An error occurred while deleting the service");
+      toast.error('An error occurred while deleting the service');
     }
   };
 
@@ -47,8 +47,8 @@ const ServiceDeleteModal: FC<TServiceDeleteModalProps> = ({ id }) => {
           color="default"
         />
       </Tooltip>
-      <Modal isOpen={isOpen} onOpenChange={onClose} placement="top-center">
-        <ModalContent>
+      <Modal isOpen={isOpen} onOpenChange={onClose} placement="center">
+        <ModalContent className="m-2">
           <ModalHeader>Confirm Deletion</ModalHeader>
           <ModalBody>Are you sure you want to delete this service?</ModalBody>
           <ModalFooter>

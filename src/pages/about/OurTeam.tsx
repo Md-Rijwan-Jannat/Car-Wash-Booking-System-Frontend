@@ -124,7 +124,7 @@ export default function OurTeam() {
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.1, rotate: 1 }}
+              whileHover={{ scale: 1.05 }}
               custom={index}
               initial="hidden"
               animate="visible"
