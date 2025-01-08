@@ -1,30 +1,30 @@
-import { FC } from "react";
-import { Button, Chip } from "@nextui-org/react";
-import CWForm from "../form/CWForm";
-import CWInput from "../form/CWInput";
-import { IoMdCall, IoMdMail, IoMdPerson, IoMdPin } from "react-icons/io";
-import CWTextarea from "../form/CWTextarea";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useTheme } from "next-themes";
-import CWSelect from "../form/CWSelect";
-import SlotsBookingCard from "./SlotsBookingCard";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { FC } from 'react';
+import { Button, Chip } from '@nextui-org/react';
+import CWForm from '../form/CWForm';
+import CWInput from '../form/CWInput';
+import { IoMdCall, IoMdMail, IoMdPerson, IoMdPin } from 'react-icons/io';
+import CWTextarea from '../form/CWTextarea';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { useTheme } from 'next-themes';
+import CWSelect from '../form/CWSelect';
+import SlotsBookingCard from './SlotsBookingCard';
+import { useAppDispatch, useAppSelector } from '../../redux/hook';
 import {
   clearBookmarks,
   getAllSlotBooking,
-} from "../../redux/features/user/slotBookmarkSlice";
-import NoData from "../serviceSlots/NoData";
-import { useGetMeQuery } from "../../redux/features/auth/authApi";
-import { TUser, useCurrentUser } from "../../redux/features/auth/authSlice";
-import { TUserData } from "../../types";
-import { vehicleTypeItems } from "../../constants/user";
-import { useCreateSlotBookingsMutation } from "../../redux/features/user/slotBokingApi";
+} from '../../redux/features/user/slotBookmarkSlice';
+import NoData from '../serviceSlots/NoData';
+import { useGetMeQuery } from '../../redux/features/auth/authApi';
+import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
+import { TUserData } from '../../types';
+import { vehicleTypeItems } from '../../constants/user';
+import { useCreateSlotBookingsMutation } from '../../redux/features/user/slotBokingApi';
 
 const SlotBooking: FC = () => {
   const { theme } = useTheme();
   const slotBookingData = useAppSelector(getAllSlotBooking);
   const dispatch = useAppDispatch();
-  const { email } = useAppSelector(useCurrentUser) as TUser;
+  const { email } = useAppSelector(useCurrentUser) || ({} as TUser);
   const { data: userDetails } = useGetMeQuery(email);
   const totalPrice = slotBookingData?.reduce(
     (sum, booking) => sum + booking.price,
@@ -33,7 +33,7 @@ const SlotBooking: FC = () => {
 
   const [createSlotBooking, { data, isLoading }] =
     useCreateSlotBookingsMutation();
-  console.log("Booking successful 1", data);
+  console.log('Booking successful 1', data);
 
   const userData = userDetails?.data as TUserData;
 
@@ -48,7 +48,7 @@ const SlotBooking: FC = () => {
         serviceId: serviceIds,
         slotId: slotIds,
         name: data.name,
-        email: data.email,
+        email: data?.email,
         phone: data.phone,
         address: data.address,
         totalPrice: `${totalPrice}`,
@@ -59,17 +59,17 @@ const SlotBooking: FC = () => {
         registrationPlate: data.registrationPlate,
       };
 
-      console.log("payload =>", payload);
+      console.log('payload =>', payload);
 
       const result = await createSlotBooking(payload);
       if (result.data.success) {
         window.location.href = result.data.data.paymentSession.payment_url;
-        console.log("Booking successful", result);
+        console.log('Booking successful', result);
       }
 
       dispatch(clearBookmarks());
     } catch (error) {
-      console.error("Booking failed", error);
+      console.error('Booking failed', error);
     }
   };
 
@@ -78,9 +78,9 @@ const SlotBooking: FC = () => {
       <div className="flex flex-col md:flex-row items-start justify-between gap-5 w-full">
         {/* Left Side */}
         <div className="w-full">
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-3">
             <Chip variant="bordered">Your bookmarked slots</Chip>
-            <div className="flex items-center gap-2">
+            <div className="flex  justify-between gap-2">
               <Chip>
                 <p className="text-sm font-medium text-primaryColor">
                   Total Price: ৳{totalPrice}
@@ -90,7 +90,8 @@ const SlotBooking: FC = () => {
                 onClick={() => dispatch(clearBookmarks())}
                 size="sm"
                 color="warning"
-                variant="flat"
+                radius="full"
+                className="text-white h-7"
               >
                 Clear cart
               </Button>
@@ -121,7 +122,7 @@ const SlotBooking: FC = () => {
           <CWForm onSubmit={onSubmit}>
             <div
               className={`flex flex-col items-center justify-center gap-5 ${
-                theme === "dark" ? "border-gray-50 border-opacity-15" : ""
+                theme === 'dark' ? 'border-gray-50 border-opacity-15' : ''
               } rounded-md p-3 lg:p-5 w-full h-auto`}
             >
               <CWInput
@@ -195,7 +196,7 @@ const SlotBooking: FC = () => {
                 type="submit"
                 isDisabled={isLoading}
               >
-                {isLoading ? "Processing..." : "Proceed to Payment"}
+                {isLoading ? 'Processing...' : 'Proceed to Payment'}
               </Button>
             </div>
           </CWForm>

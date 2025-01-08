@@ -1,8 +1,7 @@
-import { Switch } from '@nextui-org/react';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { IoIosSunny } from 'react-icons/io';
-import { IoIosMoon } from 'react-icons/io';
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
+import { Button } from "@nextui-org/react";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -15,22 +14,19 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   const handleThemeChange = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   return (
-    <Switch
-      checked={theme === 'dark'}
-      onChange={handleThemeChange}
-      size="lg"
-      color="warning"
-      thumbIcon={({ isSelected, className }) =>
-        isSelected ? (
-          <IoIosSunny className={className} />
-        ) : (
-          <IoIosMoon className={className} />
-        )
-      }
-    ></Switch>
+    <Button
+      radius="full"
+      isIconOnly
+      size="md"
+      variant="ghost"
+      onClick={handleThemeChange}
+      className={`${theme === "light" ? "text-warning" : "text-default-500"}`}
+    >
+      {theme === "light" ? <Sun size={20} /> : <Moon size={20} />}
+    </Button>
   );
 }

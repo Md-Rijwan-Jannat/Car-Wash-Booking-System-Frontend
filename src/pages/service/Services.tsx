@@ -90,7 +90,7 @@ const Services: FC = () => {
           ))}
         </div>
 
-        {meta && services?.length > 16 && (
+        {meta?.totalPage > 1 && (
           <div className="mt-10 flex justify-center items-start">
             <Pagination
               color="default"

@@ -1,15 +1,16 @@
-import { FC } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
-import { useAppSelector, useAppDispatch } from '../../redux/hook';
+import { FC } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import { useAppSelector, useAppDispatch } from "../../redux/hook";
 import {
   getAllFavoriteServices,
   removeFavorite,
   clearFavorites,
-} from '../../redux/features/service/serviceSlice';
-import { Button, Card, Link } from '@nextui-org/react';
-import { LuArrowUpRight } from 'react-icons/lu';
-import Container from '../../components/ui/Container';
-import NoData from '../../components/serviceSlots/NoData';
+} from "../../redux/features/service/serviceSlice";
+import { Button, Card } from "@nextui-org/react";
+import { LuArrowUpRight } from "react-icons/lu";
+import Container from "../../components/ui/Container";
+import NoData from "../../components/serviceSlots/NoData";
+import { Link } from "react-router-dom";
 
 const FavoriteService: FC = () => {
   const favoriteServices = useAppSelector(getAllFavoriteServices);
@@ -31,7 +32,7 @@ const FavoriteService: FC = () => {
           <Button
             onClick={handleClearFavorites}
             className={`text-white ${
-              favoriteServices.length === 0 && 'cursor-not-allowed bg-gray-300'
+              favoriteServices.length === 0 && "cursor-not-allowed bg-gray-300"
             }`}
             radius="full"
             color="warning"
@@ -96,7 +97,7 @@ const FavoriteService: FC = () => {
               </Card>
             ))
           ) : (
-            <p className="col-span-full">
+            <p className="col-span-12">
               <NoData text="Empty" />
             </p>
           )}

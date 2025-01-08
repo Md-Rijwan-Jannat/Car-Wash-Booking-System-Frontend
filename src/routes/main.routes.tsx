@@ -35,4 +35,12 @@ export const MainRoutes = [
     path: 'success',
     element: <Success />,
   },
+  {
+    path: 'configurations',
+    element: <Success />,
+  },
+  {
+    path: 'help&feedback',
+    element: <Success />,
+  },
 ];

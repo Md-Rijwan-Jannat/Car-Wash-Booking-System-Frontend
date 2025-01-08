@@ -1,6 +1,6 @@
-import { Tooltip } from '@nextui-org/react';
-import { useTheme } from 'next-themes';
-import React, { useEffect, useState } from 'react';
+import { Tooltip } from "@nextui-org/react";
+import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
 
 interface CountDownProps {
   slotDates: string[][];
@@ -20,7 +20,7 @@ const NavBarCountDown: React.FC<CountDownProps> = ({ slotDates }) => {
   }, []);
 
   const convertToDateObject = (dateString: string) => {
-    const [day, month, year] = dateString.split('-');
+    const [day, month, year] = dateString.split("-");
     return new Date(`${year}-${month}-${day}T00:00:00`);
   };
 
@@ -68,14 +68,8 @@ const NavBarCountDown: React.FC<CountDownProps> = ({ slotDates }) => {
   return (
     <div>
       {countdown && (
-        <Tooltip content={'Service starting countdown'}>
-          <div
-            className={`bg-gray-50 rounded-full py-1 px-5 font-semibold border text-warning ${
-              theme === 'dark'
-                ? 'bg-opacity-10 border-gray-100 border-opacity-15'
-                : ''
-            } mb-3`}
-          >
+        <Tooltip content={"Service starting countdown"}>
+          <div className="bg-default-50 rounded-full py-1 px-5 font-semibold border text-warning mb-3">
             <p>{countdown}</p>
           </div>
         </Tooltip>

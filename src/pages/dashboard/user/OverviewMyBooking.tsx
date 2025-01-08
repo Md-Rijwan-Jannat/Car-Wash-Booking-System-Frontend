@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
-import { TMeta, TSlotBooking } from '../../../types';
+import { TSlotBooking } from '../../../types';
 import LoaderSkeleton from '../../../components/skeleton/LoaderSkeleton';
 import NoData from '../../../components/serviceSlots/NoData';
 import { formatTo12Hour } from '../../../utils/FormatDate';

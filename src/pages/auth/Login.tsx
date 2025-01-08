@@ -1,17 +1,17 @@
-import { Button, Checkbox } from '@nextui-org/react';
-import { FC, useEffect, useState } from 'react';
-import { IoMdLock, IoMdMail } from 'react-icons/io';
-import CWForm from '../../components/form/CWForm';
-import CWInput from '../../components/form/CWInput';
-import { useLoginMutation } from '../../redux/features/auth/authApi';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAppDispatch } from '../../redux/hook';
-import { setUser, TUser } from '../../redux/features/auth/authSlice';
-import { toast } from 'sonner';
-import { verifyToken } from '../../utils/VerifyToken';
-import Container from '../../components/ui/Container';
-import Logo from '../../components/ui/Logo';
-import BackButton from '../../components/serviceSlots/BackButton';
+import { Button, Checkbox } from "@nextui-org/react";
+import { FC, useEffect, useState } from "react";
+import { IoMdLock, IoMdMail } from "react-icons/io";
+import CWForm from "../../components/form/CWForm";
+import CWInput from "../../components/form/CWInput";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useNavigate, Link } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hook";
+import { setUser, TUser } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
+import { verifyToken } from "../../utils/VerifyToken";
+import Container from "../../components/ui/Container";
+import Logo from "../../components/ui/Logo";
+import BackButton from "../../components/serviceSlots/BackButton";
 
 type TLoginFormValues = {
   email: string;
@@ -24,12 +24,12 @@ const Login: FC = () => {
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const [defaultValues, setDefaultValues] = useState<TLoginFormValues>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem('savedEmail');
+    const savedEmail = localStorage.getItem("savedEmail");
     if (savedEmail) {
       setDefaultValues((prev) => ({ ...prev, email: savedEmail }));
       setRememberMe(true);
@@ -37,11 +37,11 @@ const Login: FC = () => {
   }, []);
 
   const onSubmit = async (data: TLoginFormValues) => {
-    const toastId = toast.loading('Logging in...');
+    const toastId = toast.loading("Logging in...");
     if (rememberMe) {
-      localStorage.setItem('savedEmail', data.email);
+      localStorage.setItem("savedEmail", data.email);
     } else {
-      localStorage.removeItem('savedEmail');
+      localStorage.removeItem("savedEmail");
     }
 
     try {
@@ -49,14 +49,14 @@ const Login: FC = () => {
       if (res.token) {
         const userData = verifyToken(res.token) as TUser;
         dispatch(setUser({ user: userData, token: res.token }));
-        navigate('/');
+        navigate("/");
       }
-      toast.success('Successfully logged in', {
+      toast.success("Successfully logged in", {
         id: toastId,
         duration: 3000,
       });
     } catch (error) {
-      toast.error('Something went wrong', {
+      toast.error("Something went wrong", {
         id: toastId,
         duration: 3000,
       });
@@ -103,12 +103,10 @@ const Login: FC = () => {
                   <Checkbox
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    classNames={{
-                      label: 'text-small',
-                    }}
+                    className={"text-black"}
                     color="warning"
                   >
-                    Remember me
+                    <p className="text-black">Remember me</p>
                   </Checkbox>
                   <Button
                     isLoading={isLoading}
@@ -127,8 +125,8 @@ const Login: FC = () => {
             style={{
               backgroundImage:
                 "url('https://auto-brite.ca/wp-content/uploads/2022/04/unnamed-1-1.jpg')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
             className="flex flex-col items-center justify-center w-full h-[400px] bg-warning rounded-r-md p-4 relative"
           >
@@ -139,17 +137,17 @@ const Login: FC = () => {
             <div className="z-10 text-white text-center mb-4 space-y-2">
               <p>Demo Credentials:</p>
               <Button
-                className="text-white bg-transparent underline cursor-pointer border border-default-100 rounded-full"
+                className="text-white bg-transparent underline cursor-pointer border border-default-100/40 rounded-full"
                 onClick={() =>
-                  handleDemoLogin('rijwanjannat36@gmail.com', 'Rijwan36@')
+                  handleDemoLogin("rijwanjannat36@gmail.com", "Rijwan36@")
                 }
               >
                 Admin: rijwanjannat36@gmail.com / Rijwan36@
               </Button>
               <Button
-                className="text-white bg-transparent underline cursor-pointer border border-default-100 rounded-full"
+                className="text-white bg-transparent underline cursor-pointer border border-default-100/40 rounded-full"
                 onClick={() =>
-                  handleDemoLogin('hasinabibi@gmail.com', 'Rijwan36@')
+                  handleDemoLogin("hasinabibi@gmail.com", "Rijwan36@")
                 }
               >
                 User: hasinabibi@gmail.com / Rijwan36@

@@ -76,9 +76,9 @@ const DashboardLayout: FC = () => {
           <>
             <SidebarItem
               icon={<ImProfile className="text-[20px] md:text-[16px]" />}
-              text="Dashboard"
+              text="profile"
               active={false}
-              link="/dashboard/dashboard"
+              link="/dashboard/profile"
             />
             <SidebarItem
               icon={<GiTargetDummy className="text-[20px] md:text-[16px]" />}

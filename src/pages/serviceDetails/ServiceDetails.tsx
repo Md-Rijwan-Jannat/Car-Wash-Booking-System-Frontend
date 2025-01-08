@@ -12,6 +12,8 @@ import NoData from '../../components/serviceSlots/NoData';
 import ServiceDetailsSkeleton from '../../components/skeleton/ServiceDetailsSkeleton';
 import { formatCalenderDate } from '../../utils/FormatDate';
 import { parseDate } from '@internationalized/date';
+import Container from '../../components/ui/Container';
+import RelatedServices from '../../components/serviceSlots/RelatedServices';
 
 const ServiceDetails: FC = () => {
   const [focusedDate, setFocusedDate] = useState<any>();
@@ -33,7 +35,11 @@ const ServiceDetails: FC = () => {
   }, [serviceData]);
 
   if (serviceLoading) {
-    return <ServiceDetailsSkeleton />;
+    return (
+      <Container>
+        <ServiceDetailsSkeleton />
+      </Container>
+    );
   }
 
   if (!serviceData?.data) {
@@ -132,6 +138,7 @@ const ServiceDetails: FC = () => {
           onSelectDate={setSelectedDate} // Pass function to update availableDates
         />
       </motion.div>
+      <RelatedServices />
     </div>
   );
 };

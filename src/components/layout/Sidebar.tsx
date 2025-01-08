@@ -99,11 +99,7 @@ export const Sidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             theme === 'dark' ? 'border-gray-100 border-opacity-15' : ''
           }`}
         >
-          <NavLink
-            to={`dashboard/${
-              (data?.role === 'admin' && 'profile') || 'dashboard'
-            }`}
-          >
+          <NavLink to={`dashboard/profile`}>
             <Avatar src={data?.profileImg} className="w-10 h-10 rounded-md" />
           </NavLink>
           <div

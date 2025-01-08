@@ -52,7 +52,11 @@ const WebsiteReview: FC = () => {
       : 0;
 
   if (reviewLoading) {
-    return <WebsiteReviewSkeleton />;
+    return (
+      <Container>
+        <WebsiteReviewSkeleton />
+      </Container>
+    );
   }
 
   const handleNextSlide = () => {

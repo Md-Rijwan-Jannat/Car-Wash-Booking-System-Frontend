@@ -1,8 +1,8 @@
-import { Input } from '@nextui-org/react';
-import { useFormContext, Controller } from 'react-hook-form';
-import { FC, useState } from 'react';
-import { IoMdPerson } from 'react-icons/io';
-import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import { Input } from "@nextui-org/react";
+import { useFormContext, Controller } from "react-hook-form";
+import { FC, useState } from "react";
+import { IoMdPerson } from "react-icons/io";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 type TCWInputProps = {
   name: string;
@@ -18,7 +18,7 @@ const CWInput: FC<TCWInputProps> = ({
   name,
   label,
   placeholder,
-  type = 'text',
+  type = "text",
   icon = (
     <IoMdPerson className="text-2xl text-warning pointer-events-none flex-shrink-0" />
   ),
@@ -32,8 +32,8 @@ const CWInput: FC<TCWInputProps> = ({
     setPasswordVisible(!passwordVisible);
   };
 
-  const isPasswordField = type === 'password';
-  const inputType = isPasswordField && passwordVisible ? 'text' : type;
+  const isPasswordField = type === "password";
+  const inputType = isPasswordField && passwordVisible ? "text" : type;
 
   return (
     <Controller

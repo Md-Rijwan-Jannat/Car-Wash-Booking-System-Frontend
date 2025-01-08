@@ -9,7 +9,7 @@ import CompleteBookings from '../pages/dashboard/user/Bookings/CompleteBookings'
 
 export const UserRoutes = [
   {
-    path: 'dashboard',
+    path: 'profile',
     element: <UserDashboard />,
   },
   {

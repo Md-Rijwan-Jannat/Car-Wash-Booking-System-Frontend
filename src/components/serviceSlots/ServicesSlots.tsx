@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../../redux/features/auth/authSlice';
 import SlotCard from './SlotCard';
 import SlotSkeleton from '../skeleton/ServiceSlotSkeleton';
+import Container from '../ui/Container';
 
 type TServicesSlotsProps = {
   slotsId: string | undefined;
@@ -77,12 +78,14 @@ const ServicesSlots: FC<TServicesSlotsProps> = ({
 
   if (slotsLoading) {
     return (
-      <div className="flex flex-col mt-6">
-        <Skeleton className="w-[80px] rounded-xl h-[25px]" />
-        <div className="mt-5">
-          <SlotSkeleton />
+      <Container>
+        <div className="flex flex-col mt-6">
+          <Skeleton className="w-[80px] rounded-xl h-[25px]" />
+          <div className="mt-5">
+            <SlotSkeleton />
+          </div>
         </div>
-      </div>
+      </Container>
     );
   }
 

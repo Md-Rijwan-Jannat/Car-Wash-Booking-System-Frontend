@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  Badge,
   Button,
   Navbar,
   NavbarBrand,
@@ -10,34 +8,39 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
   Tooltip,
-} from '@nextui-org/react';
-import { FC } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { ThemeSwitcher } from '../../theme/ThemeSwitcher';
-import { useTheme } from 'next-themes';
-import { useAppSelector } from '../../redux/hook';
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Avatar,
+} from "@nextui-org/react";
+
+import { FC } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import {
+  logout,
   TUser,
   useCurrentUser,
   useCurrentUserToken,
-} from '../../redux/features/auth/authSlice';
-import { verifyToken } from '../../utils/VerifyToken';
-import { FaHeart, FaShopify } from 'react-icons/fa';
-import { useGetMeQuery } from '../../redux/features/auth/authApi';
-import { getAllSlotBooking } from '../../redux/features/user/slotBookmarkSlice';
-import { useGetAllMyBookingsQuery } from '../../redux/features/user/slotBokingApi';
-import NavBarCountDown from './NavBarCountDown';
-import Logo from '../ui/Logo';
-import { getAllFavoriteServices } from '../../redux/features/service/serviceSlice';
-import { IoHeart } from 'react-icons/io5';
+} from "../../redux/features/auth/authSlice";
+import { verifyToken } from "../../utils/VerifyToken";
+import { useGetMeQuery } from "../../redux/features/auth/authApi";
+import { getAllSlotBooking } from "../../redux/features/user/slotBookmarkSlice";
+import { useGetAllMyBookingsQuery } from "../../redux/features/user/slotBokingApi";
+import NavBarCountDown from "./NavBarCountDown";
+import Logo from "../ui/Logo";
+import { getAllFavoriteServices } from "../../redux/features/service/serviceSlice";
+import { Heart, Menu, ShoppingBag } from "lucide-react";
 
 const NavBar: FC = () => {
-  const { theme } = useTheme();
   const { email, role } = useAppSelector(useCurrentUser) || {};
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { data: userDetails } = useGetMeQuery(email);
   const { profileImg, name } = userDetails?.data || ({} as TUser);
-  const { data: booking } = useGetAllMyBookingsQuery({ sort: '-createdAt' });
+  const { data: booking } = useGetAllMyBookingsQuery({ sort: "-createdAt" });
   const slotBookingData = useAppSelector(getAllSlotBooking);
   const token = useAppSelector(useCurrentUserToken);
   let user;
@@ -49,150 +52,170 @@ const NavBar: FC = () => {
   }
 
   const menuItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'Dashboard', path: `/dashboard/dashboard` },
-    { name: 'About Us', path: '/aboutUs' },
-    { name: 'Bookings', path: '/booking' },
-    { name: 'Favorite', path: '/favorites-services' },
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services" },
+    { name: "About Us", path: "/aboutUs" },
+    { name: "Bookings", path: "/booking" },
+    { name: "Favorite", path: "/favorites-services" },
   ].filter(Boolean);
 
   return (
     <Navbar
-      position="static"
-      isBlurred={false}
       maxWidth="xl"
-      className="bg-transparent"
+      className="bg-background/60 backdrop-blur-md border-b border-divider"
     >
-      <NavbarContent className="sm:hidden" justify="start">
+      <NavbarContent className="lg:hidden" justify="start">
+        <NavbarMenuToggle icon={<Menu className="h-6 w-6" />} />
+      </NavbarContent>
+
+      <NavbarContent className="lg:hidden pr-3" justify="center">
         <NavbarBrand>
           <Logo />
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+
+      <NavbarContent className="hidden lg:flex gap-4" justify="center">
         <NavbarBrand>
           <Logo />
         </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <div className="flex items-center justify-center gap-6">
+        <nav className="hidden lg:flex gap-4 space-x-9 ml-10">
           {menuItems.map((item, index) => (
             <NavbarItem key={index}>
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  isActive
-                    ? 'text-warning border-b-4 border-warning font-medium'
-                    : 'text-default-900'
+                  `px-1 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-default-500 border-b-2 border-warning"
+                      : "text-foreground/60 hover:bg-accent hover:text-accent-foreground"
+                  }`
                 }
               >
                 {item.name}
               </NavLink>
             </NavbarItem>
           ))}
-        </div>
+        </nav>
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <div className="flex items-center gap-3">
-          <NavbarItem>
-            <Tooltip content="Recent booking slot will start">
-              <NavbarItem className="hidden md:block mt-3">
-                {booking?.data?.length && role === 'user' && (
-                  <NavBarCountDown
-                    slotDates={
-                      booking?.data?.[0].slot
-                        ? [[booking.data[0].slot[0].date]]
-                        : []
-                    } // Pass the first slot date
-                  />
-                )}
-              </NavbarItem>
-            </Tooltip>
-          </NavbarItem>
-          <NavbarItem className="hidden lg:flex">
-            <ThemeSwitcher />
-          </NavbarItem>
-          <NavbarItem>
-            <div
-              onClick={() => navigate('/favorites-services')}
-              className="cursor-pointer mt-2"
-            >
-              {role === 'user' && (
-                <Badge
-                  content={`${allFavoriteServices?.length || 0}`}
-                  color="warning"
-                  variant="flat"
-                  className="border-none"
-                >
-                  <IoHeart className="text-warning" size={36} />
-                </Badge>
+        <NavbarItem>
+          <Tooltip content="Recent booking slot will start">
+            <NavbarItem className="hidden lg:block mt-3">
+              {booking?.data?.length && role === "user" && (
+                <NavBarCountDown
+                  slotDates={
+                    booking?.data?.[0]?.slot
+                      ? [[booking.data[0].slot[0].date]]
+                      : []
+                  }
+                />
               )}
+            </NavbarItem>
+          </Tooltip>
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <ThemeSwitcher />
+        </NavbarItem>
+        <NavbarItem>
+          <div className="relative">
+            <Button
+              radius="full"
+              isIconOnly
+              size="md"
+              variant="ghost"
+              onClick={() => navigate("/favorites-services")}
+              startContent={<Heart className="h-5 w-5" />}
+            />
+            <div className="bg-red-500 absolute top-0 right-0 w-4 h-4 rounded-full text-white text-xs flex items-center justify-center">
+              {allFavoriteServices?.length || 0}
             </div>
-          </NavbarItem>
-          <NavbarItem>
-            <div
-              onClick={() => navigate('/booking')}
-              className="cursor-pointer mt-1"
-            >
-              {role === 'user' && (
-                <Badge
-                  content={slotBookingData?.length || 0}
-                  color="warning"
-                  variant="flat"
-                  className="border-none"
+          </div>
+        </NavbarItem>
+        {role === "user" && (
+          <>
+            <NavbarItem>
+              <div className="relative">
+                <Button
+                  radius="full"
+                  isIconOnly
+                  size="md"
+                  variant="ghost"
+                  onClick={() => navigate("/favorites-services")}
+                  startContent={<ShoppingBag className="h-5 w-5" />}
+                />
+                <div className="bg-warning-500 absolute top-0 right-0 w-4 h-4 rounded-full text-white text-xs flex items-center justify-center">
+                  {slotBookingData?.length || 0}
+                </div>
+              </div>
+            </NavbarItem>
+          </>
+        )}
+        <NavbarItem>
+          {user ? (
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform size-7"
+                  name={name}
+                  src={profileImg}
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile" className="h-14 gap-2">
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{email}</p>
+                </DropdownItem>
+                <DropdownItem
+                  key="settings"
+                  onClick={() => navigate("/dashboard/profile")}
                 >
-                  <FaShopify className="text-warning" size={30} />
-                </Badge>
-              )}
-            </div>
-          </NavbarItem>
-          <NavbarItem>
-            <div
-              onClick={() => navigate('/dashboard/dashboard')}
-              className="cursor-pointer mb-1"
-            >
-              {user && <Avatar name={name} src={profileImg || undefined} />}
-            </div>
-          </NavbarItem>
+                  My Profile
+                </DropdownItem>
 
-          <NavbarItem className="hidden lg:flex">
-            {!user && (
-              <Button
-                className="text-white"
-                as={NavLink}
-                to="/auth/login"
-                color="warning"
-                variant="shadow"
-                radius="full"
-              >
-                Login
-              </Button>
-            )}
-          </NavbarItem>
-        </div>
+                <DropdownItem
+                  className={`${role === "admin" ? "" : "hidden"}`}
+                  onClick={() => navigate("/dashboard/dashboard")}
+                >
+                  Dashboard
+                </DropdownItem>
+
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  onClick={() => dispatch(logout())}
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            <Button
+              as={Link}
+              color="warning"
+              href="/login"
+              variant="flat"
+              radius="full"
+            >
+              Login
+            </Button>
+          )}
+        </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="lg:hidden flex flex-col items-center pt-5">
-        <Tooltip content="Recent booking slot will start">
-          <NavbarItem>
-            {booking?.data.length && role === 'user' && (
-              <NavBarCountDown
-                slotDates={
-                  booking?.data?.[0].slot
-                    ? [[booking.data[0].slot[0].date]]
-                    : []
-                } // Pass the first slot date
-              />
-            )}
-          </NavbarItem>
-        </Tooltip>
+      <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.name}-${index}`}>
+          <NavbarMenuItem className="space-y-2" key={`${item.name}-${index}`}>
             <NavLink
               to={item.path}
               className={({ isActive }) =>
-                `w-full ${isActive ? 'text-warning' : ''}`
+                `px-1 py-2 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-default-500 border-b-2 border-warning"
+                    : "text-foreground/60 hover:bg-accent hover:text-accent-foreground"
+                }`
               }
             >
               {item.name}
@@ -200,48 +223,9 @@ const NavBar: FC = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem>
-          <div
-            onClick={() => navigate('/favorites-services')}
-            className="cursor-pointer mt-2"
-          >
-            <Badge
-              content={`${allFavoriteServices?.length || 0}`}
-              color="warning"
-              variant="flat"
-              className="border-none text-default-900"
-            >
-              <FaHeart size={25} className="text-red-500" />
-            </Badge>
-          </div>
-        </NavbarMenuItem>
-        <NavbarMenuItem className="flex gap-3">
-          {!user && (
-            <Button
-              className="text-white"
-              size="sm"
-              as={NavLink}
-              to="/auth/login"
-              color="warning"
-              variant="shadow"
-              radius="full"
-            >
-              Login
-            </Button>
-          )}
           <ThemeSwitcher />
         </NavbarMenuItem>
       </NavbarMenu>
-      <NavbarContent className="sm:hidden" justify="end">
-        <div
-          className={`border size-10 bg-orange-50 flex items-center justify-center rounded-full text-warning ${
-            theme === 'dark'
-              ? 'border-gray-100 bg-opacity-10 border-opacity-15'
-              : ''
-          }`}
-        >
-          <NavbarMenuToggle />
-        </div>
-      </NavbarContent>
     </Navbar>
   );
 };
