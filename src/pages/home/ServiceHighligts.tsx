@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 import {
   FaCar,
   FaWater,
@@ -7,45 +7,45 @@ import {
   FaShower,
   FaTint,
   FaWind,
-} from 'react-icons/fa';
-import SectionTitle from '../../components/ui/SectionTitle';
-import Container from '../../components/ui/Container';
+} from "react-icons/fa";
+import SectionTitle from "../../components/ui/SectionTitle";
+import Container from "../../components/ui/Container";
 
 const services = [
   {
     icon: <FaCar className="text-4xl text-warning" />,
-    title: 'Exterior Wash',
+    title: "Exterior Wash",
     description:
-      'High-quality exterior wash that leaves your car shining like new.',
+      "High-quality exterior wash that leaves your car shining like new.",
   },
   {
     icon: <FaWater className="text-4xl text-warning" />,
-    title: 'Interior Cleaning',
-    description: 'Deep interior cleaning to remove all dirt, dust, and odors.',
+    title: "Interior Cleaning",
+    description: "Deep interior cleaning to remove all dirt, dust, and odors.",
   },
   {
     icon: <FaTools className="text-4xl text-warning" />,
-    title: 'Engine Detailing',
+    title: "Engine Detailing",
     description:
-      'Comprehensive engine cleaning for optimal performance and appearance.',
+      "Comprehensive engine cleaning for optimal performance and appearance.",
   },
   {
     icon: <FaShower className="text-4xl text-warning" />,
-    title: 'Underbody Wash',
+    title: "Underbody Wash",
     description:
       "Thorough underbody wash to remove dirt and salt, protecting your car's underside.",
   },
   {
     icon: <FaTint className="text-4xl text-warning" />,
-    title: 'Wax & Polish',
+    title: "Wax & Polish",
     description:
-      'Premium wax and polish service that gives your car a mirror-like finish.',
+      "Premium wax and polish service that gives your car a mirror-like finish.",
   },
   {
     icon: <FaWind className="text-4xl text-warning" />,
-    title: 'Tire & Wheel Cleaning',
+    title: "Tire & Wheel Cleaning",
     description:
-      'Detailed tire and wheel cleaning for a spotless, like-new appearance.',
+      "Detailed tire and wheel cleaning for a spotless, like-new appearance.",
   },
 ];
 
@@ -70,8 +70,8 @@ const ServiceHighlights: React.FC = () => {
     // Initial check
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const ServiceHighlights: React.FC = () => {
       controls.start({
         opacity: 1,
         y: 0,
-        transition: { duration: 0.8, ease: 'easeOut' },
+        transition: { duration: 0.8, ease: "easeOut" },
       });
     }
   }, [controls, isVisible]);
@@ -112,12 +112,12 @@ const ServiceHighlights: React.FC = () => {
       }}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
+      animate={isInView ? "visible" : "hidden"}
     >
       {/* Overlay for darkening the background */}
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <Container>
-        {' '}
+        {" "}
         {/* Content */}
         <div className="relative z-10 mx-auto text-white">
           <SectionTitle subHeader="" header="" des="" />

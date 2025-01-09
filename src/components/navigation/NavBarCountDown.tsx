@@ -1,5 +1,4 @@
 import { Tooltip } from "@nextui-org/react";
-import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
 interface CountDownProps {
@@ -8,8 +7,7 @@ interface CountDownProps {
 
 const NavBarCountDown: React.FC<CountDownProps> = ({ slotDates }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [countdown, setCountdown] = useState<string | null>(null); // Set initial state to null
-  const { theme } = useTheme();
+  const [countdown, setCountdown] = useState<string | null>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

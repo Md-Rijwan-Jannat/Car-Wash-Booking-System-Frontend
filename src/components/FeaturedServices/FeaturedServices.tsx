@@ -1,18 +1,17 @@
 // FeaturedServices.tsx
-import { FC, useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import { Pagination, Autoplay } from 'swiper/modules';
-import { Button, Skeleton } from '@nextui-org/react';
-import { useTheme } from 'next-themes';
-import { useGetAllServicesQuery } from '../../redux/features/admin/serviceManagementApi';
-import { useNavigate } from 'react-router-dom';
-import SectionTitle from '../ui/SectionTitle';
-import FeatureCard from './FratureCard';
-import Container from '../ui/Container';
-import SwiperCore from 'swiper';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { FC, useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Pagination, Autoplay } from "swiper/modules";
+import { Button, Skeleton } from "@nextui-org/react";
+import { useGetAllServicesQuery } from "../../redux/features/admin/serviceManagementApi";
+import { useNavigate } from "react-router-dom";
+import SectionTitle from "../ui/SectionTitle";
+import Container from "../ui/Container";
+import SwiperCore from "swiper";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FeatureCard } from "./FratureCard";
 
 type TFeaturedServicesProps = object;
 
@@ -43,12 +42,11 @@ const SkeletonCard: FC = () => (
 
 const FeaturedServices: FC<TFeaturedServicesProps> = () => {
   const swiperRef = useRef<SwiperCore | null>(null);
-  const { theme = 'light' } = useTheme();
   const [itemsCount, setItemsCount] = useState(1);
   const navigate = useNavigate();
   const { data: servicesData, isLoading } = useGetAllServicesQuery({
-    limit: '12',
-    sort: 'createdAt',
+    limit: "12",
+    sort: "createdAt",
   });
   const services = servicesData?.data;
 
@@ -66,8 +64,8 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
     };
 
     updateItemsCount();
-    window.addEventListener('resize', updateItemsCount);
-    return () => window.removeEventListener('resize', updateItemsCount);
+    window.addEventListener("resize", updateItemsCount);
+    return () => window.removeEventListener("resize", updateItemsCount);
   }, []);
 
   const handleDetailsPage = (id: string) => {
@@ -147,7 +145,6 @@ const FeaturedServices: FC<TFeaturedServicesProps> = () => {
               <FeatureCard
                 service={service}
                 onClick={() => handleDetailsPage(service._id)}
-                theme={theme}
               />
             </SwiperSlide>
           ))}
